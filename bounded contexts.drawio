@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2024-05-12T18:42:13.530Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36" etag="HbLspmBgXN7pLzMWoIzC" version="22.1.21" type="google">
+  <diagram name="Page-1" id="pwuCGrfxs8tLCJIaglWO">
+    <mxGraphModel dx="3185" dy="2455" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Mdm-Nb5RzRzal7qqLFV0-3" value="" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=JetBrains Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DJetBrains%2BMono;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="-230" y="140" width="80" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Mdm-Nb5RzRzal7qqLFV0-4" value="&lt;font style=&quot;font-size: 60px;&quot;&gt;Legend&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="-280" y="40" width="270" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-1" value="&lt;font style=&quot;font-size: 40px;&quot;&gt;Aggregate Root&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-130" y="150" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=JetBrains Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DJetBrains%2BMono;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="-230" y="250" width="80" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-3" value="&lt;font style=&quot;font-size: 40px;&quot;&gt;Entity&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-150" y="260" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-5" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="-230" y="460" width="77.5" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-7" value="&lt;font style=&quot;font-size: 40px;&quot;&gt;Bounded context&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-132.5" y="475" width="330" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-34" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="240" y="585" width="330" height="260" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-13" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;" vertex="1" parent="pli5Z3zszz2CMLmFMObm-34">
+          <mxGeometry y="70" width="330" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="Mdm-Nb5RzRzal7qqLFV0-1" value="&lt;font style=&quot;font-size: 40px;&quot;&gt;&lt;b&gt;Wallet&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=JetBrains Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DJetBrains%2BMono;fillColor=#d5e8d4;strokeColor=#82b366;" parent="pli5Z3zszz2CMLmFMObm-34" vertex="1">
+          <mxGeometry x="60" y="125" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-14" value="&lt;font style=&quot;font-size: 40px;&quot;&gt;Wallet Context&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="pli5Z3zszz2CMLmFMObm-34">
+          <mxGeometry x="10" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-35" value="" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=JetBrains Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DJetBrains%2BMono;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="-230" y="355" width="80" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-36" value="&lt;font style=&quot;font-size: 40px;&quot;&gt;Value Object&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="-130" y="365" width="262.5" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-51" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="490" y="-50" width="1000" height="430" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-46" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;" vertex="1" parent="pli5Z3zszz2CMLmFMObm-51">
+          <mxGeometry y="70" width="1000" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-40" value="&lt;font style=&quot;font-size: 40px;&quot;&gt;&lt;b&gt;User&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=JetBrains Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DJetBrains%2BMono;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="pli5Z3zszz2CMLmFMObm-51">
+          <mxGeometry x="40" y="110" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-44" value="" style="group" vertex="1" connectable="0" parent="pli5Z3zszz2CMLmFMObm-51">
+          <mxGeometry x="540" y="110" width="410" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-42" value="&lt;font style=&quot;font-size: 40px;&quot;&gt;&lt;b&gt;WalletPermission&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=JetBrains Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DJetBrains%2BMono;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="pli5Z3zszz2CMLmFMObm-44">
+          <mxGeometry width="410" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-43" value="&lt;font style=&quot;font-size: 30px;&quot;&gt;walletId&lt;br&gt;permissions&lt;br&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="pli5Z3zszz2CMLmFMObm-44">
+          <mxGeometry x="112.5" y="80" width="185" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-45" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=12;html=1;endArrow=ERzeroToMany;startArrow=ERmandOne;rounded=0;strokeWidth=4;endSize=20;startSize=20;" edge="1" parent="pli5Z3zszz2CMLmFMObm-51" source="pli5Z3zszz2CMLmFMObm-40" target="pli5Z3zszz2CMLmFMObm-42">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="390" y="350" as="sourcePoint" />
+            <mxPoint x="490" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-47" value="&lt;font style=&quot;font-size: 40px;&quot;&gt;User Context&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="pli5Z3zszz2CMLmFMObm-51">
+          <mxGeometry x="315" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-50" value="&lt;span style=&quot;font-size: 40px;&quot;&gt;&lt;b&gt;Permissions&lt;/b&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=JetBrains Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DJetBrains%2BMono;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="pli5Z3zszz2CMLmFMObm-51">
+          <mxGeometry x="325" y="320" width="300" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-56" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="710" y="460" width="770" height="295" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-20" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;" vertex="1" parent="pli5Z3zszz2CMLmFMObm-56">
+          <mxGeometry y="60" width="770" height="235" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-37" value="&lt;font style=&quot;font-size: 40px;&quot;&gt;&lt;b&gt;Category&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=JetBrains Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DJetBrains%2BMono;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="pli5Z3zszz2CMLmFMObm-56">
+          <mxGeometry x="501" y="90" width="230" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-18" value="" style="group" vertex="1" connectable="0" parent="pli5Z3zszz2CMLmFMObm-56">
+          <mxGeometry x="70" y="90" width="330" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-15" value="&lt;font style=&quot;font-size: 40px;&quot;&gt;&lt;b&gt;ExpenseNote&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=JetBrains Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DJetBrains%2BMono;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="pli5Z3zszz2CMLmFMObm-18">
+          <mxGeometry width="330" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-17" value="&lt;font style=&quot;font-size: 30px;&quot;&gt;walletId&lt;br&gt;category&lt;br&gt;whoDid&lt;br&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="pli5Z3zszz2CMLmFMObm-18">
+          <mxGeometry x="75" y="80" width="185" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-21" value="&lt;font style=&quot;font-size: 40px;&quot;&gt;Expense Context&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="pli5Z3zszz2CMLmFMObm-56">
+          <mxGeometry x="70" width="320" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-57" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="710" y="840" width="770" height="297.5" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-29" value="" style="group" vertex="1" connectable="0" parent="pli5Z3zszz2CMLmFMObm-57">
+          <mxGeometry x="70" y="90" width="330" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-30" value="&lt;font style=&quot;font-size: 40px;&quot;&gt;&lt;b&gt;IncomeNote&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=JetBrains Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DJetBrains%2BMono;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="pli5Z3zszz2CMLmFMObm-29">
+          <mxGeometry width="330" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-31" value="&lt;font style=&quot;font-size: 30px;&quot;&gt;walletId&lt;br&gt;category&lt;br&gt;whoDid&lt;br&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="pli5Z3zszz2CMLmFMObm-29">
+          <mxGeometry x="75" y="80" width="185" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-53" value="&lt;font style=&quot;font-size: 40px;&quot;&gt;&lt;b&gt;Category&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=JetBrains Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DJetBrains%2BMono;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="pli5Z3zszz2CMLmFMObm-57">
+          <mxGeometry x="501" y="90" width="230" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-54" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;" vertex="1" parent="pli5Z3zszz2CMLmFMObm-57">
+          <mxGeometry y="62.5" width="770" height="235" as="geometry" />
+        </mxCell>
+        <mxCell id="pli5Z3zszz2CMLmFMObm-55" value="&lt;font style=&quot;font-size: 40px;&quot;&gt;Income Context&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="pli5Z3zszz2CMLmFMObm-57">
+          <mxGeometry x="70" width="320" height="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
