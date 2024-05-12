@@ -27,6 +27,8 @@ repositories {
 extra["sentryVersion"] = "7.3.0"
 
 dependencies {
+	implementation("io.arrow-kt:arrow-core:1.2.4")
+	implementation("io.arrow-kt:arrow-fx-coroutines:1.2.4")
 	implementation("org.springframework.boot:spring-boot-starter-jooq")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-web")
