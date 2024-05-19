@@ -1,9 +1,11 @@
-package com.plyushkin.expense
+package com.plyushkin.budget.expense
 
 import arrow.core.Either
 import arrow.core.NonEmptySet
+import com.plyushkin.budget.Money
 import com.plyushkin.user.UserId
 import com.plyushkin.wallet.WalletId
+import java.time.LocalDate
 
 data class CategoryId private constructor(val value: Long) {
     companion object {
@@ -81,6 +83,8 @@ class ExpenseNote private constructor(
     val id: ExpenseNoteId,
     val walletId: WalletId,
     val whoDid: UserId,
+    val date: LocalDate,
+    val amount: Money,
     val category: LeafCategory,
     val comment: String
 ) {
@@ -89,13 +93,15 @@ class ExpenseNote private constructor(
             id: ExpenseNoteId,
             walletId: WalletId,
             whoDid: UserId,
+            date: LocalDate,
+            amount: Money,
             category: LeafCategory,
             comment: String
         ): Either<Invalid, ExpenseNote> {
             if (category.walletId != walletId) {
                 return Either.Left(InvalidCategory("Category walletId=${category.walletId} does not equal to ExpenseNote walletId=$walletId"))
             }
-            return Either.Right(ExpenseNote(id, walletId, whoDid, category, comment))
+            return Either.Right(ExpenseNote(id, walletId, whoDid, date, amount, category, comment))
         }
     }
 
