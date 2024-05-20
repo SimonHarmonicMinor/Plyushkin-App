@@ -2,7 +2,7 @@ package com.plyushkin.common
 
 import java.util.concurrent.ThreadLocalRandom
 
-open class BaseEntity<T>(val id: T) {
+open class BaseEntity<T>(private val id: T) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
