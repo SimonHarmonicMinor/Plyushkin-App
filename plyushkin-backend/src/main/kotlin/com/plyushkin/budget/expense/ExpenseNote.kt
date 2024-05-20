@@ -1,7 +1,7 @@
 package com.plyushkin.budget.expense
 
 import arrow.core.Either
-import arrow.core.NonEmptySet
+import com.plyushkin.budget.Category
 import com.plyushkin.budget.Money
 import com.plyushkin.common.BaseEntity
 import com.plyushkin.user.UserId
@@ -40,27 +40,14 @@ data class ExpenseNoteId private constructor(val value: Long) {
     class Invalid(message: String) : IllegalArgumentException(message)
 }
 
-sealed class Category(
-    val id: CategoryId,
-    val walletId: WalletId,
-    val whoCreated: UserId
-) : BaseEntity<Pair<CategoryId, WalletId>>(Pair(id, walletId))
-
-class LeafCategory(
+class ExpenseNoteCategory(
     id: CategoryId,
     walletId: WalletId,
     whoCreated: UserId,
-    val parent: Category?
-) : Category(id, walletId, whoCreated)
-
-class NonLeafCategory(
-    id: CategoryId,
-    walletId: WalletId,
-    whoCreated: UserId,
-    val parent: Category?,
-    val children: NonEmptySet<Category>
-) : Category(id, walletId, whoCreated)
-
+    children: Set<ExpenseNoteCategory>
+) : Category<ExpenseNoteCategory>(
+    id, walletId, whoCreated, children
+)
 
 class ExpenseNote private constructor(
     val id: ExpenseNoteId,
@@ -68,7 +55,7 @@ class ExpenseNote private constructor(
     val whoDid: UserId,
     val date: LocalDate,
     val amount: Money,
-    val category: LeafCategory,
+    val category: ExpenseNoteCategory,
     val comment: String
 ) : BaseEntity<Pair<ExpenseNoteId, WalletId>>(Pair(id, walletId)) {
     companion object {
@@ -78,11 +65,14 @@ class ExpenseNote private constructor(
             whoDid: UserId,
             date: LocalDate,
             amount: Money,
-            category: LeafCategory,
+            category: ExpenseNoteCategory,
             comment: String
         ): Either<Invalid, ExpenseNote> {
             if (category.walletId != walletId) {
                 return Either.Left(InvalidCategory("Category walletId=${category.walletId} does not equal to ExpenseNote walletId=$walletId"))
+            }
+            if (category.children.isNotEmpty()) {
+                return Either.Left(InvalidCategory("Category is not terminated because it has children: ${category.children}"))
             }
             return Either.Right(ExpenseNote(id, walletId, whoDid, date, amount, category, comment))
         }
