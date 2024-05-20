@@ -2,6 +2,8 @@ package com.plyushkin.common
 
 import java.util.concurrent.ThreadLocalRandom
 
+interface DomainEvent
+
 open class BaseEntity<T>(private val id: T) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -16,6 +18,20 @@ open class BaseEntity<T>(private val id: T) {
 
     override fun hashCode(): Int {
         return id.hashCode()
+    }
+}
+
+abstract class AggregateRoot<T>(id: T) : BaseEntity<T>(id) {
+    private val _domainEvents = mutableListOf<DomainEvent>()
+    val domainEvents: List<DomainEvent>
+        get() = _domainEvents
+
+    protected fun registerEvent(event: DomainEvent) {
+        _domainEvents.add(event)
+    }
+
+    fun clearEvents() {
+        _domainEvents.clear()
     }
 }
 
@@ -64,5 +80,6 @@ open class PrefixedId {
         return value.hashCode()
     }
 
-    open class Invalid(message: String, cause: Throwable?) : IllegalArgumentException(message, cause)
+    open class Invalid(message: String, cause: Throwable?) :
+        IllegalArgumentException(message, cause)
 }
