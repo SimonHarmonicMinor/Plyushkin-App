@@ -70,7 +70,7 @@ class ExpenseNote private constructor(
     val amount: Money,
     val category: LeafCategory,
     val comment: String
-) {
+) : BaseEntity<Pair<ExpenseNoteId, WalletId>>(Pair(id, walletId)) {
     companion object {
         fun create(
             id: ExpenseNoteId,
@@ -86,24 +86,6 @@ class ExpenseNote private constructor(
             }
             return Either.Right(ExpenseNote(id, walletId, whoDid, date, amount, category, comment))
         }
-    }
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as ExpenseNote
-
-        if (id != other.id) return false
-        if (walletId != other.walletId) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = id.hashCode()
-        result = 31 * result + walletId.hashCode()
-        return result
     }
 
     open class Invalid(message: String) : IllegalArgumentException(message)
