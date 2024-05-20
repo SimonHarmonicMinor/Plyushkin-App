@@ -34,6 +34,5 @@ enum class Permission {
     READ, WRITE
 }
 
-class User(id: UserId, val permissions: Map<WalletId, Set<Permission>>) :
-    BaseEntity<UserId>(id) {
-}
+class User(val id: UserId, val permissions: Map<WalletId, Set<Permission>>) :
+    BaseEntity<UserId>(id)
