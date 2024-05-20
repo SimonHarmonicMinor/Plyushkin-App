@@ -3,6 +3,7 @@ package com.plyushkin.budget.expense
 import arrow.core.Either
 import arrow.core.NonEmptySet
 import com.plyushkin.budget.Money
+import com.plyushkin.common.BaseEntity
 import com.plyushkin.user.UserId
 import com.plyushkin.wallet.WalletId
 import java.time.LocalDate
@@ -43,25 +44,7 @@ sealed class Category(
     val id: CategoryId,
     val walletId: WalletId,
     val whoCreated: UserId
-) {
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Category
-
-        if (id != other.id) return false
-        if (walletId != other.walletId) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = id.hashCode()
-        result = 31 * result + walletId.hashCode()
-        return result
-    }
-}
+) : BaseEntity<Pair<CategoryId, WalletId>>(Pair(id, walletId))
 
 class LeafCategory(
     id: CategoryId,
