@@ -4,6 +4,14 @@ import java.util.concurrent.ThreadLocalRandom
 
 interface DomainEvent
 
+data class DomainContext<E>(val entity: E, val events: List<DomainEvent>) {
+    fun withNewEvent(entityFn: (E) -> E, eventToAdd: DomainEvent): DomainContext<E> {
+        return copy(entity = entityFn(entity), events = events + eventToAdd)
+    }
+}
+
+fun <E> E.domainContext(): DomainContext<E> = DomainContext(this, emptyList())
+
 open class BaseEntity<T>(private val id: T) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
