@@ -1,55 +1,12 @@
 package com.plyushkin.budget.expense
 
 import arrow.core.Either
-import com.plyushkin.budget.Category
 import com.plyushkin.budget.Money
-import com.plyushkin.common.BaseEntity
 import com.plyushkin.user.UserId
 import com.plyushkin.wallet.WalletId
 import java.time.LocalDate
 
-data class CategoryId private constructor(val value: Long) {
-    companion object {
-        fun create(value: Long): Either<Invalid, CategoryId> {
-            return value.let {
-                if (it <= 0) {
-                    Either.Left(Invalid("Value should be positive: $value"))
-                } else {
-                    Either.Right(CategoryId(value))
-                }
-            }
-        }
-    }
-
-    class Invalid(message: String) : IllegalArgumentException(message)
-}
-
-data class ExpenseNoteId private constructor(val value: Long) {
-    companion object {
-        fun create(value: Long): Either<Invalid, ExpenseNoteId> {
-            return value.let {
-                if (it <= 0) {
-                    Either.Left(Invalid("Value should be positive: $value"))
-                } else {
-                    Either.Right(ExpenseNoteId(value))
-                }
-            }
-        }
-    }
-
-    class Invalid(message: String) : IllegalArgumentException(message)
-}
-
-class ExpenseNoteCategory(
-    id: CategoryId,
-    walletId: WalletId,
-    whoCreated: UserId,
-    children: Set<ExpenseNoteCategory>
-) : Category<ExpenseNoteCategory>(
-    id, walletId, whoCreated, children
-)
-
-class ExpenseNote private constructor(
+class ExpenseNote internal constructor(
     val id: ExpenseNoteId,
     val walletId: WalletId,
     val whoDid: UserId,
@@ -57,7 +14,10 @@ class ExpenseNote private constructor(
     val amount: Money,
     val category: ExpenseNoteCategory,
     val comment: String
-) : BaseEntity<Pair<ExpenseNoteId, WalletId>>(Pair(id, walletId)) {
+) {
+
+
+
     companion object {
         fun create(
             id: ExpenseNoteId,
@@ -67,7 +27,7 @@ class ExpenseNote private constructor(
             amount: Money,
             category: ExpenseNoteCategory,
             comment: String
-        ): Either<Invalid, ExpenseNote> {
+        ): Either<InvalidExpenseNote, ExpenseNote> {
             if (category.walletId != walletId) {
                 return Either.Left(InvalidCategory("Category walletId=${category.walletId} does not equal to ExpenseNote walletId=$walletId"))
             }
@@ -78,7 +38,27 @@ class ExpenseNote private constructor(
         }
     }
 
-    open class Invalid(message: String) : IllegalArgumentException(message)
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
 
-    class InvalidCategory(message: String) : Invalid(message)
+        other as ExpenseNote
+
+        if (id != other.id) return false
+        if (walletId != other.walletId) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id.hashCode()
+        result = 31 * result + walletId.hashCode()
+        return result
+    }
 }
+
+open class InvalidExpenseNote(message: String) : IllegalArgumentException(message)
+
+class InvalidCategory(message: String) : InvalidExpenseNote(message)
+
+
