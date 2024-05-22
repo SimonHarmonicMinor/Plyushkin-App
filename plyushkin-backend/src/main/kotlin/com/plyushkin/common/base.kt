@@ -10,8 +10,6 @@ data class DomainContext<E>(val entity: E, val events: List<DomainEvent>) {
     }
 }
 
-fun <E> E.domainContext(): DomainContext<E> = DomainContext(this, emptyList())
-
 open class BaseEntity<T>(private val id: T) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
