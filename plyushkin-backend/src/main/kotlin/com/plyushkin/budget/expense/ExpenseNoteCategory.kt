@@ -32,24 +32,24 @@ data class ExpenseNoteCategory internal constructor(
         result = 31 * result + walletId.hashCode()
         return result
     }
+
+    data class ChildCategoryAddedEvent(
+        val walletId: WalletId,
+        val parentCategoryId: ExpenseNoteCategoryId,
+        val childCategoryId: ExpenseNoteCategoryId
+    ) : DomainEvent
+
+    data class ChildCategoryDetachedEvent(
+        val walletId: WalletId,
+        val parentCategoryId: ExpenseNoteCategoryId,
+        val childCategoryId: ExpenseNoteCategoryId
+    ) : DomainEvent
+
+    class AddChildExpenseCategoryException(message: String) : IllegalArgumentException(message)
+
+    class DetachChildExpenseCategoryException(message: String, cause: Throwable) :
+        IllegalArgumentException(message, cause)
 }
-
-data class ChildCategoryAddedEvent(
-    val walletId: WalletId,
-    val parentCategoryId: ExpenseNoteCategoryId,
-    val childCategoryId: ExpenseNoteCategoryId
-) : DomainEvent
-
-data class ChildCategoryDetachedEvent(
-    val walletId: WalletId,
-    val parentCategoryId: ExpenseNoteCategoryId,
-    val childCategoryId: ExpenseNoteCategoryId
-) : DomainEvent
-
-class CannotAddChildExpenseCategory(message: String) : IllegalArgumentException(message)
-
-class CannotDetachChildExpenseCategory(message: String, cause: Throwable) :
-    IllegalArgumentException(message, cause)
 
 fun ExpenseNoteCategory.Companion.create(
     id: ExpenseNoteCategoryId,
@@ -61,11 +61,11 @@ fun ExpenseNoteCategory.Companion.create(
 fun ExpenseNoteCategory.domainContext() = DomainContext(this, emptyList())
 
 fun DomainContext<ExpenseNoteCategory>.addChildCategory(category: ExpenseNoteCategory)
-        : Either<CannotAddChildExpenseCategory, DomainContext<ExpenseNoteCategory>> =
+        : Either<ExpenseNoteCategory.AddChildExpenseCategoryException, DomainContext<ExpenseNoteCategory>> =
     entity.run {
         if (category.walletId != walletId) {
             return Either.Left(
-                CannotAddChildExpenseCategory(
+                ExpenseNoteCategory.AddChildExpenseCategoryException(
                     "Child.walletId=${category.walletId} does not equal to current walletId=${walletId}"
                 )
             )
@@ -73,7 +73,7 @@ fun DomainContext<ExpenseNoteCategory>.addChildCategory(category: ExpenseNoteCat
         return Either.Right(
             withNewEvent(
                 { it.copy(children = it.children + category) },
-                ChildCategoryAddedEvent(
+                ExpenseNoteCategory.ChildCategoryAddedEvent(
                     walletId = walletId,
                     parentCategoryId = id,
                     childCategoryId = category.id
@@ -83,12 +83,12 @@ fun DomainContext<ExpenseNoteCategory>.addChildCategory(category: ExpenseNoteCat
     }
 
 fun DomainContext<ExpenseNoteCategory>.detachChildCategory(childCategoryId: ExpenseNoteCategoryId)
-        : Either<CannotDetachChildExpenseCategory, DomainContext<ExpenseNoteCategory>> =
+        : Either<ExpenseNoteCategory.DetachChildExpenseCategoryException, DomainContext<ExpenseNoteCategory>> =
     entity.children.withRemovedBy { it.id == childCategoryId }
         .map { newChildren ->
             withNewEvent(
                 { it.copy(children = newChildren) },
-                ChildCategoryDetachedEvent(
+                ExpenseNoteCategory.ChildCategoryDetachedEvent(
                     walletId = entity.walletId,
                     parentCategoryId = entity.id,
                     childCategoryId = childCategoryId
@@ -96,7 +96,7 @@ fun DomainContext<ExpenseNoteCategory>.detachChildCategory(childCategoryId: Expe
             )
         }
         .mapLeft {
-            CannotDetachChildExpenseCategory(
+            ExpenseNoteCategory.DetachChildExpenseCategoryException(
                 "Cannot find child category with the specified id to detach=$childCategoryId",
                 it
             )
