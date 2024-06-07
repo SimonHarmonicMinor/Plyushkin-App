@@ -5,6 +5,7 @@ import static lombok.AccessLevel.PROTECTED;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
@@ -22,6 +23,11 @@ public class ExpenseNoteId {
     ExpenseNoteId expenseNoteId = new ExpenseNoteId();
     expenseNoteId.value = value;
     return expenseNoteId;
+  }
+
+  @Override
+  public String toString() {
+    return String.valueOf(value);
   }
 
   public static class InvalidExpenseNoteIdException extends Exception {

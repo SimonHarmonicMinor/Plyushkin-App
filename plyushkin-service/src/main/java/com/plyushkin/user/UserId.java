@@ -34,6 +34,11 @@ public class UserId extends PrefixedId {
     return new UserId("U");
   }
 
+  @Override
+  public String toString() {
+    return String.valueOf(value);
+  }
+
   public static class InvalidUserIdException extends Exception {
 
     public InvalidUserIdException(String message) {

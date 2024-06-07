@@ -32,6 +32,11 @@ public class WalletId extends PrefixedId {
     }
   }
 
+  @Override
+  public String toString() {
+    return String.valueOf(value);
+  }
+
   public static class InvalidWalletIdException extends Exception {
 
     public InvalidWalletIdException(String message, Throwable cause) {
