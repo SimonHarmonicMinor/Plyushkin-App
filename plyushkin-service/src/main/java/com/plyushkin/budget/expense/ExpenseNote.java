@@ -18,6 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Objects;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.AbstractAggregateRoot;
@@ -57,6 +58,22 @@ public class ExpenseNote extends AbstractAggregateRoot<ExpenseNote> {
 
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o instanceof ExpenseNote expenseNote) {
+      return id != null && id.equals(expenseNote.id);
+    }
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    return getClass().hashCode();
+  }
+
   public static class InvalidExpenseNoteException extends Exception {
 
     public InvalidExpenseNoteException(String message) {
@@ -70,4 +87,6 @@ public class ExpenseNote extends AbstractAggregateRoot<ExpenseNote> {
       super(message);
     }
   }
+
+
 }
