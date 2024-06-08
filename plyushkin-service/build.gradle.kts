@@ -1,8 +1,11 @@
+import net.ltgt.gradle.errorprone.errorprone
+
 plugins {
     java
     id("org.springframework.boot") version "3.2.6"
     id("io.spring.dependency-management") version "1.1.5"
     id("ru.vyarus.quality") version "5.0.0"
+    id("net.ltgt.errorprone") version "4.0.0"
 }
 
 group = "com.plyushkin"
@@ -25,6 +28,7 @@ repositories {
 extra["sentryVersion"] = "7.3.0"
 
 dependencies {
+    errorprone("com.google.errorprone:error_prone_core:2.28.0")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
@@ -66,4 +70,11 @@ tasks.create("runStaticAnalysis") {
 
 quality {
     spotbugsLevel = "low"
+}
+
+tasks.withType<JavaCompile>().configureEach {
+    options.errorprone.disableWarningsInGeneratedCode.set(true)
+    if (name == "compileTestJava") {
+        options.errorprone.isEnabled.set(false)
+    }
 }
