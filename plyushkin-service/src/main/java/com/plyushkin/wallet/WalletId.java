@@ -5,23 +5,26 @@ import static lombok.AccessLevel.PROTECTED;
 import com.plyushkin.common.PrefixedId;
 import jakarta.persistence.Embeddable;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
 public class WalletId extends PrefixedId {
 
-  private WalletId(@NonNull String prefix) {
+  private WalletId(String prefix) throws InvalidPrefixedIdException {
     super(prefix);
   }
 
-  private WalletId(@NonNull String prefix, @NonNull String value)
+  private WalletId(String prefix, String value)
       throws InvalidPrefixedIdException {
     super(prefix, value);
   }
 
   public static WalletId createRandom() {
-    return new WalletId("WA");
+    try {
+      return new WalletId("WA");
+    } catch (InvalidPrefixedIdException e) {
+      throw new IllegalArgumentException("Invalid random WalletId", e);
+    }
   }
 
   public static WalletId create(String value) throws InvalidWalletIdException {

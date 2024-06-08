@@ -2,14 +2,13 @@ package com.plyushkin.common;
 
 import static lombok.AccessLevel.PROTECTED;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.concurrent.ThreadLocalRandom;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.SneakyThrows;
 
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
@@ -21,22 +20,23 @@ public class PrefixedId implements Serializable {
   @Column(name = "id")
   protected String value;
 
-  @SneakyThrows
-  protected PrefixedId(@NonNull String prefix) {
+  @SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
+  protected PrefixedId(String prefix) throws InvalidPrefixedIdException {
     this(
         prefix,
-        prefix +
-            String.format(
-                "%19d",
-                ThreadLocalRandom.current()
-                    .nextLong(0, Long.MAX_VALUE)
-            )
+        prefix
+            + String.format(
+            "%19d",
+            ThreadLocalRandom.current()
+                .nextLong(0, Long.MAX_VALUE)
+        )
     );
   }
 
+  @SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
   protected PrefixedId(
-      @NonNull String prefix,
-      @NonNull String value
+      String prefix,
+      String value
   ) throws InvalidPrefixedIdException {
     if (!value.startsWith(prefix)) {
       throw new InvalidPrefixedIdException(

@@ -6,6 +6,7 @@ import static lombok.AccessLevel.PROTECTED;
 
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
@@ -65,6 +66,7 @@ public class AbstractNote<I, CI, C extends AbstractCategory<CI, C>, T extends Ab
   @ToString.Include
   private String comment;
 
+  @SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
   protected AbstractNote(
       I id,
       WalletId walletId,

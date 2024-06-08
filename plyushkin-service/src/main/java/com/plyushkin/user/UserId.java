@@ -4,18 +4,21 @@ import static lombok.AccessLevel.PROTECTED;
 
 import com.plyushkin.common.PrefixedId;
 import jakarta.persistence.Embeddable;
+import java.io.Serial;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
 public class UserId extends PrefixedId {
 
-  protected UserId(@NonNull String prefix) {
+  @Serial
+  private static final long serialVersionUID = 1;
+
+  protected UserId(String prefix) throws InvalidPrefixedIdException {
     super(prefix);
   }
 
-  protected UserId(@NonNull String prefix, @NonNull String value)
+  protected UserId(String prefix, String value)
       throws InvalidPrefixedIdException {
     super(prefix, value);
   }
@@ -31,7 +34,11 @@ public class UserId extends PrefixedId {
   }
 
   public static UserId createRandom() {
-    return new UserId("U");
+    try {
+      return new UserId("U");
+    } catch (InvalidPrefixedIdException e) {
+      throw new IllegalArgumentException("Invalid UserId", e);
+    }
   }
 
   @Override

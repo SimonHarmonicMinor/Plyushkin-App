@@ -20,11 +20,6 @@ import lombok.NoArgsConstructor;
 @Inheritance(strategy = TABLE_PER_CLASS)
 @NoArgsConstructor(access = PROTECTED)
 public class Profile {
-
-  @Id
-  @GeneratedValue(strategy = IDENTITY)
-  private Long pk;
-
   @Enumerated(STRING)
   protected ProfileType type;
 
@@ -33,6 +28,10 @@ public class Profile {
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "user_id")
   protected User user;
+
+  @Id
+  @GeneratedValue(strategy = IDENTITY)
+  private Long pk;
 
   protected Profile(ProfileType type, String id, User user) {
     this.type = type;
