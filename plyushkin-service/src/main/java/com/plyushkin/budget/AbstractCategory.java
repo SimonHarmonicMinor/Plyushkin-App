@@ -90,7 +90,7 @@ public abstract class AbstractCategory<I, T extends AbstractCategory<I, T>> exte
       return true;
     }
     if (o instanceof AbstractCategory abstractCategory) {
-      return id != null && Objects.equals(id, abstractCategory.id);
+      return pk != null && Objects.equals(pk, abstractCategory.pk);
     }
     return false;
   }

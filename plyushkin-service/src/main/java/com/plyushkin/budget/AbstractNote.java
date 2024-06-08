@@ -103,7 +103,7 @@ public class AbstractNote<I, CI, C extends AbstractCategory<CI, C>, T extends Ab
       return true;
     }
     if (o instanceof AbstractNote abstractNote) {
-      return id != null && id.equals(abstractNote.id);
+      return pk != null && pk.equals(abstractNote.pk);
     }
     return false;
   }
