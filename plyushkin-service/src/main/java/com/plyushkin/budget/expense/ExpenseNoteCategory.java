@@ -108,7 +108,7 @@ public class ExpenseNoteCategory extends AbstractAggregateRoot<ExpenseNoteCatego
       return true;
     }
     if (o instanceof ExpenseNoteCategory expenseNoteCategory) {
-      return id != null && Objects.equals(id, expenseNoteCategory.id)
+      return id != null && Objects.equals(id, expenseNoteCategory.id);
     }
     return false;
   }
