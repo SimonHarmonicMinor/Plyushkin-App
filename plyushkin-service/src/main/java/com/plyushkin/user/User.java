@@ -1,5 +1,6 @@
 package com.plyushkin.user;
 
+import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PROTECTED;
 
 import jakarta.persistence.EmbeddedId;
@@ -7,11 +8,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.List;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "users")
 @NoArgsConstructor(access = PROTECTED)
+@Getter(PACKAGE)
 public class User {
 
   @EmbeddedId
