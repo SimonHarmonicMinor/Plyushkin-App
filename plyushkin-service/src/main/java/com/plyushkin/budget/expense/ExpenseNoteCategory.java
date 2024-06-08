@@ -2,14 +2,15 @@ package com.plyushkin.budget.expense;
 
 
 import static jakarta.persistence.FetchType.LAZY;
+import static java.util.Optional.ofNullable;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
-import com.plyushkin.budget.expense.events.ChildCategoryAddedEvent;
-import com.plyushkin.budget.expense.events.ChildCategoryDetachedEvent;
+import com.plyushkin.budget.expense.events.CategoryParentChangedEvent;
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
@@ -65,8 +66,11 @@ public class ExpenseNoteCategory extends AbstractAggregateRoot<ExpenseNoteCatego
   @OneToMany(mappedBy = "parent")
   private Set<ExpenseNoteCategory> children;
 
-  public static ExpenseNoteCategory create(ExpenseNoteCategoryId id, WalletId walletId,
-      UserId whoCreated) {
+  public static ExpenseNoteCategory create(
+      ExpenseNoteCategoryId id,
+      WalletId walletId,
+      UserId whoCreated
+  ) {
     ExpenseNoteCategory expenseNoteCategory = new ExpenseNoteCategory();
     expenseNoteCategory.id = id;
     expenseNoteCategory.walletId = walletId;
@@ -75,31 +79,23 @@ public class ExpenseNoteCategory extends AbstractAggregateRoot<ExpenseNoteCatego
     return expenseNoteCategory;
   }
 
-  public void addChildCategory(ExpenseNoteCategory expenseNoteCategory)
-      throws AddChildCategoryException {
-    if (!expenseNoteCategory.walletId.equals(walletId)) {
-      throw new AddChildCategoryException(
+  public void changeParent(@Nullable ExpenseNoteCategory newParent) throws ChangeParentCategoryException {
+    if (newParent != null && !newParent.walletId.equals(walletId)) {
+      throw new ChangeParentCategoryException(
           "Cannot add %s because WalletId is not %s"
-              .formatted(expenseNoteCategory, walletId)
+              .formatted(newParent, walletId)
       );
     }
-    expenseNoteCategory.parent = this;
-    children.add(expenseNoteCategory);
-    registerEvent(new ChildCategoryAddedEvent(walletId, this.id, expenseNoteCategory.id));
-  }
-
-  public void detachChildCategory(ExpenseNoteCategoryId expenseNoteCategoryId)
-      throws DetachChildCategoryException {
-    ExpenseNoteCategory categoryToDetach = children.stream()
-        .filter(category -> category.id.equals(expenseNoteCategoryId))
-        .findFirst()
-        .orElseThrow(() -> new DetachChildCategoryException(
-            "Cannot detach category with id '%s' because it's not present"
-                .formatted(expenseNoteCategoryId)
-        ));
-    categoryToDetach.parent = null;
-    children.remove(categoryToDetach);
-    registerEvent(new ChildCategoryDetachedEvent(walletId, this.id, expenseNoteCategoryId));
+    ExpenseNoteCategory oldParent = this.parent;
+    this.parent = newParent;
+    registerEvent(
+        new CategoryParentChangedEvent(
+            this.walletId,
+            this.id,
+            ofNullable(newParent).map(c -> c.id).orElse(null),
+            ofNullable(oldParent).map(c -> c.id).orElse(null)
+        )
+    );
   }
 
   @Override
@@ -118,17 +114,10 @@ public class ExpenseNoteCategory extends AbstractAggregateRoot<ExpenseNoteCatego
     return getClass().hashCode();
   }
 
-  public static class AddChildCategoryException extends Exception {
+  public static class ChangeParentCategoryException extends Exception {
 
-    public AddChildCategoryException(String s) {
-      super(s);
-    }
-  }
-
-  public static class DetachChildCategoryException extends Exception {
-
-    public DetachChildCategoryException(String s) {
-      super(s);
+    public ChangeParentCategoryException(String message) {
+      super(message);
     }
   }
 }
