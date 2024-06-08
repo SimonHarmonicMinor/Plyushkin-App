@@ -55,6 +55,7 @@ public class AbstractNote<I, CI, C extends AbstractCategory<CI, C>, T extends Ab
 
   @Embedded
   @ToString.Include
+  @AttributeOverride(name = "value", column = @Column(name = "amount"))
   private Money amount;
 
   @ManyToOne(fetch = LAZY)
