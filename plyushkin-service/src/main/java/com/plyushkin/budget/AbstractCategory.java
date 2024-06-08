@@ -89,8 +89,8 @@ public abstract class AbstractCategory<I, T extends AbstractCategory<I, T>> exte
     if (this == o) {
       return true;
     }
-    if (o instanceof ExpenseNoteCategory expenseNoteCategory) {
-      return id != null && Objects.equals(id, expenseNoteCategory.id);
+    if (o instanceof AbstractCategory abstractCategory) {
+      return id != null && Objects.equals(id, abstractCategory.id);
     }
     return false;
   }
