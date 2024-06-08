@@ -1,6 +1,5 @@
 package com.plyushkin.budget.expense;
 
-import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.plyushkin.budget.AbstractNote;
@@ -10,15 +9,11 @@ import com.plyushkin.wallet.WalletId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Entity
 @Table(name = "expense_note")
 @NoArgsConstructor(access = PROTECTED)
-@Getter(PACKAGE)
-@ToString(onlyExplicitlyIncluded = true)
 public class ExpenseNote extends
     AbstractNote<ExpenseNoteId, ExpenseNoteCategoryId, ExpenseNoteCategory, ExpenseNote> {
 
