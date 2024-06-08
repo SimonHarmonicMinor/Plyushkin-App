@@ -5,12 +5,14 @@ import static lombok.AccessLevel.PROTECTED;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import java.util.concurrent.ThreadLocalRandom;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
+@EqualsAndHashCode
 public class PrefixedId {
 
   private static final int ID_LENGTH = 19;
