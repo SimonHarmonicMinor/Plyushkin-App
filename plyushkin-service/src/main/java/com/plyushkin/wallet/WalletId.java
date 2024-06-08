@@ -4,11 +4,13 @@ import static lombok.AccessLevel.PROTECTED;
 
 import com.plyushkin.common.PrefixedId;
 import jakarta.persistence.Embeddable;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
+@EqualsAndHashCode
 public class WalletId extends PrefixedId {
 
   private WalletId(@NonNull String prefix) {
