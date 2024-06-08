@@ -19,11 +19,13 @@ public class ExpenseNoteCategory extends
 
   public static ExpenseNoteCategory create(
       ExpenseNoteCategoryId id,
+      String name,
       WalletId walletId,
       UserId whoCreated
   ) {
     ExpenseNoteCategory expenseNoteCategory = new ExpenseNoteCategory();
     expenseNoteCategory.id = id;
+    expenseNoteCategory.name = name;
     expenseNoteCategory.walletId = walletId;
     expenseNoteCategory.whoCreated = whoCreated;
     expenseNoteCategory.children = new HashSet<>();
