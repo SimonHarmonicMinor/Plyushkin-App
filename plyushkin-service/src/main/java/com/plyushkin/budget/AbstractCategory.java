@@ -83,6 +83,17 @@ public abstract class AbstractCategory<I, T extends AbstractCategory<I, T>> exte
     );
   }
 
+  public void addChildCategory(T newChild) throws AddChildCategoryException {
+    if (!newChild.walletId.equals(walletId)) {
+      throw new AddChildCategoryException(
+          "Cannot add child %s because WalletId is not %s"
+              .formatted(newChild, walletId)
+      );
+    }
+    newChild.parent = (T) this;
+    this.children.add(newChild);
+  }
+
   public void update(String name) {
     this.name = name;
   }
@@ -106,6 +117,13 @@ public abstract class AbstractCategory<I, T extends AbstractCategory<I, T>> exte
   public static class ChangeParentCategoryException extends Exception {
 
     public ChangeParentCategoryException(String message) {
+      super(message);
+    }
+  }
+
+  public static class AddChildCategoryException extends Exception {
+
+    public AddChildCategoryException(String message) {
       super(message);
     }
   }
