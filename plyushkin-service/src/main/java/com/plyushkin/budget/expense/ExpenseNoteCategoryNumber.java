@@ -12,20 +12,20 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
 @EqualsAndHashCode
-public class ExpenseNoteCategoryId implements Serializable {
+public class ExpenseNoteCategoryNumber implements Serializable {
   @Serial
   private static final long serialVersionUID = 1L;
 
-  @Column(name = "id", updatable = false)
+  @Column(name = "number", updatable = false)
   private long value;
 
-  public static ExpenseNoteCategoryId create(long value) throws InvalidExpenseNoteIdException {
+  public static ExpenseNoteCategoryNumber create(long value) throws InvalidExpenseNoteIdException {
     if (value <= 0) {
       throw new InvalidExpenseNoteIdException(
           "Value should be positive but it is: " + value
       );
     }
-    ExpenseNoteCategoryId expenseNoteCategoryId = new ExpenseNoteCategoryId();
+    ExpenseNoteCategoryNumber expenseNoteCategoryId = new ExpenseNoteCategoryNumber();
     expenseNoteCategoryId.value = value;
     return expenseNoteCategoryId;
   }
