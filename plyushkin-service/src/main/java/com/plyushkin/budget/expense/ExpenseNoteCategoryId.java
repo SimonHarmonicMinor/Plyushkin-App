@@ -4,13 +4,18 @@ import static lombok.AccessLevel.PROTECTED;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import java.io.Serial;
+import java.io.Serializable;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
 @EqualsAndHashCode
-public class ExpenseNoteCategoryId {
+public class ExpenseNoteCategoryId implements Serializable {
+  @Serial
+  private static final long serialVersionUID = 1L;
+
   @Column(name = "id", updatable = false)
   private long value;
 
