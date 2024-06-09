@@ -11,18 +11,18 @@ import java.util.HashSet;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "budget.income_note_category")
+@Table(schema = "budget", name = "income_note_category")
 @NoArgsConstructor(access = PROTECTED)
-public class IncomeNoteCategory extends AbstractCategory<IncomeNoteCategoryId, IncomeNoteCategory> {
+public class IncomeNoteCategory extends AbstractCategory<IncomeNoteCategoryNumber, IncomeNoteCategory> {
 
   public static IncomeNoteCategory create(
-      IncomeNoteCategoryId id,
+      IncomeNoteCategoryNumber id,
       String name,
       WalletId walletId,
       UserId whoCreated
   ) {
     IncomeNoteCategory incomeNoteCategory = new IncomeNoteCategory();
-    incomeNoteCategory.id = id;
+    incomeNoteCategory.number = id;
     incomeNoteCategory.name = name;
     incomeNoteCategory.walletId = walletId;
     incomeNoteCategory.whoCreated = whoCreated;
