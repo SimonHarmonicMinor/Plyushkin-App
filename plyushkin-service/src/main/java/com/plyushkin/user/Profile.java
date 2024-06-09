@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Inheritance(strategy = TABLE_PER_CLASS)
 @NoArgsConstructor(access = PROTECTED)
-public class Profile {
+public abstract class Profile {
 
   @Id
   protected String id;
