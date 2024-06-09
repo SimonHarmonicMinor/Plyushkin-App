@@ -33,11 +33,6 @@ import org.springframework.data.domain.AbstractAggregateRoot;
 public abstract class AbstractCategory<I extends Serializable, T extends AbstractCategory<I, T>> extends
     AbstractAggregateRoot<T> {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Getter(PRIVATE)
-  private Long pk;
-
   @Embedded
   @ToString.Include
   protected I number;
@@ -66,6 +61,11 @@ public abstract class AbstractCategory<I extends Serializable, T extends Abstrac
   @OneToMany(mappedBy = "parent")
   protected Set<T> children;
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Getter(PRIVATE)
+  private Long pk;
+
   public void changeParent(@Nullable T newParent) throws ChangeParentCategoryException {
     if (newParent != null && !newParent.walletId.equals(walletId)) {
       throw new ChangeParentCategoryException(
@@ -73,7 +73,6 @@ public abstract class AbstractCategory<I extends Serializable, T extends Abstrac
               .formatted(newParent, walletId)
       );
     }
-    T oldParent = this.parent;
     this.parent = newParent;
   }
 
