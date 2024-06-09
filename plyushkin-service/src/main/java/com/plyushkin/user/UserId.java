@@ -2,7 +2,7 @@ package com.plyushkin.user;
 
 import static lombok.AccessLevel.PROTECTED;
 
-import com.plyushkin.common.PrefixedId;
+import com.plyushkin.util.PrefixedId;
 import jakarta.persistence.Embeddable;
 import java.io.Serial;
 import lombok.NoArgsConstructor;

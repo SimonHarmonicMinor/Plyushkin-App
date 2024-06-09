@@ -1,4 +1,4 @@
-package com.plyushkin.common;
+package com.plyushkin.util;
 
 import static lombok.AccessLevel.PROTECTED;
 

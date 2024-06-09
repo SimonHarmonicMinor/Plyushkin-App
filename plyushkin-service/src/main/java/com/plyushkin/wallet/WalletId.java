@@ -2,7 +2,7 @@ package com.plyushkin.wallet;
 
 import static lombok.AccessLevel.PROTECTED;
 
-import com.plyushkin.common.PrefixedId;
+import com.plyushkin.util.PrefixedId;
 import jakarta.persistence.Embeddable;
 import lombok.NoArgsConstructor;
 
