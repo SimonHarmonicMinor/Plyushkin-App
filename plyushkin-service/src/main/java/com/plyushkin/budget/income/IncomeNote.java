@@ -12,13 +12,13 @@ import java.time.LocalDate;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "budget.income_note")
+@Table(schema = "budget", name = "income_note")
 @NoArgsConstructor(access = PROTECTED)
 public class IncomeNote extends
-    AbstractNote<IncomeNoteId, IncomeNoteCategoryId, IncomeNoteCategory, IncomeNote> {
+    AbstractNote<IncomeNoteNumber, IncomeNoteCategoryNumber, IncomeNoteCategory, IncomeNote> {
 
   protected IncomeNote(
-      IncomeNoteId id,
+      IncomeNoteNumber id,
       WalletId walletId,
       UserId whoDid,
       LocalDate date,
@@ -30,7 +30,7 @@ public class IncomeNote extends
   }
 
   public static IncomeNote create(
-      IncomeNoteId id,
+      IncomeNoteNumber id,
       WalletId walletId,
       UserId whoDid,
       LocalDate date,
