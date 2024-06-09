@@ -5,7 +5,6 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -19,7 +18,7 @@ public class ValidateSchemaTest {
 
   @ServiceConnection
   @Container
-  public static PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres:13.5");
+  private static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres:13.5");
 
   @Test
   void sanity() {
