@@ -16,7 +16,7 @@ public class IncomeNoteNumber implements Serializable {
   @Serial
   private static final long serialVersionUID = 1L;
 
-  @Column(name = "id", updatable = false)
+  @Column(name = "number", updatable = false)
   private long value;
 
   public static IncomeNoteNumber create(long value) throws InvalidIncomeNoteIdException {
