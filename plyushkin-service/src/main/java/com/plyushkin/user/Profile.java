@@ -6,6 +6,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 import static jakarta.persistence.InheritanceType.TABLE_PER_CLASS;
 import static lombok.AccessLevel.PROTECTED;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
@@ -21,12 +22,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = PROTECTED)
 public class Profile {
   @Enumerated(STRING)
+  @Column(updatable = false)
   protected ProfileType type;
 
+  @Column(updatable = false)
   protected String id;
 
   @ManyToOne(fetch = LAZY)
-  @JoinColumn(name = "user_id")
+  @JoinColumn(name = "user_id", updatable = false)
   protected User user;
 
   @Id
