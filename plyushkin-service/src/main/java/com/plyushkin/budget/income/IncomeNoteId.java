@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 public class IncomeNoteId {
 
-  @Column(name = "id")
+  @Column(name = "id", updatable = false)
   private long value;
 
   public static IncomeNoteId create(long value) throws InvalidIncomeNoteIdException {

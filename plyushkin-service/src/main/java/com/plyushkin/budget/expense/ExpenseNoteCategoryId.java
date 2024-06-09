@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = PROTECTED)
 @EqualsAndHashCode
 public class ExpenseNoteCategoryId {
-  @Column(name = "id")
+  @Column(name = "id", updatable = false)
   private long value;
 
   public static ExpenseNoteCategoryId create(long value) throws InvalidExpenseNoteIdException {

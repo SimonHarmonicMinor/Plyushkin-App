@@ -17,7 +17,7 @@ public class PrefixedId implements Serializable {
 
   private static final int ID_LENGTH = 19;
 
-  @Column(name = "id")
+  @Column(name = "id", updatable = false)
   protected String value;
 
   @SuppressFBWarnings("CT_CONSTRUCTOR_THROW")

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 public class ExpenseNoteId {
 
-  @Column(name = "id")
+  @Column(name = "id", updatable = false)
   private long value;
 
   public static ExpenseNoteId create(long value) throws InvalidExpenseNoteIdException {
