@@ -3,8 +3,6 @@ package com.plyushkin.wallet;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PROTECTED;
 
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -19,7 +17,6 @@ import lombok.NoArgsConstructor;
 public class Wallet {
 
   @EmbeddedId
-  @AttributeOverride(name = "value", column = @Column(name = "id"))
   private WalletId id;
 
   private String name;
