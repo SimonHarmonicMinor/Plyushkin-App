@@ -1,7 +1,7 @@
 package com.plyushkin.budget;
 
 import static jakarta.persistence.FetchType.LAZY;
-import static java.util.Optional.ofNullable;
+import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.plyushkin.user.UserId;
@@ -11,7 +11,9 @@ import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
-import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MappedSuperclass;
@@ -31,23 +33,28 @@ import org.springframework.data.domain.AbstractAggregateRoot;
 public abstract class AbstractCategory<I extends Serializable, T extends AbstractCategory<I, T>> extends
     AbstractAggregateRoot<T> {
 
-  @EmbeddedId
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Getter(PRIVATE)
+  private Long pk;
+
+  @Embedded
   @ToString.Include
-  protected I id;
+  protected I number;
 
   @ToString.Include
   protected String name;
 
   @Embedded
   @AttributeOverrides(
-      @AttributeOverride(name = "value", column = @Column(name = "wallet_id"))
+      @AttributeOverride(name = "value", column = @Column(name = "wallet_id", updatable = false))
   )
   @ToString.Include
   protected WalletId walletId;
 
   @Embedded
   @AttributeOverrides(
-      @AttributeOverride(name = "value", column = @Column(name = "who_created_id"))
+      @AttributeOverride(name = "value", column = @Column(name = "who_created_id", updatable = false))
   )
   @ToString.Include
   protected UserId whoCreated;
@@ -68,14 +75,6 @@ public abstract class AbstractCategory<I extends Serializable, T extends Abstrac
     }
     T oldParent = this.parent;
     this.parent = newParent;
-    registerEvent(
-        new CategoryParentChangedEvent<>(
-            this.walletId,
-            this.id,
-            ofNullable(newParent).map(c -> c.id).orElse(null),
-            ofNullable(oldParent).map(c -> c.id).orElse(null)
-        )
-    );
   }
 
   @SuppressWarnings("unchecked")
@@ -100,14 +99,14 @@ public abstract class AbstractCategory<I extends Serializable, T extends Abstrac
       return true;
     }
     if (o instanceof AbstractCategory abstractCategory) {
-      return Objects.equals(id, abstractCategory.id);
+      return pk != null && Objects.equals(pk, abstractCategory.pk);
     }
     return false;
   }
 
   @Override
   public int hashCode() {
-    return id.hashCode();
+    return getClass().hashCode();
   }
 
   public static class ChangeParentCategoryException extends Exception {
