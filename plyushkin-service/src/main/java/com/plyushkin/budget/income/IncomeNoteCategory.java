@@ -11,7 +11,7 @@ import java.util.HashSet;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "income_note_category")
+@Table(name = "budget.income_note_category")
 @NoArgsConstructor(access = PROTECTED)
 public class IncomeNoteCategory extends AbstractCategory<IncomeNoteCategoryId, IncomeNoteCategory> {
 

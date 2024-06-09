@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "wallet")
+@Table(name = "wallet.wallet")
 @NoArgsConstructor(access = PROTECTED)
 @Getter(PACKAGE)
 public class Wallet {

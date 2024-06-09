@@ -12,7 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "users")
+@Table(name = "auth.users")
 @NoArgsConstructor(access = PROTECTED)
 @Getter(PACKAGE)
 public class User {

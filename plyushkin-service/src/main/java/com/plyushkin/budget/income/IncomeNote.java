@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "income_note")
+@Table(name = "budget.income_note")
 @NoArgsConstructor(access = PROTECTED)
 public class IncomeNote extends
     AbstractNote<IncomeNoteId, IncomeNoteCategoryId, IncomeNoteCategory, IncomeNote> {

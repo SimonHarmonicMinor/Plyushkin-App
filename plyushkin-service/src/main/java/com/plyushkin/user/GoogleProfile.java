@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "google_profile")
+@Table(name = "auth.google_profile")
 @NoArgsConstructor(access = PROTECTED)
 public class GoogleProfile extends Profile {
 
