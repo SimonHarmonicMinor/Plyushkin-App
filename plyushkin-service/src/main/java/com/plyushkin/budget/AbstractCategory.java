@@ -2,7 +2,6 @@ package com.plyushkin.budget;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static java.util.Optional.ofNullable;
-import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.plyushkin.user.UserId;
@@ -12,11 +11,12 @@ import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
-import jakarta.persistence.Id;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.OneToMany;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 import lombok.Getter;
@@ -28,15 +28,10 @@ import org.springframework.data.domain.AbstractAggregateRoot;
 @ToString(onlyExplicitlyIncluded = true)
 @NoArgsConstructor(access = PROTECTED)
 @Getter
-public abstract class AbstractCategory<I, T extends AbstractCategory<I, T>> extends
+public abstract class AbstractCategory<I extends Serializable, T extends AbstractCategory<I, T>> extends
     AbstractAggregateRoot<T> {
 
-  @Id
-  @Getter(PRIVATE)
-  @ToString.Include
-  protected Long pk;
-
-  @Embedded
+  @EmbeddedId
   @ToString.Include
   protected I id;
 
@@ -104,14 +99,14 @@ public abstract class AbstractCategory<I, T extends AbstractCategory<I, T>> exte
       return true;
     }
     if (o instanceof AbstractCategory abstractCategory) {
-      return pk != null && Objects.equals(pk, abstractCategory.pk);
+      return Objects.equals(id, abstractCategory.id);
     }
     return false;
   }
 
   @Override
   public int hashCode() {
-    return getClass().hashCode();
+    return id.hashCode();
   }
 
   public static class ChangeParentCategoryException extends Exception {

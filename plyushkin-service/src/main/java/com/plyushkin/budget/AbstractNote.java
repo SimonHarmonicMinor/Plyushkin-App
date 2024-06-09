@@ -1,7 +1,6 @@
 package com.plyushkin.budget;
 
 import static jakarta.persistence.FetchType.LAZY;
-import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.plyushkin.user.UserId;
@@ -11,10 +10,11 @@ import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
-import jakarta.persistence.Id;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MappedSuperclass;
+import java.io.Serializable;
 import java.time.LocalDate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,15 +25,10 @@ import org.springframework.data.domain.AbstractAggregateRoot;
 @ToString(onlyExplicitlyIncluded = true)
 @NoArgsConstructor(access = PROTECTED)
 @Getter
-public class AbstractNote<I, CI, C extends AbstractCategory<CI, C>, T extends AbstractNote<I, CI, C, T>> extends
-    AbstractAggregateRoot<T> {
+public class AbstractNote<I extends Serializable, CI extends Serializable, C extends AbstractCategory<CI, C>, T extends AbstractNote<I, CI, C, T>>
+    extends AbstractAggregateRoot<T> {
 
-  @Id
-  @Getter(PRIVATE)
-  @ToString.Include
-  private Long pk;
-
-  @Embedded
+  @EmbeddedId
   @ToString.Include
   private I id;
 
@@ -105,14 +100,14 @@ public class AbstractNote<I, CI, C extends AbstractCategory<CI, C>, T extends Ab
       return true;
     }
     if (o instanceof AbstractNote abstractNote) {
-      return pk != null && pk.equals(abstractNote.pk);
+      return id.equals(abstractNote.id);
     }
     return false;
   }
 
   @Override
   public int hashCode() {
-    return getClass().hashCode();
+    return id.hashCode();
   }
 
   private void validateCategory(C category) throws InvalidNoteCategoryException {
