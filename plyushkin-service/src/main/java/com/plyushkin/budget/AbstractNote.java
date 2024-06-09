@@ -116,12 +116,6 @@ public class AbstractNote<I, CI, C extends AbstractCategory<CI, C>, T extends Ab
   }
 
   private void validateCategory(C category) throws InvalidNoteCategoryException {
-    if (category.getChildren().size() != 0) {
-      throw new InvalidNoteCategoryException(
-          "Category '%s' cannot be assigned because it has children: %s"
-              .formatted(category, category.getChildren())
-      );
-    }
     if (!category.getWalletId().equals(walletId)) {
       throw new InvalidNoteCategoryException(
           "Category '%s' cannot be assigned because WalletId does not match: %s"
