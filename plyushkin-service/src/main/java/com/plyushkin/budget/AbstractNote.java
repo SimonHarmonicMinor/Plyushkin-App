@@ -1,6 +1,7 @@
 package com.plyushkin.budget;
 
 import static jakarta.persistence.FetchType.LAZY;
+import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.plyushkin.user.UserId;
@@ -10,7 +11,9 @@ import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
-import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MappedSuperclass;
@@ -28,9 +31,14 @@ import org.springframework.data.domain.AbstractAggregateRoot;
 public class AbstractNote<I extends Serializable, CI extends Serializable, C extends AbstractCategory<CI, C>, T extends AbstractNote<I, CI, C, T>>
     extends AbstractAggregateRoot<T> {
 
-  @EmbeddedId
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Getter(PRIVATE)
+  private Long pk;
+
+  @Embedded
   @ToString.Include
-  private I id;
+  private I number;
 
   @Embedded
   @AttributeOverrides(
@@ -72,7 +80,7 @@ public class AbstractNote<I extends Serializable, CI extends Serializable, C ext
       String comment
   ) throws InvalidNoteException {
     validateCategory(category);
-    this.id = id;
+    this.number = id;
     this.walletId = walletId;
     this.whoDid = whoDid;
     this.date = date;
@@ -100,14 +108,14 @@ public class AbstractNote<I extends Serializable, CI extends Serializable, C ext
       return true;
     }
     if (o instanceof AbstractNote abstractNote) {
-      return id.equals(abstractNote.id);
+      return pk != null && pk.equals(abstractNote.pk);
     }
     return false;
   }
 
   @Override
   public int hashCode() {
-    return id.hashCode();
+    return getClass().hashCode();
   }
 
   private void validateCategory(C category) throws InvalidNoteCategoryException {
