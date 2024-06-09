@@ -28,7 +28,12 @@ import org.springframework.data.domain.AbstractAggregateRoot;
 @ToString(onlyExplicitlyIncluded = true)
 @NoArgsConstructor(access = PROTECTED)
 @Getter
-public class AbstractNote<I extends Serializable, CI extends Serializable, C extends AbstractCategory<CI, C>, T extends AbstractNote<I, CI, C, T>>
+public class AbstractNote<
+    I extends Serializable,
+    CI extends Serializable,
+    C extends AbstractCategory<CI, C>,
+    T extends AbstractNote<I, CI, C, T>
+    >
     extends AbstractAggregateRoot<T> {
 
   @Id
