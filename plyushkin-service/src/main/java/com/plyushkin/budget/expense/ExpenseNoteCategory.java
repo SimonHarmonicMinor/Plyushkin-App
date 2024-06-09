@@ -12,19 +12,19 @@ import java.util.HashSet;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "budget.expense_note_category")
+@Table(schema = "budget", name = "expense_note_category")
 @NoArgsConstructor(access = PROTECTED)
 public class ExpenseNoteCategory extends
-    AbstractCategory<ExpenseNoteCategoryId, ExpenseNoteCategory> {
+    AbstractCategory<ExpenseNoteCategoryNumber, ExpenseNoteCategory> {
 
   public static ExpenseNoteCategory create(
-      ExpenseNoteCategoryId id,
+      ExpenseNoteCategoryNumber id,
       String name,
       WalletId walletId,
       UserId whoCreated
   ) {
     ExpenseNoteCategory expenseNoteCategory = new ExpenseNoteCategory();
-    expenseNoteCategory.id = id;
+    expenseNoteCategory.number = id;
     expenseNoteCategory.name = name;
     expenseNoteCategory.walletId = walletId;
     expenseNoteCategory.whoCreated = whoCreated;
