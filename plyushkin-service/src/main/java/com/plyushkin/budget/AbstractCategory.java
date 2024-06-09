@@ -83,6 +83,10 @@ public abstract class AbstractCategory<I, T extends AbstractCategory<I, T>> exte
     );
   }
 
+  public void update(String name) {
+    this.name = name;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
