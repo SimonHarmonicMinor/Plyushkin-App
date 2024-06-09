@@ -21,10 +21,6 @@ import lombok.NoArgsConstructor;
 @Inheritance(strategy = TABLE_PER_CLASS)
 @NoArgsConstructor(access = PROTECTED)
 public class Profile {
-  @Enumerated(STRING)
-  @Column(updatable = false)
-  protected ProfileType type;
-
   @Column(updatable = false)
   protected String id;
 
@@ -36,8 +32,7 @@ public class Profile {
   @GeneratedValue(strategy = IDENTITY)
   private Long pk;
 
-  protected Profile(ProfileType type, String id, User user) {
-    this.type = type;
+  protected Profile(String id, User user) {
     this.id = id;
     this.user = user;
   }
