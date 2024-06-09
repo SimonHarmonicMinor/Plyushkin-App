@@ -78,6 +78,7 @@ public abstract class AbstractCategory<I extends Serializable, T extends Abstrac
     );
   }
 
+  @SuppressWarnings("unchecked")
   public void addChildCategory(T newChild) throws AddChildCategoryException {
     if (!newChild.walletId.equals(walletId)) {
       throw new AddChildCategoryException(
