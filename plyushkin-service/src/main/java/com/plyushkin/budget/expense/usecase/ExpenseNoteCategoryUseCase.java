@@ -11,14 +11,10 @@ import com.plyushkin.budget.expense.usecase.command.AddChildCommand;
 import com.plyushkin.budget.expense.usecase.command.ChangeParentCommand;
 import com.plyushkin.budget.expense.usecase.command.CreateCategoryCommand;
 import com.plyushkin.budget.expense.usecase.exception.AddChildException;
-import com.plyushkin.budget.expense.usecase.exception.AddChildException.ChildCategoryNotFound;
-import com.plyushkin.budget.expense.usecase.exception.AddChildException.RootCategoryNotFound;
 import com.plyushkin.budget.expense.usecase.exception.ChangeParentException;
 import com.plyushkin.budget.expense.usecase.exception.ChangeParentException.ParentNotFound;
-import com.plyushkin.budget.expense.usecase.exception.ChangeParentException.RootNotFound;
 import com.plyushkin.budget.expense.usecase.exception.CreateCategoryException;
 import com.plyushkin.util.WriteTransactional;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -62,14 +58,14 @@ public class ExpenseNoteCategoryUseCase {
             command.walletId(),
             command.rootCategoryNumber()
         )
-        .orElseThrow(() -> new RootCategoryNotFound(
+        .orElseThrow(() -> new AddChildException.RootCategoryNotFound(
             "Cannot find root category by WalletId %s and number %s"
                 .formatted(command.walletId(), command.rootCategoryNumber())
         ));
     ExpenseNoteCategory child = repository.findByWalletIdAndNumber(
         command.walletId(),
         command.childCategoryNumber()
-    ).orElseThrow(() -> new ChildCategoryNotFound(
+    ).orElseThrow(() -> new AddChildException.ChildCategoryNotFound(
         "Cannot find child category by WalletId %s and number %s"
             .formatted(command.walletId(), command.rootCategoryNumber())
     ));
@@ -83,6 +79,7 @@ public class ExpenseNoteCategoryUseCase {
         case ChildEqualsToRoot err -> throw new AddChildException.ChildEqualsToRoot(
             "Child equals to root", err
         );
+        default -> throw new IllegalStateException("Unknown value " + e, e);
       }
     }
     repository.save(root);
@@ -96,18 +93,17 @@ public class ExpenseNoteCategoryUseCase {
             command.walletId(),
             command.rootCategoryNumber()
         )
-        .orElseThrow(() -> new RootNotFound(
+        .orElseThrow(() -> new ChangeParentException.RootNotFound(
             "Cannot find root category by WalletId %s and number %s"
                 .formatted(command.walletId(), command.rootCategoryNumber())
         ));
-    ExpenseNoteCategory newParent = Optional.ofNullable(command.parentCategoryNumber())
-        .map(num ->
-            repository.findByWalletIdAndNumber(command.walletId(), num)
-                .orElseThrow(() -> new ParentNotFound(
-                    "Cannot find child category by WalletId %s and number %s"
-                        .formatted(command.walletId(), num)
-                ))
-        ).orElse(null);
+    ExpenseNoteCategory newParent = command.parentCategoryNumber() == null
+        ? null
+        : repository.findByWalletIdAndNumber(command.walletId(), command.parentCategoryNumber())
+            .orElseThrow(() -> new ParentNotFound(
+                "Cannot find child category by WalletId %s and number %s"
+                    .formatted(command.walletId(), command.parentCategoryNumber())
+            ));
     try {
       root.changeParent(newParent);
     } catch (ChangeParentCategoryException e) {
@@ -118,6 +114,7 @@ public class ExpenseNoteCategoryUseCase {
         case ChangeParentCategoryException.ParentEqualsToRoot err -> throw new ChangeParentException.ParentEqualsToRoot(
             "Parent equals to root", err
         );
+        default -> throw new IllegalStateException("Unknown value " + e, e);
       }
     }
     repository.save(root);
