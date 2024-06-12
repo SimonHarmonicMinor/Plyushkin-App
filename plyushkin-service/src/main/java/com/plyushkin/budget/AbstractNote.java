@@ -47,7 +47,7 @@ public class AbstractNote<
 
   @Embedded
   @AttributeOverrides(
-      @AttributeOverride(name = "value", column = @Column(name = "wallet_id"))
+      @AttributeOverride(name = "value", column = @Column(name = "wallet_id", updatable = false))
   )
   @ToString.Include
   private WalletId walletId;
