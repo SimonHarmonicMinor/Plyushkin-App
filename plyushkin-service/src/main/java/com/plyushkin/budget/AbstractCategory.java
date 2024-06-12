@@ -24,6 +24,7 @@ import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.StandardException;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
 @MappedSuperclass
@@ -68,9 +69,14 @@ public abstract class AbstractCategory<I extends Serializable, T extends Abstrac
 
   public void changeParent(@Nullable T newParent) throws ChangeParentCategoryException {
     if (newParent != null && !newParent.walletId.equals(walletId)) {
-      throw new ChangeParentCategoryException(
+      throw new ChangeParentCategoryException.MismatchedWalletId(
           "Cannot set parent %s because WalletId is not %s"
               .formatted(newParent, walletId)
+      );
+    }
+    if (Objects.equals(newParent, this)) {
+      throw new ChangeParentCategoryException.ParentEqualsToRoot(
+          "Category cannot be a parent to itself"
       );
     }
     this.parent = newParent;
@@ -79,9 +85,14 @@ public abstract class AbstractCategory<I extends Serializable, T extends Abstrac
   @SuppressWarnings("unchecked")
   public void addChildCategory(T newChild) throws AddChildCategoryException {
     if (!newChild.walletId.equals(walletId)) {
-      throw new AddChildCategoryException(
+      throw new AddChildCategoryException.MismatchedWalletId(
           "Cannot add child %s because WalletId is not %s"
               .formatted(newChild, walletId)
+      );
+    }
+    if (Objects.equals(newChild, this)) {
+      throw new AddChildCategoryException.ChildEqualsToRoot(
+          "Category cannot be a child to itself"
       );
     }
     newChild.parent = (T) this;
@@ -108,17 +119,31 @@ public abstract class AbstractCategory<I extends Serializable, T extends Abstrac
     return getClass().hashCode();
   }
 
-  public static class ChangeParentCategoryException extends Exception {
+  @StandardException
+  public static sealed class ChangeParentCategoryException extends Exception {
 
-    public ChangeParentCategoryException(String message) {
-      super(message);
+    @StandardException
+    public static final class MismatchedWalletId extends ChangeParentCategoryException {
+
+    }
+
+    @StandardException
+    public static final class ParentEqualsToRoot extends ChangeParentCategoryException {
+
     }
   }
 
-  public static class AddChildCategoryException extends Exception {
+  @StandardException
+  public static sealed class AddChildCategoryException extends Exception {
 
-    public AddChildCategoryException(String message) {
-      super(message);
+    @StandardException
+    public static final class MismatchedWalletId extends AddChildCategoryException {
+
+    }
+
+    @StandardException
+    public static final class ChildEqualsToRoot extends AddChildCategoryException {
+
     }
   }
 }
