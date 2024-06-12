@@ -3,16 +3,22 @@ package com.plyushkin.budget.expense.usecase;
 import com.plyushkin.budget.AbstractCategory.AddChildCategoryException;
 import com.plyushkin.budget.AbstractCategory.AddChildCategoryException.ChildEqualsToRoot;
 import com.plyushkin.budget.AbstractCategory.AddChildCategoryException.MismatchedWalletId;
+import com.plyushkin.budget.AbstractCategory.ChangeParentCategoryException;
 import com.plyushkin.budget.expense.ExpenseNoteCategory;
 import com.plyushkin.budget.expense.ExpenseNoteCategoryNumber;
 import com.plyushkin.budget.expense.repository.ExpenseNoteCategoryRepository;
-import com.plyushkin.budget.expense.usecase.command.AddChildExpenseNoteCategoryCommand;
-import com.plyushkin.budget.expense.usecase.command.CreateExpenseNoteCategoryCommand;
-import com.plyushkin.budget.expense.usecase.exception.CannotAddChildExpenseNoteCategoryException;
-import com.plyushkin.budget.expense.usecase.exception.CannotAddChildExpenseNoteCategoryException.ChildCategoryNotFound;
-import com.plyushkin.budget.expense.usecase.exception.CannotAddChildExpenseNoteCategoryException.RootCategoryNotFound;
-import com.plyushkin.budget.expense.usecase.exception.CannotCreateExpenseNoteCategoryException;
+import com.plyushkin.budget.expense.usecase.command.AddChildCommand;
+import com.plyushkin.budget.expense.usecase.command.ChangeParentCommand;
+import com.plyushkin.budget.expense.usecase.command.CreateCategoryCommand;
+import com.plyushkin.budget.expense.usecase.exception.AddChildException;
+import com.plyushkin.budget.expense.usecase.exception.AddChildException.ChildCategoryNotFound;
+import com.plyushkin.budget.expense.usecase.exception.AddChildException.RootCategoryNotFound;
+import com.plyushkin.budget.expense.usecase.exception.ChangeParentException;
+import com.plyushkin.budget.expense.usecase.exception.ChangeParentException.ParentNotFound;
+import com.plyushkin.budget.expense.usecase.exception.ChangeParentException.RootNotFound;
+import com.plyushkin.budget.expense.usecase.exception.CreateCategoryException;
 import com.plyushkin.util.WriteTransactional;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +29,11 @@ public class ExpenseNoteCategoryUseCase {
   private final ExpenseNoteCategoryRepository repository;
 
   @WriteTransactional
-  public ExpenseNoteCategoryNumber createCategory(CreateExpenseNoteCategoryCommand command)
-      throws CannotCreateExpenseNoteCategoryException {
+  public ExpenseNoteCategoryNumber createCategory(CreateCategoryCommand command)
+      throws CreateCategoryException {
     repository.lockByWalletId(command.walletId());
     if (repository.existsByNameAndWalletId(command.walletId(), command.name())) {
-      throw new CannotCreateExpenseNoteCategoryException.NonUniqueNamePerWalletId(
+      throw new CreateCategoryException.NonUniqueNamePerWalletId(
           "Name %s is already taken for WalletId %s"
               .formatted(command.name(), command.walletId())
       );
@@ -48,8 +54,8 @@ public class ExpenseNoteCategoryUseCase {
   }
 
   @WriteTransactional
-  public void addChildCategory(AddChildExpenseNoteCategoryCommand command)
-      throws CannotAddChildExpenseNoteCategoryException {
+  public void addChildCategory(AddChildCommand command)
+      throws AddChildException {
     repository.lockByWalletId(command.walletId());
     ExpenseNoteCategory root = repository.findByWalletIdAndNumber(
             command.walletId(),
@@ -70,11 +76,46 @@ public class ExpenseNoteCategoryUseCase {
       root.addChildCategory(child);
     } catch (AddChildCategoryException e) {
       switch (e) {
-        case MismatchedWalletId err -> throw new CannotAddChildExpenseNoteCategoryException.MismatchedWalletId(
+        case MismatchedWalletId err -> throw new AddChildException.MismatchedWalletId(
             "Mismatched WalletId " + command.walletId(), err
         )
-        case ChildEqualsToRoot err -> throw new CannotAddChildExpenseNoteCategoryException.ChildEqualsToRoot(
+        case ChildEqualsToRoot err -> throw new AddChildException.ChildEqualsToRoot(
             "Child equals to root", err
+        )
+      }
+    }
+    repository.save(root);
+  }
+
+  @WriteTransactional
+  public void changeParentCategory(ChangeParentCommand command)
+      throws ChangeParentException {
+    repository.lockByWalletId(command.walletId());
+    ExpenseNoteCategory root = repository.findByWalletIdAndNumber(
+            command.walletId(),
+            command.rootCategoryNumber()
+        )
+        .orElseThrow(() -> new RootNotFound(
+            "Cannot find root category by WalletId %s and number %s"
+                .formatted(command.walletId(), command.rootCategoryNumber())
+        ));
+    ExpenseNoteCategory newParent = Optional.ofNullable(command.parentCategoryNumber())
+        .map(num ->
+            repository.findByWalletIdAndNumber(command.walletId(), num)
+                .orElseThrow(() -> new ParentNotFound(
+                    "Cannot find child category by WalletId %s and number %s"
+                        .formatted(command.walletId(), num)
+                ))
+        ).orElse(null);
+    try {
+      root.changeParent(newParent);
+    } catch (ChangeParentCategoryException e) {
+      switch (e) {
+        case ChangeParentCategoryException.MismatchedWalletId err -> throw new ChangeParentException.MismatchedWalletId(
+            "Mismatched WalletId " + command.walletId(), err
+        )
+        case ChangeParentCategoryException.ParentEqualsToRoot err -> throw new ChangeParentException.ParentEqualsToRoot(
+            "Parent equals to root", err
         )
       }
     }
