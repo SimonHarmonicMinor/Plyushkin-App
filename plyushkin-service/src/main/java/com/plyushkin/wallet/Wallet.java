@@ -13,11 +13,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Table(schema = "wallet", name = "wallet")
 @NoArgsConstructor(access = PROTECTED)
 @Getter(PACKAGE)
+@DynamicUpdate
 public class Wallet {
 
   @EmbeddedId
@@ -38,5 +40,10 @@ public class Wallet {
     wallet.name = name;
     wallet.currency = currency;
     return wallet;
+  }
+
+  public void update(String name, Currency currency) {
+    this.name = name;
+    this.currency = currency;
   }
 }
