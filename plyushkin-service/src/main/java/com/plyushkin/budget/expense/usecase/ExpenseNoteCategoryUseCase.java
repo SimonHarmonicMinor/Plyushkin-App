@@ -1,8 +1,6 @@
 package com.plyushkin.budget.expense.usecase;
 
 import com.plyushkin.budget.AbstractCategory.AddChildCategoryException;
-import com.plyushkin.budget.AbstractCategory.AddChildCategoryException.ChildEqualsToRoot;
-import com.plyushkin.budget.AbstractCategory.AddChildCategoryException.MismatchedWalletId;
 import com.plyushkin.budget.AbstractCategory.ChangeParentCategoryException;
 import com.plyushkin.budget.expense.ExpenseNoteCategory;
 import com.plyushkin.budget.expense.ExpenseNoteCategoryNumber;
@@ -12,7 +10,6 @@ import com.plyushkin.budget.expense.usecase.command.ChangeParentCommand;
 import com.plyushkin.budget.expense.usecase.command.CreateCategoryCommand;
 import com.plyushkin.budget.expense.usecase.exception.AddChildException;
 import com.plyushkin.budget.expense.usecase.exception.ChangeParentException;
-import com.plyushkin.budget.expense.usecase.exception.ChangeParentException.ParentNotFound;
 import com.plyushkin.budget.expense.usecase.exception.CreateCategoryException;
 import com.plyushkin.util.WriteTransactional;
 import lombok.RequiredArgsConstructor;
@@ -73,10 +70,10 @@ public class ExpenseNoteCategoryUseCase {
       root.addChildCategory(child);
     } catch (AddChildCategoryException e) {
       switch (e) {
-        case MismatchedWalletId err -> throw new AddChildException.MismatchedWalletId(
+        case AddChildCategoryException.MismatchedWalletId err -> throw new AddChildException.MismatchedWalletId(
             "Mismatched WalletId " + command.walletId(), err
         );
-        case ChildEqualsToRoot err -> throw new AddChildException.ChildEqualsToRoot(
+        case AddChildCategoryException.ChildEqualsToRoot err -> throw new AddChildException.ChildEqualsToRoot(
             "Child equals to root", err
         );
         default -> throw new IllegalStateException("Unknown value " + e, e);
@@ -100,7 +97,7 @@ public class ExpenseNoteCategoryUseCase {
     ExpenseNoteCategory newParent = command.parentCategoryNumber() == null
         ? null
         : repository.findByWalletIdAndNumber(command.walletId(), command.parentCategoryNumber())
-            .orElseThrow(() -> new ParentNotFound(
+            .orElseThrow(() -> new ChangeParentException.ParentNotFound(
                 "Cannot find child category by WalletId %s and number %s"
                     .formatted(command.walletId(), command.parentCategoryNumber())
             ));
