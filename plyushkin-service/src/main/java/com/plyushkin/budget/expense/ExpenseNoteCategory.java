@@ -10,10 +10,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import java.util.HashSet;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Table(schema = "budget", name = "expense_note_category")
 @NoArgsConstructor(access = PROTECTED)
+@DynamicUpdate
 public class ExpenseNoteCategory extends
     AbstractCategory<ExpenseNoteCategoryNumber, ExpenseNoteCategory> {
 

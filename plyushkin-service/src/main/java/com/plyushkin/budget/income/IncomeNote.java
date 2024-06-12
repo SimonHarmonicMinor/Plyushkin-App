@@ -10,10 +10,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Table(schema = "budget", name = "income_note")
 @NoArgsConstructor(access = PROTECTED)
+@DynamicUpdate
 public class IncomeNote extends
     AbstractNote<IncomeNoteNumber, IncomeNoteCategoryNumber, IncomeNoteCategory, IncomeNote> {
 
