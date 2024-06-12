@@ -24,6 +24,7 @@
         <Or>
             <Bug pattern="EI_EXPOSE_REP"/>
             <Bug pattern="EI_EXPOSE_REP2"/>
+            <Bug pattern="BC_UNCONFIRMED_CAST"/>
         </Or>
     </Match>
 
