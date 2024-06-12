@@ -9,12 +9,14 @@ import java.io.Serial;
 import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
 @EqualsAndHashCode
 @AllArgsConstructor(access = PRIVATE)
+@Getter
 public class ExpenseNoteCategoryNumber implements Serializable {
   @Serial
   private static final long serialVersionUID = 1L;

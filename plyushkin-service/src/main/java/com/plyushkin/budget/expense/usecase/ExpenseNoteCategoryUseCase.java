@@ -35,7 +35,8 @@ public class ExpenseNoteCategoryUseCase {
     if (repository.existsByNameAndWalletId(command.walletId(), command.name())) {
       throw new CreateCategoryException.NonUniqueNamePerWalletId(
           "Name %s is already taken for WalletId %s"
-              .formatted(command.name(), command.walletId())
+              .formatted(command.name(), command.walletId()),
+          command.name()
       );
     }
     ExpenseNoteCategoryNumber expenseNoteCategoryNumber =
@@ -68,7 +69,7 @@ public class ExpenseNoteCategoryUseCase {
     ExpenseNoteCategory child = repository.findByWalletIdAndNumber(
         command.walletId(),
         command.childCategoryNumber()
-    ).orElse(() -> new ChildCategoryNotFound(
+    ).orElseThrow(() -> new ChildCategoryNotFound(
         "Cannot find child category by WalletId %s and number %s"
             .formatted(command.walletId(), command.rootCategoryNumber())
     ));
@@ -78,10 +79,10 @@ public class ExpenseNoteCategoryUseCase {
       switch (e) {
         case MismatchedWalletId err -> throw new AddChildException.MismatchedWalletId(
             "Mismatched WalletId " + command.walletId(), err
-        )
+        );
         case ChildEqualsToRoot err -> throw new AddChildException.ChildEqualsToRoot(
             "Child equals to root", err
-        )
+        );
       }
     }
     repository.save(root);
@@ -113,10 +114,10 @@ public class ExpenseNoteCategoryUseCase {
       switch (e) {
         case ChangeParentCategoryException.MismatchedWalletId err -> throw new ChangeParentException.MismatchedWalletId(
             "Mismatched WalletId " + command.walletId(), err
-        )
+        );
         case ChangeParentCategoryException.ParentEqualsToRoot err -> throw new ChangeParentException.ParentEqualsToRoot(
             "Parent equals to root", err
-        )
+        );
       }
     }
     repository.save(root);

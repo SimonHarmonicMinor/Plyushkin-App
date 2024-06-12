@@ -1,16 +1,22 @@
 package com.plyushkin.budget.expense.usecase.exception;
 
+import lombok.Getter;
+
 public sealed class CreateCategoryException extends Exception {
 
   public CreateCategoryException(String message) {
     super(message);
   }
 
-  public final static class NonUniqueNamePerWalletId extends
+  @Getter
+  public static final class NonUniqueNamePerWalletId extends
       CreateCategoryException {
 
-    public NonUniqueNamePerWalletId(String message) {
+    private final String name;
+
+    public NonUniqueNamePerWalletId(String message, String name) {
       super(message);
+      this.name = name;
     }
   }
 }

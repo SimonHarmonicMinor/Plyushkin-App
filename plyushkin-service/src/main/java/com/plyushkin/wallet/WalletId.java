@@ -4,6 +4,7 @@ import static lombok.AccessLevel.PROTECTED;
 
 import com.plyushkin.util.PrefixedId;
 import jakarta.persistence.Embeddable;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Embeddable
@@ -31,7 +32,7 @@ public class WalletId extends PrefixedId {
     try {
       return new WalletId("WA", value);
     } catch (InvalidPrefixedIdException e) {
-      throw new InvalidWalletIdException("Invalid WalletId", e);
+      throw new InvalidWalletIdException("Invalid WalletId: " + value, e, value);
     }
   }
 
@@ -40,10 +41,13 @@ public class WalletId extends PrefixedId {
     return String.valueOf(value);
   }
 
+  @Getter
   public static class InvalidWalletIdException extends Exception {
+    private final String passedValue;
 
-    public InvalidWalletIdException(String message, Throwable cause) {
+    public InvalidWalletIdException(String message, Throwable cause, String passedValue) {
       super(message, cause);
+      this.passedValue = passedValue;
     }
   }
 }
