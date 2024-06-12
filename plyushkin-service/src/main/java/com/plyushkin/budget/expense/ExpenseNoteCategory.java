@@ -20,13 +20,13 @@ public class ExpenseNoteCategory extends
     AbstractCategory<ExpenseNoteCategoryNumber, ExpenseNoteCategory> {
 
   public static ExpenseNoteCategory create(
-      ExpenseNoteCategoryNumber id,
+      ExpenseNoteCategoryNumber number,
       String name,
       WalletId walletId,
       UserId whoCreated
   ) {
     ExpenseNoteCategory expenseNoteCategory = new ExpenseNoteCategory();
-    expenseNoteCategory.number = id;
+    expenseNoteCategory.number = number;
     expenseNoteCategory.name = name;
     expenseNoteCategory.walletId = walletId;
     expenseNoteCategory.whoCreated = whoCreated;
