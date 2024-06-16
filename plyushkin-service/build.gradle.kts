@@ -28,19 +28,21 @@ repositories {
 extra["sentryVersion"] = "7.3.0"
 
 dependencies {
+    val lombokVersion = "1.18.32"
     errorprone("com.google.errorprone:error_prone_core:2.28.0")
     errorprone("com.uber.nullaway:nullaway:0.11.0")
+    implementation("com.uber.nullaway:nullaway:0.11.0")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("io.sentry:sentry-spring-boot-starter-jakarta")
     implementation("org.flywaydb:flyway-core")
-    compileOnly("org.projectlombok:lombok")
+    compileOnly("org.projectlombok:lombok:$lombokVersion")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
     runtimeOnly("org.postgresql:postgresql")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-    annotationProcessor("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
     testImplementation("org.testcontainers:junit-jupiter")
@@ -82,6 +84,9 @@ tasks.withType<JavaCompile>().configureEach {
         options.errorprone {
             check("NullAway", net.ltgt.gradle.errorprone.CheckSeverity.ERROR)
             option("NullAway:AnnotatedPackages", "com.plyushkin")
+            option("NullAway:TreatGeneratedAsUnannotated", true)
+            option("NullAway:ExcludedClassAnnotations", "lombok.NoArgsConstructor")
+            option("NullAway:SuggestSuppressions", true)
         }
     }
 }
