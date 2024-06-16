@@ -57,6 +57,7 @@ public abstract class AbstractCategory<I extends Serializable, T extends Abstrac
 
   @ManyToOne(fetch = LAZY)
   @JoinColumn(name = "parent_id")
+  @Nullable
   protected T parent;
 
   @OneToMany(mappedBy = "parent")

@@ -29,6 +29,7 @@ extra["sentryVersion"] = "7.3.0"
 
 dependencies {
     errorprone("com.google.errorprone:error_prone_core:2.28.0")
+    errorprone("com.uber.nullaway:nullaway:0.11.0")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
@@ -76,5 +77,11 @@ tasks.withType<JavaCompile>().configureEach {
     options.errorprone.disableWarningsInGeneratedCode.set(true)
     if (name == "compileTestJava") {
         options.errorprone.isEnabled.set(false)
+    }
+    if (!name.lowercase().contains("test")) {
+        options.errorprone {
+            check("NullAway", net.ltgt.gradle.errorprone.CheckSeverity.ERROR)
+            option("NullAway:AnnotatedPackages", "com.plyushkin")
+        }
     }
 }
