@@ -82,6 +82,7 @@ quality {
 
 tasks.withType<JavaCompile>().configureEach {
     options.errorprone.disableWarningsInGeneratedCode.set(true)
+    options.encoding = "UTF-8"
     if (name == "compileTestJava") {
         options.errorprone.isEnabled.set(false)
     }
