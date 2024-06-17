@@ -21,7 +21,6 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -39,6 +38,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 class ExpenseNoteCategoryController {
 
+  private final ExpenseNoteCategoryUseCase useCase;
+
   @PostMapping("/wallets/{walletId}/expenseNotes")
   @Operation(responses = {
       @ApiResponse(
@@ -47,23 +48,20 @@ class ExpenseNoteCategoryController {
       ),
       @ApiResponse(
           responseCode = "400",
-          content = {
-              @Content(
-                  schema = @Schema(
-                      oneOf = {
-                          ErrorCreateCategoryResponse.class,
-                          InvalidWalletIdResponse.class,
-                      }
-                  )
+          content = @Content(
+              schema = @Schema(
+                  oneOf = {
+                      ErrorCreateCategoryResponse.class,
+                      InvalidWalletIdResponse.class
+                  }
               )
-          }
-      ),
+          )
+      )
   })
-  @SneakyThrows
   public ResponseEntity<CreateCategoryResponse> createCategory(
       @NotNull @PathVariable String walletId,
       @Valid @RequestBody CreateCategoryRequest request
-  ) {
+  ) throws InvalidWalletIdException, CreateCategoryException {
     ExpenseNoteCategoryNumber number = useCase.createCategory(new CreateCategoryCommand(
         request.name(),
         WalletId.create(walletId),
@@ -74,8 +72,6 @@ class ExpenseNoteCategoryController {
         )
         .body(new CreateCategoryResponse(number.getValue()));
   }
-
-  private final ExpenseNoteCategoryUseCase useCase;
 
   @ExceptionHandler(InvalidWalletIdException.class)
   public ResponseEntity<InvalidWalletIdResponse> handleInvalidWalletIdException(
