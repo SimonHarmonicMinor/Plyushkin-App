@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Validated
 @Slf4j
-public class ExpenseNoteCategoryController {
+class ExpenseNoteCategoryController {
 
   private final ExpenseNoteCategoryUseCase useCase;
 
