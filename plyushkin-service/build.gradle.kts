@@ -1,4 +1,5 @@
 import net.ltgt.gradle.errorprone.errorprone
+import java.nio.file.Paths;
 
 plugins {
     java
@@ -6,6 +7,8 @@ plugins {
     id("io.spring.dependency-management") version "1.1.5"
     id("ru.vyarus.quality") version "5.0.0"
     id("net.ltgt.errorprone") version "4.0.0"
+    id("org.springdoc.openapi-gradle-plugin") version "1.8.0"
+    id("org.openapi.generator") version "7.6.0"
 }
 
 group = "com.plyushkin"
@@ -36,8 +39,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
     implementation("io.sentry:sentry-spring-boot-starter-jakarta")
     implementation("org.flywaydb:flyway-core")
+    implementation("com.h2database:h2")
     compileOnly("org.projectlombok:lombok:$lombokVersion")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
     runtimeOnly("org.postgresql:postgresql")
@@ -89,4 +94,42 @@ tasks.withType<JavaCompile>().configureEach {
             option("NullAway:SuggestSuppressions", true)
         }
     }
+}
+
+openApi {
+    customBootRun {
+        args.set(listOf(
+            "--spring.jpa.hibernate.ddl-auto=none",
+            "--spring.flyway.enabled=false",
+            "--spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults=false",
+            "--spring.jpa.database=h2"
+        ))
+    }
+}
+
+openApiGenerate {
+    generatorName.set("java")
+    inputSpec.set(Paths.get("$buildDir", "openapi.json").toString())
+    outputDir.set(Paths.get("$buildDir", "generated").toString())
+    apiPackage.set("com.plyushkin.openapi.client")
+    invokerPackage.set("com.plyushkin.openapi.client")
+    modelPackage.set("com.plyushkin.openapi.client")
+    library.set("native")
+    configOptions.put("dateLibrary", "java8")
+    configOptions.put("openApiNullable", "false")
+    configOptions.put("generateBuilders", "true")
+    configOptions.put("serializationLibrary", "jackson")
+    configOptions.put("useJakartaEe", "true")
+}
+
+sourceSets {
+    test {
+        java {
+            srcDir(files("${openApiGenerate.outputDir.get()}/src/main"))
+        }
+    }
+}
+
+tasks.named("openApiGenerate") {
+    dependsOn("generateOpenApiDocs")
 }
