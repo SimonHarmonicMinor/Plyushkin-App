@@ -20,4 +20,4 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
       - name: Run Gradle Build
-        run: ./gradlew build
+        run: ./gradlew openApiGenerate && ./gradlew build
