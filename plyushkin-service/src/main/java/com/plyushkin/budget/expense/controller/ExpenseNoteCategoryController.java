@@ -13,36 +13,69 @@ import com.plyushkin.budget.expense.usecase.exception.CreateCategoryException.No
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
 import com.plyushkin.wallet.WalletId.InvalidWalletIdException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import java.net.URI;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/budget/expense")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 @Validated
 @Slf4j
 class ExpenseNoteCategoryController {
 
-  private final ExpenseNoteCategoryUseCase useCase;
-
-  @PostMapping("/note")
-  public CreateCategoryResponse createCategory(@Valid @RequestBody CreateCategoryRequest request)
-      throws InvalidWalletIdException, CreateCategoryException {
+  @PostMapping("/wallets/{walletId}/expenseNotes")
+  @Operation(responses = {
+      @ApiResponse(
+          responseCode = "201",
+          content = @Content(schema = @Schema(implementation = CreateCategoryResponse.class))
+      ),
+      @ApiResponse(
+          responseCode = "400",
+          content = {
+              @Content(
+                  schema = @Schema(
+                      oneOf = {
+                          ErrorCreateCategoryResponse.class,
+                          InvalidWalletIdResponse.class,
+                      }
+                  )
+              )
+          }
+      ),
+  })
+  @SneakyThrows
+  public ResponseEntity<CreateCategoryResponse> createCategory(
+      @NotNull @PathVariable String walletId,
+      @Valid @RequestBody CreateCategoryRequest request
+  ) {
     ExpenseNoteCategoryNumber number = useCase.createCategory(new CreateCategoryCommand(
         request.name(),
-        WalletId.create(request.walletId()),
+        WalletId.create(walletId),
         UserId.createRandom()
     ));
-    return new CreateCategoryResponse(number.getValue());
+    return ResponseEntity.created(
+            URI.create("/api/wallets/%s/expenseNotes/%s".formatted(walletId, number.getValue()))
+        )
+        .body(new CreateCategoryResponse(number.getValue()));
   }
+
+  private final ExpenseNoteCategoryUseCase useCase;
 
   @ExceptionHandler(InvalidWalletIdException.class)
   public ResponseEntity<InvalidWalletIdResponse> handleInvalidWalletIdException(
