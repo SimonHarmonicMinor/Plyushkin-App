@@ -28,6 +28,11 @@
         </Or>
     </Match>
 
+    <Match>
+        <Or>
+            <Package name="com.plyushkin.openapi.client"/>
+        </Or>
+    </Match>
 
     <!-- Do not check class -->
     <!--<Match>-->
