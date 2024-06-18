@@ -8,7 +8,9 @@ import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+
 import java.time.LocalDate;
+
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -17,30 +19,25 @@ import org.hibernate.annotations.DynamicUpdate;
 @NoArgsConstructor(access = PROTECTED)
 @DynamicUpdate
 public class IncomeNote extends
-    AbstractNote<IncomeNoteNumber, IncomeNoteCategoryNumber, IncomeNoteCategory, IncomeNote> {
+        AbstractNote<IncomeNoteNumber, IncomeNoteCategoryNumber, IncomeNoteCategory, IncomeNote> {
 
-  protected IncomeNote(
-      IncomeNoteNumber id,
-      WalletId walletId,
-      UserId whoDid,
-      LocalDate date,
-      Money amount,
-      IncomeNoteCategory category,
-      String comment
-  ) throws InvalidNoteException {
-    super(id, walletId, whoDid, date, amount, category, comment);
-  }
+    protected IncomeNote(IncomeNoteNumber id,
+                         WalletId walletId,
+                         UserId whoDid,
+                         LocalDate date,
+                         Money amount,
+                         IncomeNoteCategory category,
+                         String comment) throws InvalidNoteException {
+        super(id, walletId, whoDid, date, amount, category, comment);
+    }
 
-  public static IncomeNote create(
-      IncomeNoteNumber id,
-      WalletId walletId,
-      UserId whoDid,
-      LocalDate date,
-      Money amount,
-      IncomeNoteCategory category,
-      String comment
-  )
-      throws InvalidNoteException {
-    return new IncomeNote(id, walletId, whoDid, date, amount, category, comment);
-  }
+    public static IncomeNote create(IncomeNoteNumber id,
+                                    WalletId walletId,
+                                    UserId whoDid,
+                                    LocalDate date,
+                                    Money amount,
+                                    IncomeNoteCategory category,
+                                    String comment) throws InvalidNoteException {
+        return new IncomeNote(id, walletId, whoDid, date, amount, category, comment);
+    }
 }

@@ -22,28 +22,28 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicUpdate
 public class Wallet {
 
-  @EmbeddedId
-  private WalletId id;
+    @EmbeddedId
+    private WalletId id;
 
-  private String name;
+    private String name;
 
-  @Convert(converter = CurrencyAttributeConverter.class)
-  private Currency currency;
+    @Convert(converter = CurrencyAttributeConverter.class)
+    private Currency currency;
 
-  @Embedded
-  @AttributeOverride(name = "value", column = @Column(name = "created_by", updatable = false))
-  private UserId createdBy;
+    @Embedded
+    @AttributeOverride(name = "value", column = @Column(name = "created_by", updatable = false))
+    private UserId createdBy;
 
-  public static Wallet create(WalletId id, String name, Currency currency) {
-    Wallet wallet = new Wallet();
-    wallet.id = id;
-    wallet.name = name;
-    wallet.currency = currency;
-    return wallet;
-  }
+    public static Wallet create(WalletId id, String name, Currency currency) {
+        Wallet wallet = new Wallet();
+        wallet.id = id;
+        wallet.name = name;
+        wallet.currency = currency;
+        return wallet;
+    }
 
-  public void update(String name, Currency currency) {
-    this.name = name;
-    this.currency = currency;
-  }
+    public void update(String name, Currency currency) {
+        this.name = name;
+        this.currency = currency;
+    }
 }

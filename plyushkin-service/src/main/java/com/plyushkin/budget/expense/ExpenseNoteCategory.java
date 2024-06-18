@@ -8,7 +8,9 @@ import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+
 import java.util.HashSet;
+
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -16,21 +18,18 @@ import org.hibernate.annotations.DynamicUpdate;
 @Table(schema = "budget", name = "expense_note_category")
 @NoArgsConstructor(access = PROTECTED)
 @DynamicUpdate
-public class ExpenseNoteCategory extends
-    AbstractCategory<ExpenseNoteCategoryNumber, ExpenseNoteCategory> {
+public class ExpenseNoteCategory extends AbstractCategory<ExpenseNoteCategoryNumber, ExpenseNoteCategory> {
 
-  public static ExpenseNoteCategory create(
-      ExpenseNoteCategoryNumber number,
-      String name,
-      WalletId walletId,
-      UserId whoCreated
-  ) {
-    ExpenseNoteCategory expenseNoteCategory = new ExpenseNoteCategory();
-    expenseNoteCategory.number = number;
-    expenseNoteCategory.name = name;
-    expenseNoteCategory.walletId = walletId;
-    expenseNoteCategory.whoCreated = whoCreated;
-    expenseNoteCategory.children = new HashSet<>();
-    return expenseNoteCategory;
-  }
+    public static ExpenseNoteCategory create(ExpenseNoteCategoryNumber number,
+                                             String name,
+                                             WalletId walletId,
+                                             UserId whoCreated) {
+        ExpenseNoteCategory expenseNoteCategory = new ExpenseNoteCategory();
+        expenseNoteCategory.number = number;
+        expenseNoteCategory.name = name;
+        expenseNoteCategory.walletId = walletId;
+        expenseNoteCategory.whoCreated = whoCreated;
+        expenseNoteCategory.children = new HashSet<>();
+        return expenseNoteCategory;
+    }
 }

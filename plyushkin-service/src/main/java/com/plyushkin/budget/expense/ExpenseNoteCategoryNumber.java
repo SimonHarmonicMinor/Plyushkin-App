@@ -5,8 +5,10 @@ import static lombok.AccessLevel.PROTECTED;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+
 import java.io.Serial;
 import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -20,29 +22,28 @@ import lombok.experimental.StandardException;
 @Getter
 public class ExpenseNoteCategoryNumber implements Serializable {
 
-  @Serial
-  private static final long serialVersionUID = 1L;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
-  @Column(name = "number", updatable = false)
-  private long value;
+    @Column(name = "number", updatable = false)
+    private long value;
 
-  public static ExpenseNoteCategoryNumber createOne() {
-    return new ExpenseNoteCategoryNumber(1L);
-  }
-
-  public static ExpenseNoteCategoryNumber create(long value) throws InvalidExpenseNoteIdException {
-    if (value <= 0) {
-      throw new InvalidExpenseNoteIdException(
-          "Value should be positive but it is: " + value
-      );
+    public static ExpenseNoteCategoryNumber createOne() {
+        return new ExpenseNoteCategoryNumber(1L);
     }
-    ExpenseNoteCategoryNumber expenseNoteCategoryId = new ExpenseNoteCategoryNumber();
-    expenseNoteCategoryId.value = value;
-    return expenseNoteCategoryId;
-  }
 
-  @StandardException
-  public static class InvalidExpenseNoteIdException extends Exception {
+    public static ExpenseNoteCategoryNumber create(long value) throws InvalidExpenseNoteIdException {
+        if (value <= 0) {
+            throw new InvalidExpenseNoteIdException(
+                    "Value should be positive but it is: " + value
+            );
+        }
+        ExpenseNoteCategoryNumber expenseNoteCategoryId = new ExpenseNoteCategoryNumber();
+        expenseNoteCategoryId.value = value;
+        return expenseNoteCategoryId;
+    }
 
-  }
+    @StandardException
+    public static class InvalidExpenseNoteIdException extends Exception {
+    }
 }

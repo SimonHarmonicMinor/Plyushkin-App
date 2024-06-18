@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = PROTECTED)
 public class GoogleProfile extends Profile {
 
-  protected GoogleProfile(String id, User user) {
-    super(id, user);
-  }
+    protected GoogleProfile(String id, User user) {
+        super(id, user);
+    }
 }

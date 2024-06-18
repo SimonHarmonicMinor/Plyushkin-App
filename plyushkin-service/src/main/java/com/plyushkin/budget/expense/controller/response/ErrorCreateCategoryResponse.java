@@ -5,15 +5,15 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
 @Schema(
-    type = "object",
-    oneOf = ErrorNonUniqueNameResponse.class
+        type = "object",
+        oneOf = ErrorNonUniqueNameResponse.class
 )
 public sealed interface ErrorCreateCategoryResponse {
 
-  record ErrorNonUniqueNameResponse(
-      @NotNull
-      String name
-  ) implements ErrorCreateCategoryResponse {
+    record ErrorNonUniqueNameResponse(
+            @NotNull
+            String name
+    ) implements ErrorCreateCategoryResponse {
 
-  }
+    }
 }

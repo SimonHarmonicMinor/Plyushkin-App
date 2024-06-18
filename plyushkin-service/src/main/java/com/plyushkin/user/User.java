@@ -7,7 +7,9 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
 import java.util.List;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,9 +19,9 @@ import lombok.NoArgsConstructor;
 @Getter(PACKAGE)
 public class User {
 
-  @EmbeddedId
-  private UserId id;
+    @EmbeddedId
+    private UserId id;
 
-  @OneToMany(mappedBy = "user")
-  private List<Profile> profiles;
+    @OneToMany(mappedBy = "user")
+    private List<Profile> profiles;
 }

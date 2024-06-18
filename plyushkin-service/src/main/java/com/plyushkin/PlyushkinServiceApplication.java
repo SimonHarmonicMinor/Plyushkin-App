@@ -7,8 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SuppressWarnings("checkstyle:HideUtilityClassConstructor")
 public class PlyushkinServiceApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(PlyushkinServiceApplication.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(PlyushkinServiceApplication.class, args);
+    }
 
 }

@@ -19,7 +19,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+
 import java.net.URI;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -38,58 +40,53 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 class ExpenseNoteCategoryController {
 
-  private final ExpenseNoteCategoryUseCase useCase;
+    private final ExpenseNoteCategoryUseCase useCase;
 
-  @PostMapping("/wallets/{walletId}/expenseNotes")
-  @Operation(responses = {
-      @ApiResponse(
-          responseCode = "201",
-          content = @Content(schema = @Schema(implementation = CreateCategoryResponse.class))
-      ),
-      @ApiResponse(
-          responseCode = "400",
-          content = @Content(
-              schema = @Schema(
-                  oneOf = {
-                      ErrorCreateCategoryResponse.class,
-                      InvalidWalletIdResponse.class
-                  }
-              )
-          )
-      )
-  })
-  public ResponseEntity<CreateCategoryResponse> createCategory(
-      @NotNull @PathVariable String walletId,
-      @Valid @RequestBody CreateCategoryRequest request
-  ) throws InvalidWalletIdException, CreateCategoryException {
-    ExpenseNoteCategoryNumber number = useCase.createCategory(new CreateCategoryCommand(
-        request.name(),
-        WalletId.create(walletId),
-        UserId.createRandom()
-    ));
-    return ResponseEntity.created(
-            URI.create("/api/wallets/%s/expenseNotes/%s".formatted(walletId, number.getValue()))
-        )
-        .body(new CreateCategoryResponse(number.getValue()));
-  }
+    @PostMapping("/wallets/{walletId}/expenseNotes")
+    @Operation(responses = {
+            @ApiResponse(
+                    responseCode = "201",
+                    content = @Content(schema = @Schema(implementation = CreateCategoryResponse.class))
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    content = @Content(
+                            schema = @Schema(
+                                    oneOf = {
+                                            ErrorCreateCategoryResponse.class,
+                                            InvalidWalletIdResponse.class
+                                    }
+                            )
+                    )
+            )
+    })
+    public ResponseEntity<CreateCategoryResponse> createCategory(@NotNull @PathVariable String walletId,
+                                                                 @Valid @RequestBody CreateCategoryRequest request)
+            throws InvalidWalletIdException, CreateCategoryException {
+        ExpenseNoteCategoryNumber number = useCase.createCategory(new CreateCategoryCommand(
+                request.name(),
+                WalletId.create(walletId),
+                UserId.createRandom()
+        ));
+        return ResponseEntity.created(
+                        URI.create("/api/wallets/%s/expenseNotes/%s".formatted(walletId, number.getValue()))
+                )
+                .body(new CreateCategoryResponse(number.getValue()));
+    }
 
-  @ExceptionHandler(InvalidWalletIdException.class)
-  public ResponseEntity<InvalidWalletIdResponse> handleInvalidWalletIdException(
-      InvalidWalletIdException e
-  ) {
-    log.warn("Handled InvalidWalletIdResponse", e);
-    return ResponseEntity.status(400)
-        .body(new InvalidWalletIdResponse(e.getPassedValue()));
-  }
+    @ExceptionHandler(InvalidWalletIdException.class)
+    public ResponseEntity<InvalidWalletIdResponse> handleInvalidWalletIdException(InvalidWalletIdException e) {
+        log.warn("Handled InvalidWalletIdResponse", e);
+        return ResponseEntity.status(400)
+                .body(new InvalidWalletIdResponse(e.getPassedValue()));
+    }
 
-  @ExceptionHandler(CreateCategoryException.class)
-  public ResponseEntity<ErrorCreateCategoryResponse> handleCreateCategoryException(
-      CreateCategoryException e
-  ) {
-    log.warn("Handled ErrorCreateCategoryResponse", e);
-    return switch (e) {
-      case NonUniqueNamePerWalletId err -> ResponseEntity.status(400)
-          .body(new ErrorNonUniqueNameResponse(err.getName()));
-    };
-  }
+    @ExceptionHandler(CreateCategoryException.class)
+    public ResponseEntity<ErrorCreateCategoryResponse> handleCreateCategoryException(CreateCategoryException e) {
+        log.warn("Handled ErrorCreateCategoryResponse", e);
+        return switch (e) {
+            case NonUniqueNamePerWalletId err -> ResponseEntity.status(400)
+                    .body(new ErrorNonUniqueNameResponse(err.getName()));
+        };
+    }
 }

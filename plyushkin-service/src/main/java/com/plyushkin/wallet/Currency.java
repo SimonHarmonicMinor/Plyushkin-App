@@ -2,33 +2,33 @@ package com.plyushkin.wallet;
 
 public interface Currency {
 
-  String value();
+    String value();
 
-  static Currency of(String value) {
-    try {
-      return CurrencyEnum.of(value);
-    } catch (IllegalArgumentException e) {
-      return new StringCurrency(value);
+    static Currency of(String value) {
+        try {
+            return CurrencyEnum.of(value);
+        } catch (IllegalArgumentException e) {
+            return new StringCurrency(value);
+        }
     }
-  }
 }
 
 enum CurrencyEnum implements Currency {
-  RUB, DOLLAR, EURO;
+    RUB, DOLLAR, EURO;
 
-  public static CurrencyEnum of(String value) {
-    for (CurrencyEnum currencyEnum : values()) {
-      if (currencyEnum.name().equals(value)) {
-        return currencyEnum;
-      }
+    public static CurrencyEnum of(String value) {
+        for (CurrencyEnum currencyEnum : values()) {
+            if (currencyEnum.name().equals(value)) {
+                return currencyEnum;
+            }
+        }
+        throw new IllegalArgumentException("Unknown value: " + value);
     }
-    throw new IllegalArgumentException("Unknown value: " + value);
-  }
 
-  @Override
-  public String value() {
-    return name();
-  }
+    @Override
+    public String value() {
+        return name();
+    }
 }
 
 record StringCurrency(String value) implements Currency {

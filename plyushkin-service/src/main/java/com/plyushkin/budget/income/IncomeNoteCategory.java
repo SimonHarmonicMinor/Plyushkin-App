@@ -7,7 +7,9 @@ import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+
 import java.util.HashSet;
+
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -17,18 +19,16 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicUpdate
 public class IncomeNoteCategory extends AbstractCategory<IncomeNoteCategoryNumber, IncomeNoteCategory> {
 
-  public static IncomeNoteCategory create(
-      IncomeNoteCategoryNumber id,
-      String name,
-      WalletId walletId,
-      UserId whoCreated
-  ) {
-    IncomeNoteCategory incomeNoteCategory = new IncomeNoteCategory();
-    incomeNoteCategory.number = id;
-    incomeNoteCategory.name = name;
-    incomeNoteCategory.walletId = walletId;
-    incomeNoteCategory.whoCreated = whoCreated;
-    incomeNoteCategory.children = new HashSet<>();
-    return incomeNoteCategory;
-  }
+    public static IncomeNoteCategory create(IncomeNoteCategoryNumber id,
+                                            String name,
+                                            WalletId walletId,
+                                            UserId whoCreated) {
+        IncomeNoteCategory incomeNoteCategory = new IncomeNoteCategory();
+        incomeNoteCategory.number = id;
+        incomeNoteCategory.name = name;
+        incomeNoteCategory.walletId = walletId;
+        incomeNoteCategory.whoCreated = whoCreated;
+        incomeNoteCategory.children = new HashSet<>();
+        return incomeNoteCategory;
+    }
 }
