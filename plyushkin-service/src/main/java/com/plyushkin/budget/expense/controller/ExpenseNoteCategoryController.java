@@ -1,5 +1,6 @@
 package com.plyushkin.budget.expense.controller;
 
+import com.plyushkin.budget.expense.ExpenseNoteCategoryEntityGraph;
 import com.plyushkin.budget.expense.ExpenseNoteCategoryNumber;
 import com.plyushkin.budget.expense.ExpenseNoteNumber.InvalidExpenseNoteIdException;
 import com.plyushkin.budget.expense.controller.request.CreateExpenseNoteCategoryRequest;
@@ -20,14 +21,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-
-import java.net.URI;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -39,7 +40,7 @@ class ExpenseNoteCategoryController {
     private final ExpenseNoteCategoryUseCase useCase;
     private final ExpenseNoteCategoryRepository repository;
 
-    @PostMapping("/wallets/{walletId}/expenseNotes")
+    @PostMapping("/wallets/{walletId}/expenseNoteCategories")
     @Operation(responses = {
             @ApiResponse(
                     responseCode = "201",
@@ -66,20 +67,39 @@ class ExpenseNoteCategoryController {
                 UserId.createRandom()
         ));
         return ResponseEntity.created(
-                        URI.create("/api/wallets/%s/expenseNotes/%s".formatted(walletId, number.getValue()))
+                        URI.create("/api/wallets/%s/expenseNoteCategories/%s".formatted(walletId, number.getValue()))
                 )
                 .body(new CreateExpenseNoteCategoryResponse(number.getValue()));
     }
 
-    @GetMapping("/wallets/{walletId}/expenseNotes/{number}")
-    public ResponseEntity<?> getCategory(@PathVariable @Min(1) long number,
-                                                                   @PathVariable String walletId)
+    @GetMapping("/wallets/{walletId}/expenseNoteCategories/{number}")
+    public ResponseEntity<ExpenseNoteCategoryResponse> getCategory(@NotNull @PathVariable @Min(1) long number,
+                                                                   @NotNull @PathVariable String walletId)
             throws InvalidWalletIdException, ExpenseNoteCategoryNumber.InvalidExpenseNoteCategoryNumberException {
-        repository.findByWalletIdAndNumber(
-                WalletId.create(walletId),
-                ExpenseNoteCategoryNumber.create(number)
-        );
-        return ResponseEntity.ok(200);
+        return repository.findByWalletIdAndNumber(
+                        WalletId.create(walletId),
+                        ExpenseNoteCategoryNumber.create(number),
+                        ExpenseNoteCategoryEntityGraph.____()
+                                .parent()
+                                .____.____()
+                ).map(ExpenseNoteCategoryResponse::new)
+                .map(ResponseEntity::ok)
+                .orElse(
+                        ResponseEntity.notFound().build()
+                );
+    }
+
+    @GetMapping("/wallets/{walletId}/expenseNoteCategories")
+    public List<ExpenseNoteCategoryResponse> listCategories(@NotNull @PathVariable String walletId)
+            throws InvalidWalletIdException {
+        return repository.findAllByWalletId(
+                        WalletId.create(walletId),
+                        ExpenseNoteCategoryEntityGraph.____()
+                                .parent()
+                                .____.____()
+                ).stream()
+                .map(ExpenseNoteCategoryResponse::new)
+                .toList();
     }
 
     @ExceptionHandler(InvalidExpenseNoteIdException.class)

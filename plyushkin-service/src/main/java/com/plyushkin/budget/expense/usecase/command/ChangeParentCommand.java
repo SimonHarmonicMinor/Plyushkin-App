@@ -6,6 +6,7 @@ import jakarta.annotation.Nullable;
 
 public record ChangeParentCommand(WalletId walletId,
                                   ExpenseNoteCategoryNumber rootCategoryNumber,
+                                  String name,
                                   @Nullable ExpenseNoteCategoryNumber parentCategoryNumber) {
 
 }
