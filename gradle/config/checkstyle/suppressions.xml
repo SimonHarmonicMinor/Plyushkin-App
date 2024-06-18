@@ -11,4 +11,6 @@
 
     <!--<suppress message="Missing a Javadoc comment."/>-->
 
+    <suppress checks="." files="com[\\/]plyushkin[\\/]openapi[\\/]client"/>
+
 </suppressions>
