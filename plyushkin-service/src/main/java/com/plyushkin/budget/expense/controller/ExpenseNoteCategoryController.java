@@ -2,15 +2,18 @@ package com.plyushkin.budget.expense.controller;
 
 import com.plyushkin.budget.expense.ExpenseNoteCategoryEntityGraph;
 import com.plyushkin.budget.expense.ExpenseNoteCategoryNumber;
-import com.plyushkin.budget.expense.ExpenseNoteNumber.InvalidExpenseNoteIdException;
+import com.plyushkin.budget.expense.ExpenseNoteCategoryNumber.InvalidExpenseNoteCategoryNumberException;
 import com.plyushkin.budget.expense.controller.request.CreateExpenseNoteCategoryRequest;
+import com.plyushkin.budget.expense.controller.request.UpdateExpenseNoteCategoryRequest;
 import com.plyushkin.budget.expense.controller.response.*;
 import com.plyushkin.budget.expense.controller.response.ErrorCreateCategoryResponse.ErrorNonUniqueNameResponse;
 import com.plyushkin.budget.expense.repository.ExpenseNoteCategoryRepository;
 import com.plyushkin.budget.expense.usecase.ExpenseNoteCategoryUseCase;
 import com.plyushkin.budget.expense.usecase.command.CreateCategoryCommand;
+import com.plyushkin.budget.expense.usecase.command.UpdateCommand;
 import com.plyushkin.budget.expense.usecase.exception.CreateCategoryException;
 import com.plyushkin.budget.expense.usecase.exception.CreateCategoryException.NonUniqueNamePerWalletId;
+import com.plyushkin.budget.expense.usecase.exception.UpdateExpenseNoteCategoryException;
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
 import com.plyushkin.wallet.WalletId.InvalidWalletIdException;
@@ -72,10 +75,27 @@ class ExpenseNoteCategoryController {
                 .body(new CreateExpenseNoteCategoryResponse(number.getValue()));
     }
 
+    @PutMapping("/wallets/{walletId}/expenseNoteCategories/{number}")
+    public void updateCategory(@NotNull @PathVariable @Min(1) long number,
+                               @NotNull @PathVariable String walletId,
+                               @NotNull @Valid @RequestBody UpdateExpenseNoteCategoryRequest request)
+            throws InvalidWalletIdException,
+            InvalidExpenseNoteCategoryNumberException,
+            UpdateExpenseNoteCategoryException {
+        useCase.update(
+                new UpdateCommand(
+                        WalletId.create(walletId),
+                        ExpenseNoteCategoryNumber.create(number),
+                        request.name(),
+                        request.newParentNumber() == null ? null : ExpenseNoteCategoryNumber.create(request.newParentNumber())
+                )
+        );
+    }
+
     @GetMapping("/wallets/{walletId}/expenseNoteCategories/{number}")
     public ResponseEntity<ExpenseNoteCategoryResponse> getCategory(@NotNull @PathVariable @Min(1) long number,
                                                                    @NotNull @PathVariable String walletId)
-            throws InvalidWalletIdException, ExpenseNoteCategoryNumber.InvalidExpenseNoteCategoryNumberException {
+            throws InvalidWalletIdException, InvalidExpenseNoteCategoryNumberException {
         return repository.findByWalletIdAndNumber(
                         WalletId.create(walletId),
                         ExpenseNoteCategoryNumber.create(number),
@@ -102,8 +122,15 @@ class ExpenseNoteCategoryController {
                 .toList();
     }
 
-    @ExceptionHandler(InvalidExpenseNoteIdException.class)
-    public ResponseEntity<InvalidExpenseNoteCategoryNumberResponse> handleInvalidExpenseNoteIdException(InvalidExpenseNoteIdException e) {
+    @ExceptionHandler(UpdateExpenseNoteCategoryException.class)
+    public ResponseEntity<UpdateExpenseNoteCategoryResponse> handleUpdateExpenseNoteCategoryException(UpdateExpenseNoteCategoryException e) {
+        log4xx(e);
+        return ResponseEntity.status(400)
+                .body(new UpdateExpenseNoteCategoryResponse(e.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidExpenseNoteCategoryNumberException.class)
+    public ResponseEntity<InvalidExpenseNoteCategoryNumberResponse> handleInvalidExpenseNoteIdException(InvalidExpenseNoteCategoryNumberException e) {
         log4xx(e);
         return ResponseEntity.status(400)
                 .body(new InvalidExpenseNoteCategoryNumberResponse(e.getWrongValue()));

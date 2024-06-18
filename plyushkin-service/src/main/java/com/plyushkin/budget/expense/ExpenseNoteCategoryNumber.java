@@ -35,7 +35,8 @@ public class ExpenseNoteCategoryNumber implements Serializable {
     public static ExpenseNoteCategoryNumber create(long value) throws InvalidExpenseNoteCategoryNumberException {
         if (value <= 0) {
             throw new InvalidExpenseNoteCategoryNumberException(
-                    "Value should be positive but it is: " + value
+                    "Value should be positive but it is: " + value,
+                    value
             );
         }
         ExpenseNoteCategoryNumber expenseNoteCategoryId = new ExpenseNoteCategoryNumber();
@@ -43,7 +44,13 @@ public class ExpenseNoteCategoryNumber implements Serializable {
         return expenseNoteCategoryId;
     }
 
-    @StandardException
+    @Getter
     public static class InvalidExpenseNoteCategoryNumberException extends Exception {
+        private final long wrongValue;
+
+        public InvalidExpenseNoteCategoryNumberException(String message, long wrongValue) {
+            super(message);
+            this.wrongValue = wrongValue;
+        }
     }
 }

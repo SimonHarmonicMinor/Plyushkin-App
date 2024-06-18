@@ -6,7 +6,7 @@ import com.plyushkin.budget.AbstractCategory.ChangeParentCategoryException;
 import com.plyushkin.budget.expense.ExpenseNoteCategory;
 import com.plyushkin.budget.expense.ExpenseNoteCategoryNumber;
 import com.plyushkin.budget.expense.repository.ExpenseNoteCategoryRepository;
-import com.plyushkin.budget.expense.usecase.command.ChangeParentCommand;
+import com.plyushkin.budget.expense.usecase.command.UpdateCommand;
 import com.plyushkin.budget.expense.usecase.command.CreateCategoryCommand;
 import com.plyushkin.budget.expense.usecase.exception.UpdateExpenseNoteCategoryException;
 import com.plyushkin.budget.expense.usecase.exception.CreateCategoryException;
@@ -32,7 +32,7 @@ public class ExpenseNoteCategoryUseCase {
     }
 
     @WriteTransactional
-    public void update(ChangeParentCommand command) throws UpdateExpenseNoteCategoryException {
+    public void update(UpdateCommand command) throws UpdateExpenseNoteCategoryException {
         repository.lockByWalletId(command.walletId());
         ExpenseNoteCategory root = repository.findByWalletIdAndNumber(command.walletId(), command.rootCategoryNumber())
                 .orElseThrow(() -> new UpdateExpenseNoteCategoryException.ChangeParent.RootNotFound(
