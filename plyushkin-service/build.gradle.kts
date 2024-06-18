@@ -39,6 +39,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("com.cosium.spring.data:spring-data-jpa-entity-graph:3.2.2")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
     implementation("io.sentry:sentry-spring-boot-starter-jakarta")
     implementation("org.flywaydb:flyway-core")
@@ -46,6 +47,8 @@ dependencies {
     compileOnly("org.projectlombok:lombok:$lombokVersion")
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
     runtimeOnly("org.postgresql:postgresql")
+    annotationProcessor("com.cosium.spring.data:spring-data-jpa-entity-graph-generator:3.2.2")
+    annotationProcessor("org.hibernate:hibernate-jpamodelgen:6.4.8.Final")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -81,6 +84,9 @@ quality {
 }
 
 tasks.withType<JavaCompile>().configureEach {
+    // temporary solution until this issue is fixed
+    // https://github.com/Cosium/spring-data-jpa-entity-graph/issues/193
+    options.errorprone.isEnabled.set(false);
     options.errorprone.disableWarningsInGeneratedCode.set(true)
     options.encoding = "UTF-8"
     if (name == "compileTestJava") {
