@@ -32,9 +32,9 @@ public class ExpenseNoteCategoryNumber implements Serializable {
         return new ExpenseNoteCategoryNumber(1L);
     }
 
-    public static ExpenseNoteCategoryNumber create(long value) throws InvalidExpenseNoteIdException {
+    public static ExpenseNoteCategoryNumber create(long value) throws InvalidExpenseNoteCategoryNumberException {
         if (value <= 0) {
-            throw new InvalidExpenseNoteIdException(
+            throw new InvalidExpenseNoteCategoryNumberException(
                     "Value should be positive but it is: " + value
             );
         }
@@ -44,6 +44,6 @@ public class ExpenseNoteCategoryNumber implements Serializable {
     }
 
     @StandardException
-    public static class InvalidExpenseNoteIdException extends Exception {
+    public static class InvalidExpenseNoteCategoryNumberException extends Exception {
     }
 }

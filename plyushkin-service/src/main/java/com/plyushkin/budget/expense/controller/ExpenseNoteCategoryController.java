@@ -1,11 +1,11 @@
 package com.plyushkin.budget.expense.controller;
 
 import com.plyushkin.budget.expense.ExpenseNoteCategoryNumber;
-import com.plyushkin.budget.expense.controller.request.CreateCategoryRequest;
-import com.plyushkin.budget.expense.controller.response.CreateCategoryResponse;
-import com.plyushkin.budget.expense.controller.response.ErrorCreateCategoryResponse;
+import com.plyushkin.budget.expense.ExpenseNoteNumber.InvalidExpenseNoteIdException;
+import com.plyushkin.budget.expense.controller.request.CreateExpenseNoteCategoryRequest;
+import com.plyushkin.budget.expense.controller.response.*;
 import com.plyushkin.budget.expense.controller.response.ErrorCreateCategoryResponse.ErrorNonUniqueNameResponse;
-import com.plyushkin.budget.expense.controller.response.InvalidWalletIdResponse;
+import com.plyushkin.budget.expense.repository.ExpenseNoteCategoryRepository;
 import com.plyushkin.budget.expense.usecase.ExpenseNoteCategoryUseCase;
 import com.plyushkin.budget.expense.usecase.command.CreateCategoryCommand;
 import com.plyushkin.budget.expense.usecase.exception.CreateCategoryException;
@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 import java.net.URI;
@@ -26,12 +27,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
@@ -41,12 +37,13 @@ import org.springframework.web.bind.annotation.RestController;
 class ExpenseNoteCategoryController {
 
     private final ExpenseNoteCategoryUseCase useCase;
+    private final ExpenseNoteCategoryRepository repository;
 
     @PostMapping("/wallets/{walletId}/expenseNotes")
     @Operation(responses = {
             @ApiResponse(
                     responseCode = "201",
-                    content = @Content(schema = @Schema(implementation = CreateCategoryResponse.class))
+                    content = @Content(schema = @Schema(implementation = CreateExpenseNoteCategoryResponse.class))
             ),
             @ApiResponse(
                     responseCode = "400",
@@ -60,8 +57,8 @@ class ExpenseNoteCategoryController {
                     )
             )
     })
-    public ResponseEntity<CreateCategoryResponse> createCategory(@NotNull @PathVariable String walletId,
-                                                                 @Valid @RequestBody CreateCategoryRequest request)
+    public ResponseEntity<CreateExpenseNoteCategoryResponse> createCategory(@NotNull @PathVariable String walletId,
+                                                                            @Valid @RequestBody CreateExpenseNoteCategoryRequest request)
             throws InvalidWalletIdException, CreateCategoryException {
         ExpenseNoteCategoryNumber number = useCase.createCategory(new CreateCategoryCommand(
                 request.name(),
@@ -71,7 +68,25 @@ class ExpenseNoteCategoryController {
         return ResponseEntity.created(
                         URI.create("/api/wallets/%s/expenseNotes/%s".formatted(walletId, number.getValue()))
                 )
-                .body(new CreateCategoryResponse(number.getValue()));
+                .body(new CreateExpenseNoteCategoryResponse(number.getValue()));
+    }
+
+    @GetMapping("/wallets/{walletId}/expenseNotes/{number}")
+    public ResponseEntity<?> getCategory(@PathVariable @Min(1) long number,
+                                                                   @PathVariable String walletId)
+            throws InvalidWalletIdException, ExpenseNoteCategoryNumber.InvalidExpenseNoteCategoryNumberException {
+        repository.findByWalletIdAndNumber(
+                WalletId.create(walletId),
+                ExpenseNoteCategoryNumber.create(number)
+        );
+        return ResponseEntity.ok(200);
+    }
+
+    @ExceptionHandler(InvalidExpenseNoteIdException.class)
+    public ResponseEntity<InvalidExpenseNoteCategoryNumberResponse> handleInvalidExpenseNoteIdException(InvalidExpenseNoteIdException e) {
+        log4xx(e);
+        return ResponseEntity.status(400)
+                .body(new InvalidExpenseNoteCategoryNumberResponse(e.getWrongValue()));
     }
 
     @ExceptionHandler(InvalidWalletIdException.class)
@@ -88,5 +103,9 @@ class ExpenseNoteCategoryController {
             case NonUniqueNamePerWalletId err -> ResponseEntity.status(400)
                     .body(new ErrorNonUniqueNameResponse(err.getName()));
         };
+    }
+
+    private static void log4xx(Throwable e) {
+        log.warn("Handled 4xx", e);
     }
 }

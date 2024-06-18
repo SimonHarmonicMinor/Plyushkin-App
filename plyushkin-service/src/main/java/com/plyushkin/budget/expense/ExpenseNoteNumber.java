@@ -1,16 +1,15 @@
 package com.plyushkin.budget.expense;
 
-import static lombok.AccessLevel.PROTECTED;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
 
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.experimental.StandardException;
+import static lombok.AccessLevel.PROTECTED;
 
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
@@ -26,7 +25,8 @@ public class ExpenseNoteNumber implements Serializable {
     public static ExpenseNoteNumber create(long value) throws InvalidExpenseNoteIdException {
         if (value <= 0) {
             throw new InvalidExpenseNoteIdException(
-                    "Value should be positive but it is: " + value
+                    "Value should be positive but it is: " + value,
+                    value
             );
         }
         ExpenseNoteNumber expenseNoteId = new ExpenseNoteNumber();
@@ -39,7 +39,13 @@ public class ExpenseNoteNumber implements Serializable {
         return String.valueOf(value);
     }
 
-    @StandardException
+    @Getter
     public static class InvalidExpenseNoteIdException extends Exception {
+        private final long wrongValue;
+
+        public InvalidExpenseNoteIdException(String message, long wrongValue) {
+            super(message);
+            this.wrongValue = wrongValue;
+        }
     }
 }

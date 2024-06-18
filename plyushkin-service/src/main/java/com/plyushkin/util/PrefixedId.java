@@ -1,23 +1,24 @@
 package com.plyushkin.util;
 
-import static lombok.AccessLevel.PROTECTED;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.MappedSuperclass;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.StandardException;
 
 import java.io.Serializable;
 import java.util.concurrent.ThreadLocalRandom;
 
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.experimental.StandardException;
+import static lombok.AccessLevel.PROTECTED;
 
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
 @EqualsAndHashCode
 @MappedSuperclass
+@Getter
 public class PrefixedId implements Serializable {
 
     private static final int ID_LENGTH = 19;
