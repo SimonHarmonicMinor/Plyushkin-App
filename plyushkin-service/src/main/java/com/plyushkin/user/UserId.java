@@ -6,6 +6,7 @@ import com.plyushkin.util.PrefixedId;
 import jakarta.persistence.Embeddable;
 import java.io.Serial;
 import lombok.NoArgsConstructor;
+import lombok.experimental.StandardException;
 
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
@@ -46,14 +47,8 @@ public class UserId extends PrefixedId {
     return String.valueOf(value);
   }
 
+  @StandardException
   public static class InvalidUserIdException extends Exception {
 
-    public InvalidUserIdException(String message) {
-      super(message);
-    }
-
-    public InvalidUserIdException(String message, Throwable cause) {
-      super(message, cause);
-    }
   }
 }

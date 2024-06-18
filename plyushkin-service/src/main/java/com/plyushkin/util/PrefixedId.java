@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.concurrent.ThreadLocalRandom;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.StandardException;
 
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
@@ -70,14 +71,8 @@ public class PrefixedId implements Serializable {
     }
   }
 
+  @StandardException
   public static class InvalidPrefixedIdException extends Exception {
 
-    public InvalidPrefixedIdException(String message) {
-      super(message);
-    }
-
-    public InvalidPrefixedIdException(String message, Throwable cause) {
-      super(message, cause);
-    }
   }
 }

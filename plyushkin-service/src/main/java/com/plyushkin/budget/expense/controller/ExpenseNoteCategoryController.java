@@ -90,7 +90,6 @@ class ExpenseNoteCategoryController {
     return switch (e) {
       case NonUniqueNamePerWalletId err -> ResponseEntity.status(400)
           .body(new ErrorNonUniqueNameResponse(err.getName()));
-      default -> throw new IllegalStateException("Unexpected value: " + e, e);
     };
   }
 }

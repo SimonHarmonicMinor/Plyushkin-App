@@ -7,6 +7,7 @@ import jakarta.persistence.Embeddable;
 import java.math.BigDecimal;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.StandardException;
 
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
@@ -27,10 +28,8 @@ public class Money {
     return money;
   }
 
+  @StandardException
   public static class InvalidMoneyException extends Exception {
 
-    public InvalidMoneyException(String message) {
-      super(message);
-    }
   }
 }

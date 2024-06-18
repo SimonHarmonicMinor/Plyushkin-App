@@ -76,7 +76,6 @@ public class ExpenseNoteCategoryUseCase {
         case AddChildCategoryException.ChildEqualsToRoot err -> throw new AddChildException.ChildEqualsToRoot(
             "Child equals to root", err
         );
-        default -> throw new IllegalStateException("Unknown value " + e, e);
       }
     }
     repository.save(root);
@@ -111,7 +110,6 @@ public class ExpenseNoteCategoryUseCase {
         case ChangeParentCategoryException.ParentEqualsToRoot err -> throw new ChangeParentException.ParentEqualsToRoot(
             "Parent equals to root", err
         );
-        default -> throw new IllegalStateException("Unknown value " + e, e);
       }
     }
     repository.save(root);

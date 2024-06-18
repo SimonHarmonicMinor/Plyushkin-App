@@ -8,11 +8,13 @@ import java.io.Serial;
 import java.io.Serializable;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.StandardException;
 
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
 @EqualsAndHashCode
 public class IncomeNoteCategoryNumber implements Serializable {
+
   @Serial
   private static final long serialVersionUID = 1L;
 
@@ -30,10 +32,8 @@ public class IncomeNoteCategoryNumber implements Serializable {
     return incomeNoteCategoryId;
   }
 
+  @StandardException
   public static class InvalidIncomeNoteIdException extends Exception {
 
-    public InvalidIncomeNoteIdException(String message) {
-      super(message);
-    }
   }
 }

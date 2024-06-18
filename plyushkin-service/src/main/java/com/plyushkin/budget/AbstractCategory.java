@@ -121,7 +121,7 @@ public abstract class AbstractCategory<I extends Serializable, T extends Abstrac
   }
 
   @StandardException
-  public static sealed class ChangeParentCategoryException extends Exception {
+  public abstract static sealed class ChangeParentCategoryException extends Exception {
 
     @StandardException
     public static final class MismatchedWalletId extends ChangeParentCategoryException {
@@ -135,7 +135,7 @@ public abstract class AbstractCategory<I extends Serializable, T extends Abstrac
   }
 
   @StandardException
-  public static sealed class AddChildCategoryException extends Exception {
+  public abstract static sealed class AddChildCategoryException extends Exception {
 
     @StandardException
     public static final class MismatchedWalletId extends AddChildCategoryException {

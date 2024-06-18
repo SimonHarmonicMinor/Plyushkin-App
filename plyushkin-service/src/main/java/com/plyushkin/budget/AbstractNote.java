@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.StandardException;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
 @MappedSuperclass
@@ -132,18 +133,14 @@ public class AbstractNote<
     }
   }
 
+  @StandardException
   public static class InvalidNoteException extends Exception {
 
-    public InvalidNoteException(String message) {
-      super(message);
-    }
   }
 
+  @StandardException
   public static class InvalidNoteCategoryException extends
       InvalidNoteException {
 
-    public InvalidNoteCategoryException(String message) {
-      super(message);
-    }
   }
 }
