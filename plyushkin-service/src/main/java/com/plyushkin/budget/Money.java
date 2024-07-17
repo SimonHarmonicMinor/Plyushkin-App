@@ -1,20 +1,19 @@
 package com.plyushkin.budget;
 
-import static lombok.AccessLevel.PROTECTED;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-
-import java.math.BigDecimal;
-
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.StandardException;
 
+import java.math.BigDecimal;
+
+import static lombok.AccessLevel.PROTECTED;
+
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
 @EqualsAndHashCode
-public class Money {
+public class Money implements Comparable<Money> {
 
     @Column
     private BigDecimal value;
@@ -28,6 +27,11 @@ public class Money {
         Money money = new Money();
         money.value = value;
         return money;
+    }
+
+    @Override
+    public int compareTo(Money o) {
+        return this.value.compareTo(o.value);
     }
 
     @StandardException
