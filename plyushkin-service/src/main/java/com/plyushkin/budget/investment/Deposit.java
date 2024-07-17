@@ -38,9 +38,17 @@ public class Deposit {
     private WalletId walletId;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "initial_amount", updatable = false)),
+            @AttributeOverride(name = "date", column = @Column(name = "initial_date", updatable = false))
+    })
     private DepositState initialState;
 
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "closed_amount")),
+            @AttributeOverride(name = "date", column = @Column(name = "closed_date"))
+    })
     @Nullable
     private DepositState closedState;
 
