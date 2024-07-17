@@ -4,6 +4,7 @@ import com.plyushkin.budget.Money;
 import com.plyushkin.wallet.WalletId;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.StandardException;
 import org.hibernate.annotations.DynamicUpdate;
@@ -11,15 +12,18 @@ import org.hibernate.annotations.DynamicUpdate;
 import java.time.LocalDate;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Table(schema = "budget", name = "deposit")
 @NoArgsConstructor(access = PROTECTED)
 @DynamicUpdate
+@Getter
 public class Deposit {
     @Id
     @GeneratedValue(strategy = IDENTITY)
+    @Getter(PRIVATE)
     private Long pk;
 
     @Embedded
