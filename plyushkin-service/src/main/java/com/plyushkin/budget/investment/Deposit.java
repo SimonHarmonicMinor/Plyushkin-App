@@ -67,6 +67,11 @@ public class Deposit {
         return deposit;
     }
 
+    public void update(String name, String comment) {
+        this.name = name;
+        this.comment = comment;
+    }
+
     public void close(LocalDate closingDate, Money finalAmount) throws CloseDepositException {
         if (initialState.date().isAfter(closingDate)) {
             throw new CloseDepositException.DateBeforeInitial(
