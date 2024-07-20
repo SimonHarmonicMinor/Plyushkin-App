@@ -1,6 +1,8 @@
 package com.plyushkin.budget.investment;
 
 import com.plyushkin.budget.Money;
+import com.plyushkin.wallet.Currency;
+import com.plyushkin.wallet.CurrencyAttributeConverter;
 import com.plyushkin.wallet.WalletId;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
@@ -32,6 +34,9 @@ public class Deposit {
     private String name;
 
     private String comment;
+
+    @Convert(converter = CurrencyAttributeConverter.class)
+    private Currency currency;
 
     @Embedded
     @AttributeOverride(name = "value", column = @Column(name = "wallet_id", updatable = false))

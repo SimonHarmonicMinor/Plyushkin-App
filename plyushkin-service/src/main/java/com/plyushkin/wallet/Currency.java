@@ -1,23 +1,23 @@
 package com.plyushkin.wallet;
 
-public interface CurrencyType {
+public interface Currency {
 
     String value();
 
-    static CurrencyType of(String value) {
+    static Currency of(String value) {
         try {
-            return CurrencyTypeEnum.of(value);
+            return CurrencyEnum.of(value);
         } catch (IllegalArgumentException e) {
-            return new StringCurrencyType(value);
+            return new StringCurrency(value);
         }
     }
 }
 
-enum CurrencyTypeEnum implements CurrencyType {
+enum CurrencyEnum implements Currency {
     RUB, DOLLAR, EURO;
 
-    public static CurrencyTypeEnum of(String value) {
-        for (CurrencyTypeEnum currencyEnum : values()) {
+    public static CurrencyEnum of(String value) {
+        for (CurrencyEnum currencyEnum : values()) {
             if (currencyEnum.name().equals(value)) {
                 return currencyEnum;
             }
@@ -31,6 +31,6 @@ enum CurrencyTypeEnum implements CurrencyType {
     }
 }
 
-record StringCurrencyType(String value) implements CurrencyType {
+record StringCurrency(String value) implements Currency {
 
 }

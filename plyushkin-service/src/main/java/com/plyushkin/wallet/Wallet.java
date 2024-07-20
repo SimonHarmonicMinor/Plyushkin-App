@@ -27,23 +27,23 @@ public class Wallet {
 
     private String name;
 
-    @Convert(converter = CurrencyTypeAttributeConverter.class)
-    private CurrencyType currencyType;
+    @Convert(converter = CurrencyAttributeConverter.class)
+    private Currency currency;
 
     @Embedded
     @AttributeOverride(name = "value", column = @Column(name = "created_by", updatable = false))
     private UserId createdBy;
 
-    public static Wallet create(WalletId id, String name, CurrencyType currencyType) {
+    public static Wallet create(WalletId id, String name, Currency currency) {
         Wallet wallet = new Wallet();
         wallet.id = id;
         wallet.name = name;
-        wallet.currencyType = currencyType;
+        wallet.currency = currency;
         return wallet;
     }
 
-    public void update(String name, CurrencyType currencyType) {
+    public void update(String name, Currency currency) {
         this.name = name;
-        this.currencyType = currencyType;
+        this.currency = currency;
     }
 }
