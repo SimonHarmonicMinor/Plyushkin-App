@@ -1,6 +1,5 @@
 package com.plyushkin.budget;
 
-import com.plyushkin.budget.investment.DepositNumber;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import lombok.EqualsAndHashCode;
