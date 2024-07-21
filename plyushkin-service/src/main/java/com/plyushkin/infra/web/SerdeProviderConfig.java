@@ -1,6 +1,7 @@
 package com.plyushkin.infra.web;
 
 import com.plyushkin.budget.expense.ExpenseNoteCategoryNumber;
+import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
@@ -46,6 +47,26 @@ public class SerdeProviderConfig {
             @Override
             public Class<ExpenseNoteCategoryNumber> type() {
                 return ExpenseNoteCategoryNumber.class;
+            }
+        };
+    }
+
+    SerdeProvider<UserId> userIdSerdeProvider() {
+        return new StringSerdeProvider<UserId>() {
+            @Override
+            @SneakyThrows
+            public UserId asEntity(String rawValue) {
+                return UserId.create(rawValue);
+            }
+
+            @Override
+            public String asString(UserId value) {
+                return value.getValue();
+            }
+
+            @Override
+            public Class<UserId> type() {
+                return UserId.class;
             }
         };
     }

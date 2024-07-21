@@ -3,6 +3,7 @@ package com.plyushkin.budget.expense;
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
@@ -20,6 +21,7 @@ import lombok.experimental.StandardException;
 @EqualsAndHashCode
 @AllArgsConstructor(access = PRIVATE)
 @Getter
+@Schema(implementation = Long.class, description = "ExpenseNoteCategoryNumber", minimum = "1")
 public class ExpenseNoteCategoryNumber implements Serializable {
 
     @Serial

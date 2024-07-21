@@ -3,12 +3,14 @@ package com.plyushkin.wallet;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.plyushkin.util.PrefixedId;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
+@Schema(implementation = String.class, description = "WalletId")
 public class WalletId extends PrefixedId {
 
     private WalletId(String prefix) throws InvalidPrefixedIdException {

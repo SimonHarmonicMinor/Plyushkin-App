@@ -3,30 +3,30 @@ package com.plyushkin.budget.expense.controller.response;
 import com.plyushkin.budget.AbstractCategory;
 import com.plyushkin.budget.expense.ExpenseNoteCategory;
 import com.plyushkin.budget.expense.ExpenseNoteCategoryNumber;
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.plyushkin.user.UserId;
+import com.plyushkin.wallet.WalletId;
 import jakarta.validation.constraints.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
 
 public record ExpenseNoteCategoryResponse(
-        @Schema
-        long number,
         @NotNull
-        String walletId,
+        ExpenseNoteCategoryNumber number,
         @NotNull
-        String whoCreatedId,
+        WalletId walletId,
+        @NotNull
+        UserId whoCreatedId,
         @Nullable
-        Long parentNumber
+        ExpenseNoteCategoryNumber parentNumber
 ) {
     public ExpenseNoteCategoryResponse(ExpenseNoteCategory category) {
         this(
-                category.getNumber().getValue(),
-                category.getWalletId().getValue(),
-                category.getWhoCreated().getValue(),
+                category.getNumber(),
+                category.getWalletId(),
+                category.getWhoCreated(),
                 Optional.ofNullable(category.getParent())
                         .map(AbstractCategory::getNumber)
-                        .map(ExpenseNoteCategoryNumber::getValue)
                         .orElse(null)
         );
     }

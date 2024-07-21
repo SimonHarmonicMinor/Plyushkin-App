@@ -3,6 +3,7 @@ package com.plyushkin.user;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.plyushkin.util.PrefixedId;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Embeddable;
 
 import java.io.Serial;
@@ -12,6 +13,7 @@ import lombok.experimental.StandardException;
 
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
+@Schema(implementation = String.class, description = "UserId")
 public class UserId extends PrefixedId {
 
     @Serial
