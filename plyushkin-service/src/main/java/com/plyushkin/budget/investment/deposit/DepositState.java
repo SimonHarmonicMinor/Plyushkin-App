@@ -1,4 +1,4 @@
-package com.plyushkin.budget.investment;
+package com.plyushkin.budget.investment.deposit;
 
 import com.plyushkin.budget.Money;
 import jakarta.persistence.Embeddable;
