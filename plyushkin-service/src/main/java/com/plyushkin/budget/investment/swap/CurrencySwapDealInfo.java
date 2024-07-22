@@ -1,8 +1,8 @@
 package com.plyushkin.budget.investment.swap;
 
 import com.plyushkin.budget.Money;
-import com.plyushkin.wallet.Currency;
-import com.plyushkin.wallet.CurrencyAttributeConverter;
+import com.plyushkin.budget.Currency;
+import com.plyushkin.budget.CurrencyAttributeConverter;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Embeddable;
 

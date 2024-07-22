@@ -1,4 +1,4 @@
-package com.plyushkin.wallet;
+package com.plyushkin.budget;
 
 public interface Currency {
 

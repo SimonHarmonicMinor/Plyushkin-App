@@ -1,8 +1,8 @@
 package com.plyushkin.budget.investment.deposit;
 
 import com.plyushkin.budget.Money;
-import com.plyushkin.wallet.Currency;
-import com.plyushkin.wallet.CurrencyAttributeConverter;
+import com.plyushkin.budget.Currency;
+import com.plyushkin.budget.CurrencyAttributeConverter;
 import com.plyushkin.wallet.WalletId;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;

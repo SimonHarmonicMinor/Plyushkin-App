@@ -1,4 +1,4 @@
-package com.plyushkin.wallet;
+package com.plyushkin.budget;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
