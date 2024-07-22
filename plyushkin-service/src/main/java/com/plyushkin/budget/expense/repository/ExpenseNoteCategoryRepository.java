@@ -1,19 +1,17 @@
 package com.plyushkin.budget.expense.repository;
 
-import static jakarta.persistence.LockModeType.PESSIMISTIC_WRITE;
-
 import com.cosium.spring.data.jpa.entity.graph.domain2.EntityGraph;
 import com.cosium.spring.data.jpa.entity.graph.repository.EntityGraphJpaRepository;
 import com.plyushkin.budget.expense.ExpenseNoteCategory;
 import com.plyushkin.budget.expense.ExpenseNoteCategoryNumber;
 import com.plyushkin.wallet.WalletId;
+import org.springframework.data.jpa.repository.Lock;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Lock;
-import org.springframework.data.jpa.repository.Query;
+import static jakarta.persistence.LockModeType.PESSIMISTIC_WRITE;
 
 public interface ExpenseNoteCategoryRepository extends EntityGraphJpaRepository<ExpenseNoteCategory, Long> {
 
