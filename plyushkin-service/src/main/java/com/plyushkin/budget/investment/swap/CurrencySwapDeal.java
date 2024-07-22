@@ -8,8 +8,7 @@ import java.time.LocalDate;
 
 import static lombok.AccessLevel.PRIVATE;
 
-@Entity
-@Table(schema = "budget", name = "currency_swap_deal")
+// TODO ADD Entity
 @Getter
 public class CurrencySwapDeal {
     @Id
