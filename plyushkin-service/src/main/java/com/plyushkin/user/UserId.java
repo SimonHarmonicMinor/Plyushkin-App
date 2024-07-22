@@ -56,7 +56,7 @@ public class UserId extends PrefixedId {
 
     @Override
     public String toString() {
-        return String.valueOf(value);
+        return String.valueOf(stringValue);
     }
 
     @StandardException
