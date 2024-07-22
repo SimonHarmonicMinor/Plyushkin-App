@@ -20,7 +20,7 @@ public class SerdeProviderConfig {
 
             @Override
             public String asString(WalletId value) {
-                return value.getValue();
+                return value.getStringValue();
             }
 
             @Override
@@ -62,7 +62,7 @@ public class SerdeProviderConfig {
 
             @Override
             public String asString(UserId value) {
-                return value.getValue();
+                return value.getStringValue();
             }
 
             @Override
