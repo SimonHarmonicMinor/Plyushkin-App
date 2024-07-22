@@ -1,5 +1,6 @@
 package com.plyushkin.wallet;
 
+import static com.plyushkin.util.PrefixedId.parseLongFromRawValue;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.plyushkin.util.PrefixedId;
@@ -7,33 +8,35 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.StandardException;
+
+import java.io.Serial;
 
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
 @Schema(implementation = String.class, description = "WalletId")
 public class WalletId extends PrefixedId {
+    private static final String PREFIX = "W-";
+    @Serial
+    private static final long serialVersionUID = 1L;
 
-    private WalletId(String prefix) throws InvalidPrefixedIdException {
-        super(prefix);
-    }
-
-    private WalletId(String prefix, String value) throws InvalidPrefixedIdException {
+    private WalletId(String prefix, long value) throws InvalidPrefixedIdException {
         super(prefix, value);
     }
 
-    public static WalletId createRandom() {
+    public static WalletId parse(String rawValue) throws InvalidWalletIdException {
         try {
-            return new WalletId("WA");
+            return create(parseLongFromRawValue(PREFIX, rawValue));
         } catch (InvalidPrefixedIdException e) {
-            throw new IllegalArgumentException("Invalid random WalletId", e);
+            throw new InvalidWalletIdException("Cannot parse WalletId=%s".formatted(rawValue), e);
         }
     }
 
-    public static WalletId create(String value) throws InvalidWalletIdException {
+    public static WalletId create(long value) throws InvalidWalletIdException {
         try {
-            return new WalletId("WA", value);
+            return new WalletId(PREFIX, value);
         } catch (InvalidPrefixedIdException e) {
-            throw new InvalidWalletIdException("Invalid WalletId: " + value, e, value);
+            throw new InvalidWalletIdException("Invalid WalletId: " + value, e);
         }
     }
 
@@ -42,13 +45,7 @@ public class WalletId extends PrefixedId {
         return String.valueOf(value);
     }
 
-    @Getter
+    @StandardException
     public static class InvalidWalletIdException extends Exception {
-        private final String passedValue;
-
-        public InvalidWalletIdException(String message, Throwable cause, String passedValue) {
-            super(message, cause);
-            this.passedValue = passedValue;
-        }
     }
 }
