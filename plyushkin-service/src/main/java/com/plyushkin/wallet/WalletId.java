@@ -1,12 +1,10 @@
 package com.plyushkin.wallet;
 
-import static com.plyushkin.util.PrefixedId.parseLongFromRawValue;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.plyushkin.util.PrefixedId;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Embeddable;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.StandardException;
 
@@ -42,7 +40,7 @@ public class WalletId extends PrefixedId {
 
     @Override
     public String toString() {
-        return String.valueOf(value);
+        return String.valueOf(stringValue);
     }
 
     @StandardException
