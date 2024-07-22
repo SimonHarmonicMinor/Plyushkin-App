@@ -2,8 +2,8 @@ CREATE SCHEMA wallet;
 
 CREATE TABLE wallet.wallet
 (
-    id            VARCHAR(50) PRIMARY KEY,
+    id            BIGINT PRIMARY KEY,
     name          VARCHAR(200) NOT NULL,
     currency_type VARCHAR(50)  NOT NULL,
-    created_by    VARCHAR(50)  NOT NULL REFERENCES auth.users (id)
+    created_by    BIGINT       NOT NULL REFERENCES auth.users (id)
 );
