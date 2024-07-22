@@ -27,10 +27,10 @@ public class PrefixedId implements Serializable {
 
     @Getter(PRIVATE)
     @Column(name = "id", updatable = false)
-    protected long realValue;
+    protected long value;
 
     @Transient
-    protected String value;
+    protected String stringValue;
 
     @SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
     protected PrefixedId(String prefix) throws InvalidPrefixedIdException {
@@ -43,8 +43,8 @@ public class PrefixedId implements Serializable {
         if (value < 0) {
             throw new InvalidPrefixedIdException("Value cannot be less than zero: " + value);
         }
-        this.value = prefix + Long.toString(value, MAX_RADIX);
-        this.realValue = value;
+        this.stringValue = prefix + Long.toString(value, MAX_RADIX);
+        this.value = value;
     }
 
     public static long parseLongFromRawValue(String prefix, String rawValue) throws InvalidPrefixedIdException {
