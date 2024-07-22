@@ -7,6 +7,6 @@ CREATE TABLE auth.users
 
 CREATE TABLE auth.google_profile
 (
-    id      BIGINT PRIMARY KEY,
+    id      VARCHAR(200) PRIMARY KEY,
     user_id BIGINT NOT NULL REFERENCES auth.users (id)
 );
