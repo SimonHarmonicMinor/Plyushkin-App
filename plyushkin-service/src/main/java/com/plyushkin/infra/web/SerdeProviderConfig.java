@@ -15,7 +15,7 @@ public class SerdeProviderConfig {
             @Override
             @SneakyThrows
             public WalletId asEntity(String rawValue) {
-                return WalletId.create(rawValue);
+                return WalletId.parse(rawValue);
             }
 
             @Override
@@ -51,12 +51,13 @@ public class SerdeProviderConfig {
         };
     }
 
+    @Bean
     SerdeProvider<UserId> userIdSerdeProvider() {
-        return new StringSerdeProvider<UserId>() {
+        return new StringSerdeProvider<>() {
             @Override
             @SneakyThrows
             public UserId asEntity(String rawValue) {
-                return UserId.create(rawValue);
+                return UserId.parse(rawValue);
             }
 
             @Override
