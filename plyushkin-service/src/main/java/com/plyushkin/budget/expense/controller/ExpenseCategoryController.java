@@ -1,7 +1,7 @@
 package com.plyushkin.budget.expense.controller;
 
 import com.plyushkin.budget.expense.ExpenseCategoryNumber;
-import com.plyushkin.budget.expense.ExpenseNoteCategoryEntityGraph;
+import com.plyushkin.budget.expense.ExpenseCategoryEntityGraph;
 import com.plyushkin.budget.expense.controller.request.CreateExpenseNoteCategoryRequest;
 import com.plyushkin.budget.expense.controller.request.UpdateExpenseNoteCategoryRequest;
 import com.plyushkin.budget.expense.controller.response.CreateExpenseNoteCategoryResponse;
@@ -97,7 +97,7 @@ class ExpenseCategoryController {
         return repository.findByWalletIdAndNumber(
                         walletId,
                         number,
-                        ExpenseNoteCategoryEntityGraph.____()
+                        ExpenseCategoryEntityGraph.____()
                                 .parent()
                                 .____.____()
                 ).map(ExpenseCategoryResponse::new)
@@ -111,7 +111,7 @@ class ExpenseCategoryController {
     public List<ExpenseCategoryResponse> listCategories(@NotNull @PathVariable WalletId walletId) {
         return repository.findAllByWalletId(
                         walletId,
-                        ExpenseNoteCategoryEntityGraph.____()
+                        ExpenseCategoryEntityGraph.____()
                                 .parent()
                                 .____.____()
                 ).stream()
