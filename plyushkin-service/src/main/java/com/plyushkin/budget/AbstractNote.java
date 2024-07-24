@@ -1,16 +1,19 @@
 package com.plyushkin.budget;
 
 import static jakarta.persistence.FetchType.LAZY;
+import static java.util.Objects.requireNonNullElse;
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -91,17 +94,25 @@ public class AbstractNote<
         this.comment = comment;
     }
 
-    public void update(LocalDate date,
-                       Currency currency,
-                       Money amount,
-                       C category,
-                       String comment) throws InvalidNoteCategoryException {
-        validateCategory(category);
-        this.date = date;
-        this.currency = currency;
-        this.amount = amount;
-        this.category = category;
-        this.comment = comment;
+    public void update(@Nullable LocalDate date,
+                       @Nullable Currency currency,
+                       @Nullable Money amount,
+                       @Nullable C category,
+                       @Nullable String comment) throws InvalidNoteCategoryException {
+        if (category != null) {
+            validateCategory(category);
+            this.category = category;
+        }
+        if (date != null) {
+            this.date = date;
+        }
+        if (currency != null) {
+            this.currency = currency;
+        }
+        if (amount != null) {
+            this.amount = amount;
+        }
+        this.comment = requireNonNullElse(comment, "");
     }
 
     @Override
