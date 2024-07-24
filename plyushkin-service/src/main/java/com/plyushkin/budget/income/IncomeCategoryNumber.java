@@ -15,7 +15,7 @@ import lombok.experimental.StandardException;
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
 @EqualsAndHashCode
-public class IncomeNoteCategoryNumber implements Serializable {
+public class IncomeCategoryNumber implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -23,13 +23,13 @@ public class IncomeNoteCategoryNumber implements Serializable {
     @Column(name = "number", updatable = false)
     private long value;
 
-    public static IncomeNoteCategoryNumber create(long value) throws InvalidIncomeNoteIdException {
+    public static IncomeCategoryNumber create(long value) throws InvalidIncomeNoteIdException {
         if (value <= 0) {
             throw new InvalidIncomeNoteIdException(
                     "Value should be positive but it is: " + value
             );
         }
-        IncomeNoteCategoryNumber incomeNoteCategoryId = new IncomeNoteCategoryNumber();
+        IncomeCategoryNumber incomeNoteCategoryId = new IncomeCategoryNumber();
         incomeNoteCategoryId.value = value;
         return incomeNoteCategoryId;
     }

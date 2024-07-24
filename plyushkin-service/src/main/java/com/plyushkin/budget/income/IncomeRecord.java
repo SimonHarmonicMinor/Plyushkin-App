@@ -20,7 +20,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @NoArgsConstructor(access = PROTECTED)
 @DynamicUpdate
 public class IncomeRecord extends
-        AbstractRecord<IncomeNumber, IncomeNoteCategoryNumber, IncomeCategory, IncomeRecord> {
+        AbstractRecord<IncomeNumber, IncomeCategoryNumber, IncomeCategory, IncomeRecord> {
 
     protected IncomeRecord(IncomeNumber id,
                            WalletId walletId,
