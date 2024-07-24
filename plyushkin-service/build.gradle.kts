@@ -109,7 +109,13 @@ openApi {
             "--spring.jpa.hibernate.ddl-auto=none",
             "--spring.flyway.enabled=false",
             "--spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults=false",
-            "--spring.jpa.database=h2"
+            "--spring.jpa.database=h2",
+            "--spring.datasource.url=jdbc:h2:mem:testdb",
+            "--spring.datasource.driverClassName=org.h2.Driver",
+            "--spring.datasource.username=sa",
+            "--spring.datasource.password=password",
+            "--spring.jpa.database-platform=org.hibernate.dialect.H2Dialect",
+            "--debug=true"
         ))
     }
 }
