@@ -74,15 +74,15 @@ class ExpenseCategoryController {
                 .body(new CreateExpenseNoteCategoryResponse(number));
     }
 
-    @PutMapping("/wallets/{walletId}/expenseNoteCategories/{number}")
+    @PatchMapping("/wallets/{walletId}/expenseNoteCategories/{number}")
     public void updateCategory(@NotNull @PathVariable ExpenseCategoryNumber number,
                                @NotNull @PathVariable WalletId walletId,
                                @NotNull @Valid @RequestBody UpdateExpenseNoteCategoryRequest request)
             throws UpdateExpenseNoteCategoryException {
         useCase.update(
+                walletId,
+                number,
                 new UpdateCommand(
-                        walletId,
-                        number,
                         request.name(),
                         request.newParentNumber()
                 )

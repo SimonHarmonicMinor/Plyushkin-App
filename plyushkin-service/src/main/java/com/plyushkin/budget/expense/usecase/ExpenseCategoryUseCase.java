@@ -9,6 +9,7 @@ import com.plyushkin.budget.expense.usecase.command.UpdateCommand;
 import com.plyushkin.budget.expense.usecase.exception.CreateCategoryException;
 import com.plyushkin.budget.expense.usecase.exception.UpdateExpenseNoteCategoryException;
 import com.plyushkin.util.WriteTransactional;
+import com.plyushkin.wallet.WalletId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -41,22 +42,22 @@ public class ExpenseCategoryUseCase {
     }
 
     @WriteTransactional
-    public void update(UpdateCommand command) throws UpdateExpenseNoteCategoryException {
-        repository.lockByWalletId(command.walletId());
-        ExpenseCategory root = repository.findByWalletIdAndNumber(command.walletId(), command.rootCategoryNumber())
+    public void update(WalletId walletId, ExpenseCategoryNumber number, UpdateCommand command) throws UpdateExpenseNoteCategoryException {
+        repository.lockByWalletId(walletId);
+        ExpenseCategory root = repository.findByWalletIdAndNumber(walletId, number)
                 .orElseThrow(() -> new UpdateExpenseNoteCategoryException.ChangeParent.RootNotFound(
                         "Cannot find root category by WalletId %s and number %s"
-                                .formatted(command.walletId(), command.rootCategoryNumber())
+                                .formatted(walletId, number)
                 ));
         ExpenseCategory newParent =
                 command.parentCategoryNumber() == null
                         ?
                         null
                         :
-                        repository.findByWalletIdAndNumber(command.walletId(), command.parentCategoryNumber())
+                        repository.findByWalletIdAndNumber(walletId, command.parentCategoryNumber())
                                 .orElseThrow(() -> new UpdateExpenseNoteCategoryException.ChangeParent.ParentNotFound(
                                         "Cannot find child category by WalletId %s and number %s"
-                                                .formatted(command.walletId(), command.parentCategoryNumber())
+                                                .formatted(walletId, command.parentCategoryNumber())
                                 ));
         try {
             root.update(command.name(), newParent);
@@ -64,7 +65,7 @@ public class ExpenseCategoryUseCase {
             switch (e) {
                 case AbstractCategory.UpdateCategoryException.ChangeParent.MismatchedWalletId err ->
                         throw new UpdateExpenseNoteCategoryException.ChangeParent.MismatchedWalletId(
-                                "Mismatched WalletId " + command.walletId(), err
+                                "Mismatched WalletId " + walletId, err
                         );
                 case AbstractCategory.UpdateCategoryException.ChangeParent.ParentEqualsToRoot err ->
                         throw new UpdateExpenseNoteCategoryException.ChangeParent.ParentEqualsToRoot(
