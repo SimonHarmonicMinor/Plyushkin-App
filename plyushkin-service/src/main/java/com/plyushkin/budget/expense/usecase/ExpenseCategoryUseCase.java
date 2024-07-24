@@ -13,6 +13,8 @@ import com.plyushkin.wallet.WalletId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ExpenseCategoryUseCase {
@@ -49,16 +51,15 @@ public class ExpenseCategoryUseCase {
                         "Cannot find root category by WalletId %s and number %s"
                                 .formatted(walletId, number)
                 ));
-        ExpenseCategory newParent =
-                command.parentCategoryNumber() == null
-                        ?
-                        null
-                        :
-                        repository.findByWalletIdAndNumber(walletId, command.parentCategoryNumber())
-                                .orElseThrow(() -> new UpdateExpenseNoteCategoryException.ChangeParent.ParentNotFound(
-                                        "Cannot find child category by WalletId %s and number %s"
-                                                .formatted(walletId, command.parentCategoryNumber())
-                                ));
+        ExpenseCategory newParent = null;
+        if (command.parentCategoryNumber() != null) {
+            newParent = repository.findByWalletIdAndNumber(walletId, command.parentCategoryNumber())
+                    .orElseThrow(() -> new UpdateExpenseNoteCategoryException.ChangeParent.ParentNotFound(
+                            "Cannot find child category by WalletId %s and number %s"
+                                    .formatted(walletId, command.parentCategoryNumber())
+                    ));
+        }
+
         try {
             root.update(command.name(), newParent);
         } catch (AbstractCategory.UpdateCategoryException e) {
