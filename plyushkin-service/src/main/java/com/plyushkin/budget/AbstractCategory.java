@@ -61,8 +61,7 @@ public abstract class AbstractCategory<
 
     protected abstract void setParent(T parent);
 
-    public void update(String name, @Nullable T newParent) throws UpdateCategoryException {
-        this.name = name;
+    public void update(@Nullable String name, @Nullable T newParent) throws UpdateCategoryException {
         if (newParent != null && !newParent.walletId.equals(walletId)) {
             throw new UpdateCategoryException.ChangeParent.MismatchedWalletId(
                     "Cannot set parent %s because WalletId is not %s"
@@ -73,6 +72,9 @@ public abstract class AbstractCategory<
             throw new UpdateCategoryException.ChangeParent.ParentEqualsToRoot(
                     "Category cannot be a parent to itself"
             );
+        }
+        if (name != null) {
+            this.name = name;
         }
         setParent(newParent);
     }
