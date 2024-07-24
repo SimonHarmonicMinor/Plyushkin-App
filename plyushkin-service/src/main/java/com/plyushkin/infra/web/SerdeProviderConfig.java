@@ -1,6 +1,6 @@
 package com.plyushkin.infra.web;
 
-import com.plyushkin.budget.expense.ExpenseNoteCategoryNumber;
+import com.plyushkin.budget.expense.ExpenseCategoryNumber;
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
 import lombok.SneakyThrows;
@@ -31,22 +31,22 @@ public class SerdeProviderConfig {
     }
 
     @Bean
-    SerdeProvider<ExpenseNoteCategoryNumber> expenseNoteCategoryNumberSerdeProvider() {
+    SerdeProvider<ExpenseCategoryNumber> expenseNoteCategoryNumberSerdeProvider() {
         return new LongSerdeProvider<>() {
             @Override
             @SneakyThrows
-            public ExpenseNoteCategoryNumber asEntity(long value) {
-                return ExpenseNoteCategoryNumber.create(value);
+            public ExpenseCategoryNumber asEntity(long value) {
+                return ExpenseCategoryNumber.create(value);
             }
 
             @Override
-            public long asLong(ExpenseNoteCategoryNumber value) {
+            public long asLong(ExpenseCategoryNumber value) {
                 return value.getValue();
             }
 
             @Override
-            public Class<ExpenseNoteCategoryNumber> type() {
-                return ExpenseNoteCategoryNumber.class;
+            public Class<ExpenseCategoryNumber> type() {
+                return ExpenseCategoryNumber.class;
             }
         };
     }

@@ -1,7 +1,7 @@
 package com.plyushkin.budget.expense.controller;
 
+import com.plyushkin.budget.expense.ExpenseCategoryNumber;
 import com.plyushkin.budget.expense.ExpenseNoteCategoryEntityGraph;
-import com.plyushkin.budget.expense.ExpenseNoteCategoryNumber;
 import com.plyushkin.budget.expense.controller.request.CreateExpenseNoteCategoryRequest;
 import com.plyushkin.budget.expense.controller.request.UpdateExpenseNoteCategoryRequest;
 import com.plyushkin.budget.expense.controller.response.CreateExpenseNoteCategoryResponse;
@@ -63,7 +63,7 @@ class ExpenseCategoryController {
             @Valid @RequestBody CreateExpenseNoteCategoryRequest request
     )
             throws CreateCategoryException {
-        ExpenseNoteCategoryNumber number = useCase.createCategory(new CreateCategoryCommand(
+        ExpenseCategoryNumber number = useCase.createCategory(new CreateCategoryCommand(
                 request.name(),
                 walletId,
                 UserId.createRandom()
@@ -75,7 +75,7 @@ class ExpenseCategoryController {
     }
 
     @PutMapping("/wallets/{walletId}/expenseNoteCategories/{number}")
-    public void updateCategory(@NotNull @PathVariable ExpenseNoteCategoryNumber number,
+    public void updateCategory(@NotNull @PathVariable ExpenseCategoryNumber number,
                                @NotNull @PathVariable WalletId walletId,
                                @NotNull @Valid @RequestBody UpdateExpenseNoteCategoryRequest request)
             throws UpdateExpenseNoteCategoryException {
@@ -91,7 +91,7 @@ class ExpenseCategoryController {
 
     @GetMapping("/wallets/{walletId}/expenseNoteCategories/{number}")
     public ResponseEntity<ExpenseCategoryResponse> getCategory(
-            @NotNull @PathVariable ExpenseNoteCategoryNumber number,
+            @NotNull @PathVariable ExpenseCategoryNumber number,
             @NotNull @PathVariable WalletId walletId
     ) {
         return repository.findByWalletIdAndNumber(

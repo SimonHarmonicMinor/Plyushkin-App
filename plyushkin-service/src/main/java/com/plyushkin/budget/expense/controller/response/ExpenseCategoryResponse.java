@@ -2,7 +2,7 @@ package com.plyushkin.budget.expense.controller.response;
 
 import com.plyushkin.budget.AbstractCategory;
 import com.plyushkin.budget.expense.ExpenseCategory;
-import com.plyushkin.budget.expense.ExpenseNoteCategoryNumber;
+import com.plyushkin.budget.expense.ExpenseCategoryNumber;
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
 import jakarta.validation.constraints.NotNull;
@@ -12,13 +12,13 @@ import java.util.Optional;
 
 public record ExpenseCategoryResponse(
         @NotNull
-        ExpenseNoteCategoryNumber number,
+        ExpenseCategoryNumber number,
         @NotNull
         WalletId walletId,
         @NotNull
         UserId whoCreatedId,
         @Nullable
-        ExpenseNoteCategoryNumber parentNumber
+        ExpenseCategoryNumber parentNumber
 ) {
     public ExpenseCategoryResponse(ExpenseCategory category) {
         this(

@@ -20,7 +20,7 @@ import static lombok.AccessLevel.PROTECTED;
 @DynamicUpdate
 public class ExpenseRecord extends
         AbstractRecord<ExpenseNumber,
-                        ExpenseNoteCategoryNumber,
+                ExpenseCategoryNumber,
                 ExpenseCategory,
                 ExpenseRecord> {
 

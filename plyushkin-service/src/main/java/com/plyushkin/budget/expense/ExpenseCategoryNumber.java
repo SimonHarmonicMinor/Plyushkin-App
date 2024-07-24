@@ -20,7 +20,7 @@ import static lombok.AccessLevel.PROTECTED;
 @AllArgsConstructor(access = PRIVATE)
 @Getter
 @Schema(implementation = Long.class, description = "ExpenseNoteCategoryNumber", minimum = "1")
-public class ExpenseNoteCategoryNumber implements Serializable {
+public class ExpenseCategoryNumber implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -28,18 +28,18 @@ public class ExpenseNoteCategoryNumber implements Serializable {
     @Column(name = "number", updatable = false)
     private long value;
 
-    public static ExpenseNoteCategoryNumber createOne() {
-        return new ExpenseNoteCategoryNumber(1L);
+    public static ExpenseCategoryNumber createOne() {
+        return new ExpenseCategoryNumber(1L);
     }
 
-    public static ExpenseNoteCategoryNumber create(long value) throws InvalidExpenseNoteCategoryNumberException {
+    public static ExpenseCategoryNumber create(long value) throws InvalidExpenseNoteCategoryNumberException {
         if (value <= 0) {
             throw new InvalidExpenseNoteCategoryNumberException(
                     "Value should be positive but it is: " + value,
                     value
             );
         }
-        ExpenseNoteCategoryNumber expenseNoteCategoryId = new ExpenseNoteCategoryNumber();
+        ExpenseCategoryNumber expenseNoteCategoryId = new ExpenseCategoryNumber();
         expenseNoteCategoryId.value = value;
         return expenseNoteCategoryId;
     }

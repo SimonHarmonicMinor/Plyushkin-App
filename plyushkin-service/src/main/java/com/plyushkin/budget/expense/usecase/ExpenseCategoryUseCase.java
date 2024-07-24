@@ -2,7 +2,7 @@ package com.plyushkin.budget.expense.usecase;
 
 import com.plyushkin.budget.AbstractCategory;
 import com.plyushkin.budget.expense.ExpenseCategory;
-import com.plyushkin.budget.expense.ExpenseNoteCategoryNumber;
+import com.plyushkin.budget.expense.ExpenseCategoryNumber;
 import com.plyushkin.budget.expense.repository.ExpenseCategoryRepository;
 import com.plyushkin.budget.expense.usecase.command.CreateCategoryCommand;
 import com.plyushkin.budget.expense.usecase.command.UpdateCommand;
@@ -19,7 +19,7 @@ public class ExpenseCategoryUseCase {
     private final ExpenseCategoryRepository repository;
 
     @WriteTransactional
-    public ExpenseNoteCategoryNumber createCategory(CreateCategoryCommand command) throws CreateCategoryException {
+    public ExpenseCategoryNumber createCategory(CreateCategoryCommand command) throws CreateCategoryException {
         repository.lockByWalletId(command.walletId());
         if (repository.existsByNameAndWalletId(command.walletId(), command.name())) {
             throw new CreateCategoryException.NonUniqueNamePerWalletId(
@@ -28,12 +28,12 @@ public class ExpenseCategoryUseCase {
                     command.name()
             );
         }
-        ExpenseNoteCategoryNumber expenseNoteCategoryNumber =
+        ExpenseCategoryNumber expenseCategoryNumber =
                 repository.findMaxNumberPerWalletId(command.walletId())
-                        .orElse(ExpenseNoteCategoryNumber.createOne());
+                        .orElse(ExpenseCategoryNumber.createOne());
 
         return repository.save(ExpenseCategory.create(
-                expenseNoteCategoryNumber,
+                expenseCategoryNumber,
                 command.name(),
                 command.walletId(),
                 command.whoCreated()

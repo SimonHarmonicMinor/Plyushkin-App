@@ -1,11 +1,11 @@
 package com.plyushkin.budget.expense.controller.request;
 
-import com.plyushkin.budget.expense.ExpenseNoteCategoryNumber;
+import com.plyushkin.budget.expense.ExpenseCategoryNumber;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 
 public record UpdateExpenseNoteCategoryRequest(
         @NotNull String name,
-        @Nullable ExpenseNoteCategoryNumber newParentNumber
+        @Nullable ExpenseCategoryNumber newParentNumber
 ) {
 }
