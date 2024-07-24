@@ -28,9 +28,9 @@ public class IncomeNumber implements Serializable {
                     "Value should be positive but it is: " + value
             );
         }
-        IncomeNumber incomeNoteId = new IncomeNumber();
-        incomeNoteId.value = value;
-        return incomeNoteId;
+        IncomeNumber number = new IncomeNumber();
+        number.value = value;
+        return number;
     }
 
     @Override
