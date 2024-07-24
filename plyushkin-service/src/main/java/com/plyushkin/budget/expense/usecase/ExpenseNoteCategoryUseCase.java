@@ -22,11 +22,22 @@ public class ExpenseNoteCategoryUseCase {
     public ExpenseNoteCategoryNumber createCategory(CreateCategoryCommand command) throws CreateCategoryException {
         repository.lockByWalletId(command.walletId());
         if (repository.existsByNameAndWalletId(command.walletId(), command.name())) {
-            throw new CreateCategoryException.NonUniqueNamePerWalletId("Name %s is already taken for WalletId %s".formatted(command.name(), command.walletId()), command.name());
+            throw new CreateCategoryException.NonUniqueNamePerWalletId(
+                    "Name %s is already taken for WalletId %s"
+                            .formatted(command.name(), command.walletId()),
+                    command.name()
+            );
         }
-        ExpenseNoteCategoryNumber expenseNoteCategoryNumber = repository.findMaxNumberPerWalletId(command.walletId()).orElse(ExpenseNoteCategoryNumber.createOne());
+        ExpenseNoteCategoryNumber expenseNoteCategoryNumber =
+                repository.findMaxNumberPerWalletId(command.walletId())
+                        .orElse(ExpenseNoteCategoryNumber.createOne());
 
-        return repository.save(ExpenseNoteCategory.create(expenseNoteCategoryNumber, command.name(), command.walletId(), command.whoCreated())).getNumber();
+        return repository.save(ExpenseNoteCategory.create(
+                expenseNoteCategoryNumber,
+                command.name(),
+                command.walletId(),
+                command.whoCreated()
+        )).getNumber();
     }
 
     @WriteTransactional
@@ -34,15 +45,18 @@ public class ExpenseNoteCategoryUseCase {
         repository.lockByWalletId(command.walletId());
         ExpenseNoteCategory root = repository.findByWalletIdAndNumber(command.walletId(), command.rootCategoryNumber())
                 .orElseThrow(() -> new UpdateExpenseNoteCategoryException.ChangeParent.RootNotFound(
-                        "Cannot find root category by WalletId %s and number %s".formatted(command.walletId(), command.rootCategoryNumber())
+                        "Cannot find root category by WalletId %s and number %s"
+                                .formatted(command.walletId(), command.rootCategoryNumber())
                 ));
         ExpenseNoteCategory newParent =
                 command.parentCategoryNumber() == null
                         ?
-                        null :
+                        null
+                        :
                         repository.findByWalletIdAndNumber(command.walletId(), command.parentCategoryNumber())
                                 .orElseThrow(() -> new UpdateExpenseNoteCategoryException.ChangeParent.ParentNotFound(
-                                        "Cannot find child category by WalletId %s and number %s".formatted(command.walletId(), command.parentCategoryNumber())
+                                        "Cannot find child category by WalletId %s and number %s"
+                                                .formatted(command.walletId(), command.parentCategoryNumber())
                                 ));
         try {
             root.update(command.name(), newParent);

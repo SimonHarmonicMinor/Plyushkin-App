@@ -1,20 +1,18 @@
 package com.plyushkin.budget.expense;
 
-import static lombok.AccessLevel.PRIVATE;
-import static lombok.AccessLevel.PROTECTED;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-
-import java.io.Serial;
-import java.io.Serializable;
-
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.StandardException;
+
+import java.io.Serial;
+import java.io.Serializable;
+
+import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PROTECTED;
 
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)

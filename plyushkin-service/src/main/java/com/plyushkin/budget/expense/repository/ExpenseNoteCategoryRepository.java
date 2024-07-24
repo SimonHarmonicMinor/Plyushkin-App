@@ -27,7 +27,11 @@ public interface ExpenseNoteCategoryRepository extends EntityGraphJpaRepository<
 
     Optional<ExpenseNoteCategory> findByWalletIdAndNumber(WalletId walletId, ExpenseNoteCategoryNumber number);
 
-    Optional<ExpenseNoteCategory> findByWalletIdAndNumber(WalletId walletId, ExpenseNoteCategoryNumber number, EntityGraph entityGraph);
+    Optional<ExpenseNoteCategory> findByWalletIdAndNumber(
+            WalletId walletId,
+            ExpenseNoteCategoryNumber number,
+            EntityGraph entityGraph
+    );
 
     List<ExpenseNoteCategory> findAllByWalletId(WalletId walletId, EntityGraph entityGraph);
 }

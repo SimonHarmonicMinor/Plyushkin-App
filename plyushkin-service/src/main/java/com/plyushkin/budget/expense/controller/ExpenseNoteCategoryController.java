@@ -53,15 +53,15 @@ class ExpenseNoteCategoryController {
                     responseCode = "400",
                     content = @Content(
                             schema = @Schema(
-                                    oneOf = {
-                                            ErrorCreateCategoryResponse.class,
-                                    }
+                                    oneOf = ErrorCreateCategoryResponse.class
                             )
                     )
             )
     })
-    public ResponseEntity<CreateExpenseNoteCategoryResponse> createCategory(@NotNull @PathVariable WalletId walletId,
-                                                                            @Valid @RequestBody CreateExpenseNoteCategoryRequest request)
+    public ResponseEntity<CreateExpenseNoteCategoryResponse> createCategory(
+            @NotNull @PathVariable WalletId walletId,
+            @Valid @RequestBody CreateExpenseNoteCategoryRequest request
+    )
             throws CreateCategoryException {
         ExpenseNoteCategoryNumber number = useCase.createCategory(new CreateCategoryCommand(
                 request.name(),
@@ -90,8 +90,10 @@ class ExpenseNoteCategoryController {
     }
 
     @GetMapping("/wallets/{walletId}/expenseNoteCategories/{number}")
-    public ResponseEntity<ExpenseNoteCategoryResponse> getCategory(@NotNull @PathVariable ExpenseNoteCategoryNumber number,
-                                                                   @NotNull @PathVariable WalletId walletId) {
+    public ResponseEntity<ExpenseNoteCategoryResponse> getCategory(
+            @NotNull @PathVariable ExpenseNoteCategoryNumber number,
+            @NotNull @PathVariable WalletId walletId
+    ) {
         return repository.findByWalletIdAndNumber(
                         walletId,
                         number,
@@ -118,7 +120,9 @@ class ExpenseNoteCategoryController {
     }
 
     @ExceptionHandler(UpdateExpenseNoteCategoryException.class)
-    public ResponseEntity<UpdateExpenseNoteCategoryResponse> handleUpdateExpenseNoteCategoryException(UpdateExpenseNoteCategoryException e) {
+    public ResponseEntity<UpdateExpenseNoteCategoryResponse> handleUpdateExpenseNoteCategoryException(
+            UpdateExpenseNoteCategoryException e
+    ) {
         log4xx(e);
         return ResponseEntity.status(400)
                 .body(new UpdateExpenseNoteCategoryResponse(e.getMessage()));

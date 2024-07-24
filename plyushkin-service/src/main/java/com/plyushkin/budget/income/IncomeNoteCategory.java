@@ -4,14 +4,14 @@ import com.plyushkin.budget.AbstractCategory;
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
 import jakarta.annotation.Nullable;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;

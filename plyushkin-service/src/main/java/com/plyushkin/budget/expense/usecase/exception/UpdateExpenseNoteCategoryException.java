@@ -6,7 +6,7 @@ import lombok.experimental.StandardException;
 public abstract sealed class UpdateExpenseNoteCategoryException extends Exception {
 
     @StandardException
-    public static abstract sealed class ChangeParent extends UpdateExpenseNoteCategoryException {
+    public abstract static sealed class ChangeParent extends UpdateExpenseNoteCategoryException {
         @StandardException
         public static final class RootNotFound extends ChangeParent {
         }

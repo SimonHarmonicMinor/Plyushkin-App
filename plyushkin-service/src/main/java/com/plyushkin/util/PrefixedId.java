@@ -53,12 +53,18 @@ public class PrefixedId implements Serializable {
         }
         final var split = rawValue.split(prefix);
         if (split.length != 2) {
-            throw new InvalidPrefixedIdException("Unexpected split by prefix=%s: %s".formatted(prefix, Arrays.toString(split)));
+            throw new InvalidPrefixedIdException(
+                    "Unexpected split by prefix=%s: %s"
+                            .formatted(prefix, Arrays.toString(split))
+            );
         }
         try {
             return Long.parseLong(split[1], MAX_RADIX);
         } catch (NumberFormatException e) {
-            throw new InvalidPrefixedIdException("Couldn't parse value=%s for radix=%s".formatted(rawValue, MAX_RADIX), e);
+            throw new InvalidPrefixedIdException(
+                    "Couldn't parse value=%s for radix=%s"
+                            .formatted(rawValue, MAX_RADIX), e
+            );
         }
     }
 
