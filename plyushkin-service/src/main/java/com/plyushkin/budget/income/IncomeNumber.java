@@ -15,20 +15,20 @@ import lombok.experimental.StandardException;
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
 @EqualsAndHashCode
-public class IncomeNoteNumber implements Serializable {
+public class IncomeNumber implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Column(name = "number", updatable = false)
     private long value;
 
-    public static IncomeNoteNumber create(long value) throws InvalidIncomeNoteIdException {
+    public static IncomeNumber create(long value) throws InvalidIncomeNumberException {
         if (value <= 0) {
-            throw new InvalidIncomeNoteIdException(
+            throw new InvalidIncomeNumberException(
                     "Value should be positive but it is: " + value
             );
         }
-        IncomeNoteNumber incomeNoteId = new IncomeNoteNumber();
+        IncomeNumber incomeNoteId = new IncomeNumber();
         incomeNoteId.value = value;
         return incomeNoteId;
     }
@@ -39,6 +39,6 @@ public class IncomeNoteNumber implements Serializable {
     }
 
     @StandardException
-    public static class InvalidIncomeNoteIdException extends Exception {
+    public static class InvalidIncomeNumberException extends Exception {
     }
 }
