@@ -42,7 +42,10 @@ public class ExpenseCategoryUseCase {
     }
 
     @WriteTransactional
-    public void update(WalletId walletId, ExpenseCategoryNumber number, UpdateCommand command) throws UpdateExpenseCategoryException {
+    public void update(WalletId walletId,
+                       ExpenseCategoryNumber number,
+                       UpdateCommand command)
+            throws UpdateExpenseCategoryException {
         repository.lockByWalletId(walletId);
         ExpenseCategory root = repository.findByWalletIdAndNumber(walletId, number)
                 .orElseThrow(() -> new UpdateExpenseCategoryException.ChangeParent.RootNotFound(
