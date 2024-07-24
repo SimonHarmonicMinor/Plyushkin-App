@@ -15,7 +15,7 @@ import com.plyushkin.budget.expense.usecase.command.CreateCategoryCommand;
 import com.plyushkin.budget.expense.usecase.command.UpdateCommand;
 import com.plyushkin.budget.expense.usecase.exception.CreateCategoryException;
 import com.plyushkin.budget.expense.usecase.exception.CreateCategoryException.NonUniqueNamePerWalletId;
-import com.plyushkin.budget.expense.usecase.exception.UpdateExpenseNoteCategoryException;
+import com.plyushkin.budget.expense.usecase.exception.UpdateExpenseCategoryException;
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
 import io.swagger.v3.oas.annotations.Operation;
@@ -78,7 +78,7 @@ class ExpenseCategoryController {
     public void updateCategory(@NotNull @PathVariable ExpenseCategoryNumber number,
                                @NotNull @PathVariable WalletId walletId,
                                @NotNull @Valid @RequestBody UpdateExpenseNoteCategoryRequest request)
-            throws UpdateExpenseNoteCategoryException {
+            throws UpdateExpenseCategoryException {
         useCase.update(
                 walletId,
                 number,
@@ -119,9 +119,9 @@ class ExpenseCategoryController {
                 .toList();
     }
 
-    @ExceptionHandler(UpdateExpenseNoteCategoryException.class)
+    @ExceptionHandler(UpdateExpenseCategoryException.class)
     public ResponseEntity<UpdateExpenseNoteCategoryResponse> handleUpdateExpenseNoteCategoryException(
-            UpdateExpenseNoteCategoryException e
+            UpdateExpenseCategoryException e
     ) {
         log4xx(e);
         return ResponseEntity.status(400)
