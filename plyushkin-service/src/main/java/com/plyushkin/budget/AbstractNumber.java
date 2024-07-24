@@ -1,5 +1,6 @@
 package com.plyushkin.budget;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import lombok.EqualsAndHashCode;
@@ -16,6 +17,7 @@ import static lombok.AccessLevel.PROTECTED;
 @NoArgsConstructor(access = PROTECTED)
 @EqualsAndHashCode
 @Getter
+@SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
 public abstract class AbstractNumber implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
