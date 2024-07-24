@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
-@Table(schema = "budget", name = "income_note")
+@Table(schema = "budget", name = "income_record")
 @NoArgsConstructor(access = PROTECTED)
 @DynamicUpdate
 public class IncomeRecord extends

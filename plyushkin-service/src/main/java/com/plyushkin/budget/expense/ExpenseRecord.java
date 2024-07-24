@@ -15,7 +15,7 @@ import java.time.LocalDate;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
-@Table(schema = "budget", name = "expense_note")
+@Table(schema = "budget", name = "expense_record")
 @NoArgsConstructor(access = PROTECTED)
 @DynamicUpdate
 public class ExpenseRecord extends

@@ -12,7 +12,7 @@ CREATE TABLE budget.expense_note_category
     UNIQUE (wallet_id, number)
 );
 
-CREATE TABLE budget.expense_note
+CREATE TABLE budget.expense_record
 (
     pk          BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     number      BIGINT          NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE budget.income_note_category
     UNIQUE (wallet_id, number)
 );
 
-CREATE TABLE budget.income_note
+CREATE TABLE budget.income_record
 (
     pk          BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     number      BIGINT          NOT NULL,
