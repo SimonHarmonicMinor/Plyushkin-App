@@ -39,9 +39,9 @@ public class ExpenseCategoryNumber implements Serializable {
                     value
             );
         }
-        ExpenseCategoryNumber expenseNoteCategoryId = new ExpenseCategoryNumber();
-        expenseNoteCategoryId.value = value;
-        return expenseNoteCategoryId;
+        ExpenseCategoryNumber number = new ExpenseCategoryNumber();
+        number.value = value;
+        return number;
     }
 
     @Getter
