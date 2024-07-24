@@ -1,24 +1,27 @@
 package com.plyushkin.budget.expense;
 
-import static lombok.AccessLevel.PROTECTED;
-
 import com.plyushkin.budget.AbstractNote;
 import com.plyushkin.budget.Money;
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDate;
 
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicUpdate;
+import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Table(schema = "budget", name = "expense_note")
 @NoArgsConstructor(access = PROTECTED)
 @DynamicUpdate
-public class ExpenseNote extends AbstractNote<ExpenseNoteNumber, ExpenseNoteCategoryNumber, ExpenseNoteCategory, ExpenseNote> {
+public class ExpenseNote extends
+        AbstractNote<ExpenseNoteNumber,
+                ExpenseNoteCategoryNumber,
+                ExpenseNoteCategory,
+                ExpenseNote> {
 
     protected ExpenseNote(ExpenseNoteNumber id,
                           WalletId walletId,
