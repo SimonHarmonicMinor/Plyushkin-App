@@ -20,7 +20,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @NoArgsConstructor(access = PROTECTED)
 @DynamicUpdate
 public class IncomeRecord extends
-        AbstractRecord<IncomeNumber, IncomeNoteCategoryNumber, IncomeNoteCategory, IncomeRecord> {
+        AbstractRecord<IncomeNumber, IncomeNoteCategoryNumber, IncomeCategory, IncomeRecord> {
 
     protected IncomeRecord(IncomeNumber id,
                            WalletId walletId,
@@ -28,7 +28,7 @@ public class IncomeRecord extends
                            LocalDate date,
                            Currency currency,
                            Money amount,
-                           IncomeNoteCategory category,
+                           IncomeCategory category,
                            String comment) throws InvalidRecordException {
         super(id, walletId, whoDid, date, currency, amount, category, comment);
     }
@@ -39,7 +39,7 @@ public class IncomeRecord extends
                                       LocalDate date,
                                       Currency currency,
                                       Money amount,
-                                      IncomeNoteCategory category,
+                                      IncomeCategory category,
                                       String comment) throws InvalidRecordException {
         return new IncomeRecord(id, walletId, whoDid, date, currency, amount, category, comment);
     }
