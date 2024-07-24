@@ -18,7 +18,7 @@ import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
-@Table(schema = "budget", name = "expense_note_category")
+@Table(schema = "budget", name = "expense_category")
 @NoArgsConstructor(access = PROTECTED)
 @DynamicUpdate
 @Getter
