@@ -3,6 +3,7 @@ package com.plyushkin.budget.income;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.plyushkin.budget.AbstractNote;
+import com.plyushkin.budget.Currency;
 import com.plyushkin.budget.Money;
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
@@ -25,19 +26,21 @@ public class IncomeNote extends
                          WalletId walletId,
                          UserId whoDid,
                          LocalDate date,
+                         Currency currency,
                          Money amount,
                          IncomeNoteCategory category,
                          String comment) throws InvalidNoteException {
-        super(id, walletId, whoDid, date, amount, category, comment);
+        super(id, walletId, whoDid, date, currency, amount, category, comment);
     }
 
     public static IncomeNote create(IncomeNoteNumber id,
                                     WalletId walletId,
                                     UserId whoDid,
                                     LocalDate date,
+                                    Currency currency,
                                     Money amount,
                                     IncomeNoteCategory category,
                                     String comment) throws InvalidNoteException {
-        return new IncomeNote(id, walletId, whoDid, date, amount, category, comment);
+        return new IncomeNote(id, walletId, whoDid, date, currency, amount, category, comment);
     }
 }

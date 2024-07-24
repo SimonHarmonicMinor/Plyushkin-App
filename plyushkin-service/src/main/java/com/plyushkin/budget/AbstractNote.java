@@ -7,16 +7,7 @@ import static lombok.AccessLevel.PROTECTED;
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.AttributeOverrides;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -65,6 +56,9 @@ public class AbstractNote<
     @ToString.Include
     private LocalDate date;
 
+    @Convert(converter = CurrencyAttributeConverter.class)
+    private Currency currency;
+
     @Embedded
     @ToString.Include
     @AttributeOverride(name = "value", column = @Column(name = "amount"))
@@ -82,6 +76,7 @@ public class AbstractNote<
                            WalletId walletId,
                            UserId whoDid,
                            LocalDate date,
+                           Currency currency,
                            Money amount,
                            C category,
                            String comment) throws InvalidNoteException {
@@ -90,17 +85,20 @@ public class AbstractNote<
         this.walletId = walletId;
         this.whoDid = whoDid;
         this.date = date;
+        this.currency = currency;
         this.amount = amount;
         this.category = category;
         this.comment = comment;
     }
 
     public void update(LocalDate date,
+                       Currency currency,
                        Money amount,
                        C category,
                        String comment) throws InvalidNoteCategoryException {
         validateCategory(category);
         this.date = date;
+        this.currency = currency;
         this.amount = amount;
         this.category = category;
         this.comment = comment;

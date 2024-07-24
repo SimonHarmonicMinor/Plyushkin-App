@@ -1,6 +1,7 @@
 package com.plyushkin.budget.expense;
 
 import com.plyushkin.budget.AbstractNote;
+import com.plyushkin.budget.Currency;
 import com.plyushkin.budget.Money;
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
@@ -27,20 +28,22 @@ public class ExpenseNote extends
                           WalletId walletId,
                           UserId whoDid,
                           LocalDate date,
+                          Currency currency,
                           Money amount,
                           ExpenseNoteCategory category,
                           String comment) throws InvalidNoteException {
-        super(id, walletId, whoDid, date, amount, category, comment);
+        super(id, walletId, whoDid, date, currency, amount, category, comment);
     }
 
     public static ExpenseNote create(ExpenseNoteNumber id,
                                      WalletId walletId,
                                      UserId whoDid,
                                      LocalDate date,
+                                     Currency currency,
                                      Money amount,
                                      ExpenseNoteCategory category,
                                      String comment) throws InvalidNoteException {
-        return new ExpenseNote(id, walletId, whoDid, date, amount, category, comment);
+        return new ExpenseNote(id, walletId, whoDid, date, currency, amount, category, comment);
     }
 
 }
