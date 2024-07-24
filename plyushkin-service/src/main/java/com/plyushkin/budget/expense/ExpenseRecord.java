@@ -19,12 +19,12 @@ import static lombok.AccessLevel.PROTECTED;
 @NoArgsConstructor(access = PROTECTED)
 @DynamicUpdate
 public class ExpenseRecord extends
-        AbstractRecord<ExpenseNoteNumber,
+        AbstractRecord<ExpenseNumber,
                         ExpenseNoteCategoryNumber,
                         ExpenseNoteCategory,
                 ExpenseRecord> {
 
-    protected ExpenseRecord(ExpenseNoteNumber id,
+    protected ExpenseRecord(ExpenseNumber id,
                             WalletId walletId,
                             UserId whoDid,
                             LocalDate date,
@@ -35,7 +35,7 @@ public class ExpenseRecord extends
         super(id, walletId, whoDid, date, currency, amount, category, comment);
     }
 
-    public static ExpenseRecord create(ExpenseNoteNumber id,
+    public static ExpenseRecord create(ExpenseNumber id,
                                        WalletId walletId,
                                        UserId whoDid,
                                        LocalDate date,

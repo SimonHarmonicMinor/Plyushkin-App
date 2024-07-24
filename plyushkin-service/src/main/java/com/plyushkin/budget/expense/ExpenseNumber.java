@@ -14,7 +14,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
 @EqualsAndHashCode
-public class ExpenseNoteNumber implements Serializable {
+public class ExpenseNumber implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -22,16 +22,16 @@ public class ExpenseNoteNumber implements Serializable {
     @Column(name = "number", updatable = false)
     private long value;
 
-    public static ExpenseNoteNumber create(long value) throws InvalidExpenseNoteIdException {
+    public static ExpenseNumber create(long value) throws InvalidExpenseNumberException {
         if (value <= 0) {
-            throw new InvalidExpenseNoteIdException(
+            throw new InvalidExpenseNumberException(
                     "Value should be positive but it is: " + value,
                     value
             );
         }
-        ExpenseNoteNumber expenseNoteId = new ExpenseNoteNumber();
-        expenseNoteId.value = value;
-        return expenseNoteId;
+        ExpenseNumber number = new ExpenseNumber();
+        number.value = value;
+        return number;
     }
 
     @Override
@@ -40,10 +40,10 @@ public class ExpenseNoteNumber implements Serializable {
     }
 
     @Getter
-    public static class InvalidExpenseNoteIdException extends Exception {
+    public static class InvalidExpenseNumberException extends Exception {
         private final long wrongValue;
 
-        public InvalidExpenseNoteIdException(String message, long wrongValue) {
+        public InvalidExpenseNumberException(String message, long wrongValue) {
             super(message);
             this.wrongValue = wrongValue;
         }
