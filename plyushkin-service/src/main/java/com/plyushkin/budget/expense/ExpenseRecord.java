@@ -21,7 +21,7 @@ import static lombok.AccessLevel.PROTECTED;
 public class ExpenseRecord extends
         AbstractRecord<ExpenseNumber,
                         ExpenseNoteCategoryNumber,
-                        ExpenseNoteCategory,
+                ExpenseCategory,
                 ExpenseRecord> {
 
     protected ExpenseRecord(ExpenseNumber id,
@@ -30,7 +30,7 @@ public class ExpenseRecord extends
                             LocalDate date,
                             Currency currency,
                             Money amount,
-                            ExpenseNoteCategory category,
+                            ExpenseCategory category,
                             String comment) throws InvalidRecordException {
         super(id, walletId, whoDid, date, currency, amount, category, comment);
     }
@@ -41,7 +41,7 @@ public class ExpenseRecord extends
                                        LocalDate date,
                                        Currency currency,
                                        Money amount,
-                                       ExpenseNoteCategory category,
+                                       ExpenseCategory category,
                                        String comment) throws InvalidRecordException {
         return new ExpenseRecord(id, walletId, whoDid, date, currency, amount, category, comment);
     }

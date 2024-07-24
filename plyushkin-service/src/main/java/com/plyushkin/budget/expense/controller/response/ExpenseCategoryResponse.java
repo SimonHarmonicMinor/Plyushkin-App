@@ -1,7 +1,7 @@
 package com.plyushkin.budget.expense.controller.response;
 
 import com.plyushkin.budget.AbstractCategory;
-import com.plyushkin.budget.expense.ExpenseNoteCategory;
+import com.plyushkin.budget.expense.ExpenseCategory;
 import com.plyushkin.budget.expense.ExpenseNoteCategoryNumber;
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
@@ -10,7 +10,7 @@ import jakarta.validation.constraints.NotNull;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public record ExpenseNoteCategoryResponse(
+public record ExpenseCategoryResponse(
         @NotNull
         ExpenseNoteCategoryNumber number,
         @NotNull
@@ -20,7 +20,7 @@ public record ExpenseNoteCategoryResponse(
         @Nullable
         ExpenseNoteCategoryNumber parentNumber
 ) {
-    public ExpenseNoteCategoryResponse(ExpenseNoteCategory category) {
+    public ExpenseCategoryResponse(ExpenseCategory category) {
         this(
                 category.getNumber(),
                 category.getWalletId(),

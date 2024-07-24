@@ -1,9 +1,9 @@
 package com.plyushkin.budget.expense.usecase;
 
 import com.plyushkin.budget.AbstractCategory;
-import com.plyushkin.budget.expense.ExpenseNoteCategory;
+import com.plyushkin.budget.expense.ExpenseCategory;
 import com.plyushkin.budget.expense.ExpenseNoteCategoryNumber;
-import com.plyushkin.budget.expense.repository.ExpenseNoteCategoryRepository;
+import com.plyushkin.budget.expense.repository.ExpenseCategoryRepository;
 import com.plyushkin.budget.expense.usecase.command.CreateCategoryCommand;
 import com.plyushkin.budget.expense.usecase.command.UpdateCommand;
 import com.plyushkin.budget.expense.usecase.exception.CreateCategoryException;
@@ -14,9 +14,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ExpenseNoteCategoryUseCase {
+public class ExpenseCategoryUseCase {
 
-    private final ExpenseNoteCategoryRepository repository;
+    private final ExpenseCategoryRepository repository;
 
     @WriteTransactional
     public ExpenseNoteCategoryNumber createCategory(CreateCategoryCommand command) throws CreateCategoryException {
@@ -32,7 +32,7 @@ public class ExpenseNoteCategoryUseCase {
                 repository.findMaxNumberPerWalletId(command.walletId())
                         .orElse(ExpenseNoteCategoryNumber.createOne());
 
-        return repository.save(ExpenseNoteCategory.create(
+        return repository.save(ExpenseCategory.create(
                 expenseNoteCategoryNumber,
                 command.name(),
                 command.walletId(),
@@ -43,12 +43,12 @@ public class ExpenseNoteCategoryUseCase {
     @WriteTransactional
     public void update(UpdateCommand command) throws UpdateExpenseNoteCategoryException {
         repository.lockByWalletId(command.walletId());
-        ExpenseNoteCategory root = repository.findByWalletIdAndNumber(command.walletId(), command.rootCategoryNumber())
+        ExpenseCategory root = repository.findByWalletIdAndNumber(command.walletId(), command.rootCategoryNumber())
                 .orElseThrow(() -> new UpdateExpenseNoteCategoryException.ChangeParent.RootNotFound(
                         "Cannot find root category by WalletId %s and number %s"
                                 .formatted(command.walletId(), command.rootCategoryNumber())
                 ));
-        ExpenseNoteCategory newParent =
+        ExpenseCategory newParent =
                 command.parentCategoryNumber() == null
                         ?
                         null

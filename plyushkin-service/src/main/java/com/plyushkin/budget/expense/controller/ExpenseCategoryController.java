@@ -7,10 +7,10 @@ import com.plyushkin.budget.expense.controller.request.UpdateExpenseNoteCategory
 import com.plyushkin.budget.expense.controller.response.CreateExpenseNoteCategoryResponse;
 import com.plyushkin.budget.expense.controller.response.ErrorCreateCategoryResponse;
 import com.plyushkin.budget.expense.controller.response.ErrorCreateCategoryResponse.ErrorNonUniqueNameResponse;
-import com.plyushkin.budget.expense.controller.response.ExpenseNoteCategoryResponse;
+import com.plyushkin.budget.expense.controller.response.ExpenseCategoryResponse;
 import com.plyushkin.budget.expense.controller.response.UpdateExpenseNoteCategoryResponse;
-import com.plyushkin.budget.expense.repository.ExpenseNoteCategoryRepository;
-import com.plyushkin.budget.expense.usecase.ExpenseNoteCategoryUseCase;
+import com.plyushkin.budget.expense.repository.ExpenseCategoryRepository;
+import com.plyushkin.budget.expense.usecase.ExpenseCategoryUseCase;
 import com.plyushkin.budget.expense.usecase.command.CreateCategoryCommand;
 import com.plyushkin.budget.expense.usecase.command.UpdateCommand;
 import com.plyushkin.budget.expense.usecase.exception.CreateCategoryException;
@@ -38,10 +38,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @Validated
 @Slf4j
-class ExpenseNoteCategoryController {
+class ExpenseCategoryController {
 
-    private final ExpenseNoteCategoryUseCase useCase;
-    private final ExpenseNoteCategoryRepository repository;
+    private final ExpenseCategoryUseCase useCase;
+    private final ExpenseCategoryRepository repository;
 
     @PostMapping("/wallets/{walletId}/expenseNoteCategories")
     @Operation(responses = {
@@ -90,7 +90,7 @@ class ExpenseNoteCategoryController {
     }
 
     @GetMapping("/wallets/{walletId}/expenseNoteCategories/{number}")
-    public ResponseEntity<ExpenseNoteCategoryResponse> getCategory(
+    public ResponseEntity<ExpenseCategoryResponse> getCategory(
             @NotNull @PathVariable ExpenseNoteCategoryNumber number,
             @NotNull @PathVariable WalletId walletId
     ) {
@@ -100,7 +100,7 @@ class ExpenseNoteCategoryController {
                         ExpenseNoteCategoryEntityGraph.____()
                                 .parent()
                                 .____.____()
-                ).map(ExpenseNoteCategoryResponse::new)
+                ).map(ExpenseCategoryResponse::new)
                 .map(ResponseEntity::ok)
                 .orElse(
                         ResponseEntity.notFound().build()
@@ -108,14 +108,14 @@ class ExpenseNoteCategoryController {
     }
 
     @GetMapping("/wallets/{walletId}/expenseNoteCategories")
-    public List<ExpenseNoteCategoryResponse> listCategories(@NotNull @PathVariable WalletId walletId) {
+    public List<ExpenseCategoryResponse> listCategories(@NotNull @PathVariable WalletId walletId) {
         return repository.findAllByWalletId(
                         walletId,
                         ExpenseNoteCategoryEntityGraph.____()
                                 .parent()
                                 .____.____()
                 ).stream()
-                .map(ExpenseNoteCategoryResponse::new)
+                .map(ExpenseCategoryResponse::new)
                 .toList();
     }
 

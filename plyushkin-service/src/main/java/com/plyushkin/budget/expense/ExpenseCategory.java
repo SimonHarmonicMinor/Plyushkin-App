@@ -23,22 +23,22 @@ import static lombok.AccessLevel.PROTECTED;
 @DynamicUpdate
 @Getter
 @Setter(PROTECTED)
-public class ExpenseNoteCategory extends AbstractCategory<ExpenseNoteCategoryNumber, ExpenseNoteCategory> {
+public class ExpenseCategory extends AbstractCategory<ExpenseNoteCategoryNumber, ExpenseCategory> {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "parent_id")
     @Nullable
-    private ExpenseNoteCategory parent;
+    private ExpenseCategory parent;
 
-    public static ExpenseNoteCategory create(ExpenseNoteCategoryNumber number,
-                                             String name,
-                                             WalletId walletId,
-                                             UserId whoCreated) {
-        ExpenseNoteCategory expenseNoteCategory = new ExpenseNoteCategory();
-        expenseNoteCategory.number = number;
-        expenseNoteCategory.name = name;
-        expenseNoteCategory.walletId = walletId;
-        expenseNoteCategory.whoCreated = whoCreated;
-        return expenseNoteCategory;
+    public static ExpenseCategory create(ExpenseNoteCategoryNumber number,
+                                         String name,
+                                         WalletId walletId,
+                                         UserId whoCreated) {
+        ExpenseCategory expenseCategory = new ExpenseCategory();
+        expenseCategory.number = number;
+        expenseCategory.name = name;
+        expenseCategory.walletId = walletId;
+        expenseCategory.whoCreated = whoCreated;
+        return expenseCategory;
     }
 }
