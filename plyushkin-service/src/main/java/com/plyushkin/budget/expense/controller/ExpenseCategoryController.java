@@ -43,7 +43,7 @@ class ExpenseCategoryController {
     private final ExpenseCategoryUseCase useCase;
     private final ExpenseCategoryRepository repository;
 
-    @PostMapping("/wallets/{walletId}/expenseNoteCategories")
+    @PostMapping("/wallets/{walletId}/expenseCategories")
     @Operation(responses = {
             @ApiResponse(
                     responseCode = "201",
@@ -74,7 +74,7 @@ class ExpenseCategoryController {
                 .body(new CreateExpenseNoteCategoryResponse(number));
     }
 
-    @PatchMapping("/wallets/{walletId}/expenseNoteCategories/{number}")
+    @PatchMapping("/wallets/{walletId}/expenseCategories/{number}")
     public void updateCategory(@NotNull @PathVariable ExpenseCategoryNumber number,
                                @NotNull @PathVariable WalletId walletId,
                                @NotNull @Valid @RequestBody UpdateExpenseNoteCategoryRequest request)
@@ -89,7 +89,7 @@ class ExpenseCategoryController {
         );
     }
 
-    @GetMapping("/wallets/{walletId}/expenseNoteCategories/{number}")
+    @GetMapping("/wallets/{walletId}/expenseCategories/{number}")
     public ResponseEntity<ExpenseCategoryResponse> getCategory(
             @NotNull @PathVariable ExpenseCategoryNumber number,
             @NotNull @PathVariable WalletId walletId
@@ -107,7 +107,7 @@ class ExpenseCategoryController {
                 );
     }
 
-    @GetMapping("/wallets/{walletId}/expenseNoteCategories")
+    @GetMapping("/wallets/{walletId}/expenseCategories")
     public List<ExpenseCategoryResponse> listCategories(@NotNull @PathVariable WalletId walletId) {
         return repository.findAllByWalletId(
                         walletId,
