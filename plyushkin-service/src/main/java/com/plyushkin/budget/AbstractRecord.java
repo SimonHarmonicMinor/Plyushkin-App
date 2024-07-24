@@ -13,7 +13,6 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,11 +24,11 @@ import org.springframework.data.domain.AbstractAggregateRoot;
 @ToString(onlyExplicitlyIncluded = true)
 @NoArgsConstructor(access = PROTECTED)
 @Getter
-public class AbstractNote<
+public class AbstractRecord<
         I extends Serializable,
         CI extends Serializable,
         C extends AbstractCategory<CI, C>,
-        T extends AbstractNote<I, CI, C, T>
+        T extends AbstractRecord<I, CI, C, T>
         >
         extends AbstractAggregateRoot<T> {
 
@@ -75,14 +74,14 @@ public class AbstractNote<
     private String comment;
 
     @SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
-    protected AbstractNote(I id,
-                           WalletId walletId,
-                           UserId whoDid,
-                           LocalDate date,
-                           Currency currency,
-                           Money amount,
-                           C category,
-                           String comment) throws InvalidNoteException {
+    protected AbstractRecord(I id,
+                             WalletId walletId,
+                             UserId whoDid,
+                             LocalDate date,
+                             Currency currency,
+                             Money amount,
+                             C category,
+                             String comment) throws InvalidRecordException {
         validateCategory(category);
         this.number = id;
         this.walletId = walletId;
@@ -98,7 +97,7 @@ public class AbstractNote<
                        @Nullable Currency currency,
                        @Nullable Money amount,
                        @Nullable C category,
-                       @Nullable String comment) throws InvalidNoteCategoryException {
+                       @Nullable String comment) throws InvalidRecordCategoryException {
         if (category != null) {
             validateCategory(category);
             this.category = category;
@@ -120,8 +119,8 @@ public class AbstractNote<
         if (this == o) {
             return true;
         }
-        if (o instanceof AbstractNote abstractNote) {
-            return pk != null && pk.equals(abstractNote.pk);
+        if (o instanceof AbstractRecord abstractRecord) {
+            return pk != null && pk.equals(abstractRecord.pk);
         }
         return false;
     }
@@ -131,9 +130,9 @@ public class AbstractNote<
         return getClass().hashCode();
     }
 
-    private void validateCategory(C category) throws InvalidNoteCategoryException {
+    private void validateCategory(C category) throws InvalidRecordCategoryException {
         if (!category.getWalletId().equals(walletId)) {
-            throw new InvalidNoteCategoryException(
+            throw new InvalidRecordCategoryException(
                     "Category '%s' cannot be assigned because WalletId does not match: %s"
                             .formatted(category, walletId)
             );
@@ -141,10 +140,10 @@ public class AbstractNote<
     }
 
     @StandardException
-    public static class InvalidNoteException extends Exception {
+    public static class InvalidRecordException extends Exception {
     }
 
     @StandardException
-    public static class InvalidNoteCategoryException extends InvalidNoteException {
+    public static class InvalidRecordCategoryException extends InvalidRecordException {
     }
 }
