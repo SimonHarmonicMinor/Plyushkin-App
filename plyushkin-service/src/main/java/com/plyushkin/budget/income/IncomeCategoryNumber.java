@@ -29,9 +29,9 @@ public class IncomeCategoryNumber implements Serializable {
                     "Value should be positive but it is: " + value
             );
         }
-        IncomeCategoryNumber incomeNoteCategoryId = new IncomeCategoryNumber();
-        incomeNoteCategoryId.value = value;
-        return incomeNoteCategoryId;
+        IncomeCategoryNumber number = new IncomeCategoryNumber();
+        number.value = value;
+        return number;
     }
 
     @StandardException
