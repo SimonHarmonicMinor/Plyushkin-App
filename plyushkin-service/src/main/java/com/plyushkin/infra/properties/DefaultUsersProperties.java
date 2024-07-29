@@ -8,6 +8,7 @@ import java.util.Map;
 
 @ConfigurationProperties("default-users")
 public record DefaultUsersProperties(
+        boolean enableCreation,
         @NestedConfigurationProperty
         Map<UserId, Info> values
 ) {
