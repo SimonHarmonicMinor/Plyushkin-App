@@ -1,5 +1,6 @@
 package com.plyushkin.infra.security;
 
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,8 +18,11 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain httpBasicAuthFilterChain(HttpSecurity http,
-                                                        AuthenticationProvider authenticationProvider) throws Exception {
+    @SneakyThrows
+    public SecurityFilterChain httpBasicAuthFilterChain(
+            HttpSecurity http,
+            AuthenticationProvider authenticationProvider
+    ) {
         return http.httpBasic(Customizer.withDefaults())
                 .authenticationProvider(authenticationProvider)
                 .build();
