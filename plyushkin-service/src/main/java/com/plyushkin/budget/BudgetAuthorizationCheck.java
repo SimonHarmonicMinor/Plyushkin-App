@@ -16,7 +16,11 @@ public class BudgetAuthorizationCheck {
     private final CurrentUserIdProvider currentUserIdProvider;
     private final WalletRepository walletRepository;
 
-    public boolean isWalletCreatedByCurrentUser(WalletId walletId) {
+    public boolean hasAccessForWalletView(WalletId walletId) {
+        return hasAccessForWalletUpdate(walletId);
+    }
+
+    public boolean hasAccessForWalletUpdate(WalletId walletId) {
         final var currentUserId = currentUserIdProvider.get();
         return walletRepository.findById(walletId)
                 .map(wallet -> wallet.getCreatedBy().equals(currentUserId))
