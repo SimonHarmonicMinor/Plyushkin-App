@@ -27,6 +27,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,6 +59,7 @@ class ExpenseCategoryController {
                     )
             )
     })
+    @PreAuthorize("@BudgetAuth.hasAccessForWalletUpdate(#walletId)")
     public ResponseEntity<CreateExpenseNoteCategoryResponse> createCategory(
             @NotNull @PathVariable WalletId walletId,
             @Valid @RequestBody CreateExpenseNoteCategoryRequest request
@@ -75,6 +77,7 @@ class ExpenseCategoryController {
     }
 
     @PatchMapping("/wallets/{walletId}/expenseCategories/{number}")
+    @PreAuthorize("@BudgetAuth.hasAccessForWalletUpdate(#walletId)")
     public void updateCategory(@NotNull @PathVariable ExpenseCategoryNumber number,
                                @NotNull @PathVariable WalletId walletId,
                                @NotNull @Valid @RequestBody UpdateExpenseNoteCategoryRequest request)
@@ -90,6 +93,7 @@ class ExpenseCategoryController {
     }
 
     @GetMapping("/wallets/{walletId}/expenseCategories/{number}")
+    @PreAuthorize("@BudgetAuth.hasAccessForWalletView(#walletId)")
     public ResponseEntity<ExpenseCategoryResponse> getCategory(
             @NotNull @PathVariable ExpenseCategoryNumber number,
             @NotNull @PathVariable WalletId walletId
@@ -108,6 +112,7 @@ class ExpenseCategoryController {
     }
 
     @GetMapping("/wallets/{walletId}/expenseCategories")
+    @PreAuthorize("@BudgetAuth.hasAccessForWalletView(#walletId)")
     public List<ExpenseCategoryResponse> listCategories(@NotNull @PathVariable WalletId walletId) {
         return repository.findAllByWalletId(
                         walletId,
