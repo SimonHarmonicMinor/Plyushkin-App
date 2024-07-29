@@ -6,13 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
-import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Table(schema = "wallet", name = "wallet")
 @NoArgsConstructor(access = PROTECTED)
-@Getter(PACKAGE)
+@Getter
 @DynamicUpdate
 public class Wallet {
 
