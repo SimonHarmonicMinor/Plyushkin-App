@@ -24,4 +24,8 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Profile> profiles;
+
+    public User(UserId id) {
+        this.id = id;
+    }
 }
