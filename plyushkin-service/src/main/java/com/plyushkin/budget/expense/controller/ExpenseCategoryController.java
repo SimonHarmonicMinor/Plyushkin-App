@@ -51,7 +51,12 @@ class ExpenseCategoryController {
                 UserId.createRandom()
         ));
         return ResponseEntity.created(
-                        URI.create("/api/wallets/%s/expenseNoteCategories/%s".formatted(walletId, category.getNumber().getValue()))
+                        URI.create(
+                                "/api/wallets/%s/expenseNoteCategories/%s"
+                                        .formatted(
+                                                walletId,
+                                                category.getNumber().getValue()
+                                        ))
                 )
                 .body(new ExpenseCategoryResponse(category));
     }
