@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Slf4j
-public class BudgetAuthorizationCheck {
+class BudgetAuthorizationCheck {
     private final CurrentUserIdProvider currentUserIdProvider;
     private final WalletRepository walletRepository;
 
