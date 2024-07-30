@@ -1,6 +1,7 @@
 package com.plyushkin.wallet;
 
 import com.plyushkin.user.UserId;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,14 +25,17 @@ public class Wallet {
     @AttributeOverride(name = "value", column = @Column(name = "created_by", updatable = false))
     private UserId createdBy;
 
-    public static Wallet create(WalletId id, String name) {
+    public static Wallet create(WalletId id, String name, UserId createdBy) {
         Wallet wallet = new Wallet();
         wallet.id = id;
         wallet.name = name;
+        wallet.createdBy = createdBy;
         return wallet;
     }
 
-    public void update(String name) {
-        this.name = name;
+    public void update(@Nullable String name) {
+        if (name != null) {
+            this.name = name;
+        }
     }
 }
