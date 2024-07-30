@@ -1,14 +1,11 @@
 package com.plyushkin.budget.expense.controller;
 
-import com.plyushkin.budget.expense.ExpenseCategoryNumber;
+import com.plyushkin.budget.expense.ExpenseCategory;
 import com.plyushkin.budget.expense.ExpenseCategoryEntityGraph;
-import com.plyushkin.budget.expense.controller.request.CreateExpenseNoteCategoryRequest;
-import com.plyushkin.budget.expense.controller.request.UpdateExpenseNoteCategoryRequest;
-import com.plyushkin.budget.expense.controller.response.CreateExpenseNoteCategoryResponse;
-import com.plyushkin.budget.expense.controller.response.ErrorCreateCategoryResponse;
-import com.plyushkin.budget.expense.controller.response.ErrorCreateCategoryResponse.ErrorNonUniqueNameResponse;
+import com.plyushkin.budget.expense.ExpenseCategoryNumber;
+import com.plyushkin.budget.expense.controller.request.ExpenseNoteCategoryCreateRequest;
+import com.plyushkin.budget.expense.controller.request.ExpenseNoteCategoryUpdateRequest;
 import com.plyushkin.budget.expense.controller.response.ExpenseCategoryResponse;
-import com.plyushkin.budget.expense.controller.response.UpdateExpenseNoteCategoryResponse;
 import com.plyushkin.budget.expense.repository.ExpenseCategoryRepository;
 import com.plyushkin.budget.expense.usecase.ExpenseCategoryUseCase;
 import com.plyushkin.budget.expense.usecase.command.CreateCategoryCommand;
@@ -16,12 +13,9 @@ import com.plyushkin.budget.expense.usecase.command.UpdateCommand;
 import com.plyushkin.budget.expense.usecase.exception.CreateCategoryException;
 import com.plyushkin.budget.expense.usecase.exception.CreateCategoryException.NonUniqueNamePerWalletId;
 import com.plyushkin.budget.expense.usecase.exception.UpdateExpenseCategoryException;
+import com.plyushkin.infra.web.DefaultErrorResponse;
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -45,49 +39,37 @@ class ExpenseCategoryController {
     private final ExpenseCategoryRepository repository;
 
     @PostMapping("/wallets/{walletId}/expenseCategories")
-    @Operation(responses = {
-            @ApiResponse(
-                    responseCode = "201",
-                    content = @Content(schema = @Schema(implementation = CreateExpenseNoteCategoryResponse.class))
-            ),
-            @ApiResponse(
-                    responseCode = "400",
-                    content = @Content(
-                            schema = @Schema(
-                                    oneOf = ErrorCreateCategoryResponse.class
-                            )
-                    )
-            )
-    })
     @PreAuthorize("@BudgetAuth.hasAccessForWalletUpdate(#walletId)")
-    public ResponseEntity<CreateExpenseNoteCategoryResponse> createCategory(
+    public ResponseEntity<ExpenseCategoryResponse> createCategory(
             @NotNull @PathVariable WalletId walletId,
-            @Valid @RequestBody CreateExpenseNoteCategoryRequest request
+            @Valid @RequestBody ExpenseNoteCategoryCreateRequest request
     )
             throws CreateCategoryException {
-        ExpenseCategoryNumber number = useCase.createCategory(new CreateCategoryCommand(
+        ExpenseCategory category = useCase.createCategory(new CreateCategoryCommand(
                 request.name(),
                 walletId,
                 UserId.createRandom()
         ));
         return ResponseEntity.created(
-                        URI.create("/api/wallets/%s/expenseNoteCategories/%s".formatted(walletId, number.getValue()))
+                        URI.create("/api/wallets/%s/expenseNoteCategories/%s".formatted(walletId, category.getNumber().getValue()))
                 )
-                .body(new CreateExpenseNoteCategoryResponse(number));
+                .body(new ExpenseCategoryResponse(category));
     }
 
     @PatchMapping("/wallets/{walletId}/expenseCategories/{number}")
     @PreAuthorize("@BudgetAuth.hasAccessForWalletUpdate(#walletId)")
-    public void updateCategory(@NotNull @PathVariable ExpenseCategoryNumber number,
-                               @NotNull @PathVariable WalletId walletId,
-                               @NotNull @Valid @RequestBody UpdateExpenseNoteCategoryRequest request)
+    public ExpenseCategoryResponse updateCategory(@NotNull @PathVariable ExpenseCategoryNumber number,
+                                                  @NotNull @PathVariable WalletId walletId,
+                                                  @NotNull @Valid @RequestBody ExpenseNoteCategoryUpdateRequest request)
             throws UpdateExpenseCategoryException {
-        useCase.update(
-                walletId,
-                number,
-                new UpdateCommand(
-                        request.name(),
-                        request.newParentNumber()
+        return new ExpenseCategoryResponse(
+                useCase.update(
+                        walletId,
+                        number,
+                        new UpdateCommand(
+                                request.name(),
+                                request.newParentNumber()
+                        )
                 )
         );
     }
@@ -125,20 +107,20 @@ class ExpenseCategoryController {
     }
 
     @ExceptionHandler(UpdateExpenseCategoryException.class)
-    public ResponseEntity<UpdateExpenseNoteCategoryResponse> handleUpdateExpenseNoteCategoryException(
+    public ResponseEntity<DefaultErrorResponse> handleUpdateExpenseNoteCategoryException(
             UpdateExpenseCategoryException e
     ) {
         log4xx(e);
         return ResponseEntity.status(400)
-                .body(new UpdateExpenseNoteCategoryResponse(e.getMessage()));
+                .body(new DefaultErrorResponse(e));
     }
 
     @ExceptionHandler(CreateCategoryException.class)
-    public ResponseEntity<ErrorCreateCategoryResponse> handleCreateCategoryException(CreateCategoryException e) {
+    public ResponseEntity<DefaultErrorResponse> handleCreateCategoryException(CreateCategoryException e) {
         log.warn("Handled ErrorCreateCategoryResponse", e);
         return switch (e) {
             case NonUniqueNamePerWalletId err -> ResponseEntity.status(400)
-                    .body(new ErrorNonUniqueNameResponse(err.getName()));
+                    .body(new DefaultErrorResponse(err));
         };
     }
 

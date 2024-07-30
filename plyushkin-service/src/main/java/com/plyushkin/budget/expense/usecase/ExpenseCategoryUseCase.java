@@ -20,7 +20,7 @@ public class ExpenseCategoryUseCase {
     private final ExpenseCategoryRepository repository;
 
     @WriteTransactional
-    public ExpenseCategoryNumber createCategory(CreateCategoryCommand command) throws CreateCategoryException {
+    public ExpenseCategory createCategory(CreateCategoryCommand command) throws CreateCategoryException {
         repository.lockByWalletId(command.walletId());
         if (repository.existsByNameAndWalletId(command.walletId(), command.name())) {
             throw new CreateCategoryException.NonUniqueNamePerWalletId(
@@ -38,13 +38,13 @@ public class ExpenseCategoryUseCase {
                 command.name(),
                 command.walletId(),
                 command.whoCreated()
-        )).getNumber();
+        ));
     }
 
     @WriteTransactional
-    public void update(WalletId walletId,
-                       ExpenseCategoryNumber number,
-                       UpdateCommand command)
+    public ExpenseCategory update(WalletId walletId,
+                                  ExpenseCategoryNumber number,
+                                  UpdateCommand command)
             throws UpdateExpenseCategoryException {
         repository.lockByWalletId(walletId);
         ExpenseCategory root = repository.findByWalletIdAndNumber(walletId, number)
@@ -75,6 +75,6 @@ public class ExpenseCategoryUseCase {
                         );
             }
         }
-        repository.save(root);
+        return repository.save(root);
     }
 }
