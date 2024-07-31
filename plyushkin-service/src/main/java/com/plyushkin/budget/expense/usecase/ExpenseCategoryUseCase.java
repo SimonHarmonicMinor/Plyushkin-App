@@ -4,9 +4,11 @@ import com.plyushkin.budget.AbstractCategory;
 import com.plyushkin.budget.expense.ExpenseCategory;
 import com.plyushkin.budget.expense.ExpenseCategoryNumber;
 import com.plyushkin.budget.expense.repository.ExpenseCategoryRepository;
+import com.plyushkin.budget.expense.repository.ExpenseRecordRepository;
 import com.plyushkin.budget.expense.usecase.command.CreateCategoryCommand;
 import com.plyushkin.budget.expense.usecase.command.UpdateCommand;
 import com.plyushkin.budget.expense.usecase.exception.CreateCategoryException;
+import com.plyushkin.budget.expense.usecase.exception.DeleteCategoryException;
 import com.plyushkin.budget.expense.usecase.exception.UpdateExpenseCategoryException;
 import com.plyushkin.util.WriteTransactional;
 import com.plyushkin.wallet.WalletId;
@@ -18,6 +20,8 @@ import org.springframework.stereotype.Service;
 public class ExpenseCategoryUseCase {
 
     private final ExpenseCategoryRepository repository;
+    private final ExpenseRecordRepository expenseRecordRepository;
+    private final ExpenseCategoryRepository expenseCategoryRepository;
 
     @WriteTransactional
     public ExpenseCategory createCategory(CreateCategoryCommand command) throws CreateCategoryException {
@@ -76,5 +80,24 @@ public class ExpenseCategoryUseCase {
             }
         }
         return repository.save(root);
+    }
+
+    @WriteTransactional
+    public void deleteCategory(WalletId walletId, ExpenseCategoryNumber number) throws DeleteCategoryException {
+        expenseCategoryRepository.lockByWalletId(walletId);
+        final var category = expenseCategoryRepository.findByWalletIdAndNumber(walletId, number).orElse(null);
+        if (category == null) {
+            throw new DeleteCategoryException.NotFound(
+                    "Cannot find category by WalletId=%s and number=%s"
+                            .formatted(walletId, number)
+            );
+        }
+        if (expenseRecordRepository.existsByCategory(category)) {
+            throw new DeleteCategoryException.ReferencedByExpenseRecord(
+                    "Cannot delete category because it's references by expense record(s). WalletId=%s, number=%s"
+                            .formatted(walletId, number)
+            );
+        }
+        expenseCategoryRepository.delete(category);
     }
 }
