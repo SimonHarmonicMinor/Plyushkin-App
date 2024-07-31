@@ -2,9 +2,7 @@ package com.plyushkin.util;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
 import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.Transient;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,12 +14,11 @@ import java.util.Arrays;
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
-@Embeddable
-@NoArgsConstructor(access = PROTECTED)
 @EqualsAndHashCode
 @MappedSuperclass
 @Getter
-public class PrefixedId implements Serializable {
+@NoArgsConstructor(access = PROTECTED)
+public abstract class PrefixedId implements Serializable {
     private static final int MAX_RADIX = 36;
     private static final int ID_LENGTH = 19;
 
@@ -29,22 +26,23 @@ public class PrefixedId implements Serializable {
     @Column(name = "id", updatable = false)
     protected long value;
 
-    @Transient
-    protected String stringValue;
-
     @SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
-    protected PrefixedId(String prefix) throws InvalidPrefixedIdException {
-        this(prefix, System.currentTimeMillis());
-    }
-
-    @SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
-    protected PrefixedId(String prefix,
-                         long value) throws InvalidPrefixedIdException {
+    protected PrefixedId(long value) throws InvalidPrefixedIdException {
         if (value < 0) {
             throw new InvalidPrefixedIdException("Value cannot be less than zero: " + value);
         }
-        this.stringValue = prefix + Long.toString(value, MAX_RADIX);
         this.value = value;
+    }
+
+    protected abstract String getPrefix();
+
+    public String getStringValue() {
+        return getPrefix() + Long.toString(value, MAX_RADIX);
+    }
+
+    @Override
+    public String toString() {
+        return getStringValue();
     }
 
     public static long parseLongFromRawValue(String prefix, String rawValue) throws InvalidPrefixedIdException {

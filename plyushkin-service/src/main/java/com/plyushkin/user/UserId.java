@@ -1,15 +1,14 @@
 package com.plyushkin.user;
 
-import static lombok.AccessLevel.PROTECTED;
-
 import com.plyushkin.util.PrefixedId;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Embeddable;
+import lombok.NoArgsConstructor;
+import lombok.experimental.StandardException;
 
 import java.io.Serial;
 
-import lombok.NoArgsConstructor;
-import lombok.experimental.StandardException;
+import static lombok.AccessLevel.PROTECTED;
 
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
@@ -19,13 +18,9 @@ public class UserId extends PrefixedId {
     @Serial
     private static final long serialVersionUID = 1;
 
-    protected UserId(String prefix) throws InvalidPrefixedIdException {
-        super(prefix);
-    }
-
-    protected UserId(String prefix, long value)
+    protected UserId(long value)
             throws InvalidPrefixedIdException {
-        super(prefix, value);
+        super(value);
     }
 
     public static UserId parse(String rawValue) throws InvalidUserIdException {
@@ -38,7 +33,7 @@ public class UserId extends PrefixedId {
 
     public static UserId create(long value) throws InvalidUserIdException {
         try {
-            return new UserId(PREFIX, value);
+            return new UserId(value);
         } catch (InvalidPrefixedIdException e) {
             throw new InvalidUserIdException(
                     "Invalid UserId", e
@@ -46,17 +41,9 @@ public class UserId extends PrefixedId {
         }
     }
 
-    public static UserId createRandom() {
-        try {
-            return new UserId(PREFIX);
-        } catch (InvalidPrefixedIdException e) {
-            throw new IllegalArgumentException("Invalid UserId", e);
-        }
-    }
-
     @Override
-    public String toString() {
-        return String.valueOf(stringValue);
+    protected String getPrefix() {
+        return PREFIX;
     }
 
     @StandardException

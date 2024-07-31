@@ -11,15 +11,15 @@ import lombok.experimental.StandardException;
 import java.io.Serial;
 
 @Embeddable
-@NoArgsConstructor(access = PROTECTED)
 @Schema(implementation = String.class, description = "WalletId")
+@NoArgsConstructor(access = PROTECTED)
 public class WalletId extends PrefixedId {
     private static final String PREFIX = "W-";
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private WalletId(String prefix, long value) throws InvalidPrefixedIdException {
-        super(prefix, value);
+    private WalletId(long value) throws InvalidPrefixedIdException {
+        super(value);
     }
 
     public static WalletId parse(String rawValue) throws InvalidWalletIdException {
@@ -32,15 +32,15 @@ public class WalletId extends PrefixedId {
 
     public static WalletId create(long value) throws InvalidWalletIdException {
         try {
-            return new WalletId(PREFIX, value);
+            return new WalletId(value);
         } catch (InvalidPrefixedIdException e) {
             throw new InvalidWalletIdException("Invalid WalletId: " + value, e);
         }
     }
 
     @Override
-    public String toString() {
-        return String.valueOf(stringValue);
+    protected String getPrefix() {
+        return PREFIX;
     }
 
     @StandardException
