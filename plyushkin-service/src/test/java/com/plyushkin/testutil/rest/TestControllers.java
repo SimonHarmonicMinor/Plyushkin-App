@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestComponent;
 import org.springframework.core.env.Environment;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 @TestComponent
 public class TestControllers {
@@ -36,11 +37,14 @@ public class TestControllers {
                 builder ->
                         builder.header(
                                 "Authorization",
-                                "Basic " +
-                                        new String(Base64.getEncoder().encode(
+                                "Basic "
+                                        + new String(
+                                        Base64.getEncoder().encode(
                                                 (user.username() + ":" + user.password())
-                                                        .getBytes(StandardCharsets.UTF_8)
-                                        ))
+                                                        .getBytes(UTF_8)
+                                        ),
+                                        UTF_8
+                                )
                         )
         );
         return apiClient;
