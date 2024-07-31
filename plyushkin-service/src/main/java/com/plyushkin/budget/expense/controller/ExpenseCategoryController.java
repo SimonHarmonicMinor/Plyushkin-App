@@ -15,7 +15,7 @@ import com.plyushkin.budget.expense.usecase.exception.CreateCategoryException.No
 import com.plyushkin.budget.expense.usecase.exception.DeleteCategoryException;
 import com.plyushkin.budget.expense.usecase.exception.UpdateExpenseCategoryException;
 import com.plyushkin.infra.web.DefaultErrorResponse;
-import com.plyushkin.user.UserId;
+import com.plyushkin.user.service.CurrentUserIdProvider;
 import com.plyushkin.wallet.WalletId;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -38,6 +38,7 @@ class ExpenseCategoryController {
 
     private final ExpenseCategoryUseCase useCase;
     private final ExpenseCategoryRepository repository;
+    private final CurrentUserIdProvider currentUserIdProvider;
 
     @PostMapping("/wallets/{walletId}/expenseCategories")
     @PreAuthorize("@BudgetAuth.hasAccessForWalletUpdate(#walletId)")
@@ -49,7 +50,7 @@ class ExpenseCategoryController {
         ExpenseCategory category = useCase.createCategory(new CreateCategoryCommand(
                 request.name(),
                 walletId,
-                UserId.createRandom()
+                currentUserIdProvider.get()
         ));
         return ResponseEntity.created(
                         URI.create(
