@@ -26,7 +26,7 @@ abstract class StringSerdeProvider<T> implements SerdeProvider<T> {
         return new JsonSerializer<>() {
             @Override
             public void serialize(T value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-                gen.writeRawValue(asString(value));
+                gen.writeString(asString(value));
             }
         };
     }
