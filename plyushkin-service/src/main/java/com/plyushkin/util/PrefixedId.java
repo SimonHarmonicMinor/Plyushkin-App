@@ -3,6 +3,7 @@ package com.plyushkin.util;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Transient;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.experimental.StandardException;
 import java.io.Serializable;
 import java.util.Arrays;
 
+import static java.util.Locale.ROOT;
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -19,12 +21,13 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 public abstract class PrefixedId implements Serializable {
-    private static final int MAX_RADIX = 36;
-    private static final int ID_LENGTH = 19;
+    private static final int MAX_RADIX = 16;
 
     @Getter(PRIVATE)
     @Column(name = "id", updatable = false)
     protected long value;
+    @Transient
+    private String stringValue;
 
     @SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
     protected PrefixedId(long value) throws InvalidPrefixedIdException {
@@ -37,7 +40,10 @@ public abstract class PrefixedId implements Serializable {
     protected abstract String getPrefix();
 
     public String getStringValue() {
-        return getPrefix() + Long.toString(value, MAX_RADIX);
+        if (stringValue == null) {
+            stringValue = getPrefix() + Long.toString(value, MAX_RADIX).toUpperCase(ROOT);
+        }
+        return stringValue;
     }
 
     @Override
