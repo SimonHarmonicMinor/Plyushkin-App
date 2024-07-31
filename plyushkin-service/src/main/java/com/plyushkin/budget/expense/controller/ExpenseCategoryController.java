@@ -69,7 +69,7 @@ class ExpenseCategoryController {
                                                   @NotNull @Valid @RequestBody ExpenseNoteCategoryUpdateRequest request)
             throws UpdateExpenseCategoryException {
         return new ExpenseCategoryResponse(
-                useCase.update(
+                useCase.updateCategory(
                         walletId,
                         number,
                         new UpdateCommand(
