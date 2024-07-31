@@ -12,6 +12,7 @@ import com.plyushkin.budget.expense.usecase.command.CreateCategoryCommand;
 import com.plyushkin.budget.expense.usecase.command.UpdateCommand;
 import com.plyushkin.budget.expense.usecase.exception.CreateCategoryException;
 import com.plyushkin.budget.expense.usecase.exception.CreateCategoryException.NonUniqueNamePerWalletId;
+import com.plyushkin.budget.expense.usecase.exception.DeleteCategoryException;
 import com.plyushkin.budget.expense.usecase.exception.UpdateExpenseCategoryException;
 import com.plyushkin.infra.web.DefaultErrorResponse;
 import com.plyushkin.user.UserId;
@@ -111,6 +112,13 @@ class ExpenseCategoryController {
                 .toList();
     }
 
+    @DeleteMapping("/wallets/{walletId}/expenseCategories/{number}")
+    @PreAuthorize("@BudgetAuth.hasAccessForWalletUpdate(#walletId)")
+    public void deleteCategory(@PathVariable @NotNull WalletId walletId,
+                               @PathVariable @NotNull ExpenseCategoryNumber number) throws DeleteCategoryException {
+        useCase.deleteCategory(walletId, number);
+    }
+
     @ExceptionHandler(UpdateExpenseCategoryException.class)
     public ResponseEntity<DefaultErrorResponse> handleUpdateExpenseNoteCategoryException(
             UpdateExpenseCategoryException e
@@ -122,11 +130,18 @@ class ExpenseCategoryController {
 
     @ExceptionHandler(CreateCategoryException.class)
     public ResponseEntity<DefaultErrorResponse> handleCreateCategoryException(CreateCategoryException e) {
-        log.warn("Handled ErrorCreateCategoryResponse", e);
+        log4xx(e);
         return switch (e) {
             case NonUniqueNamePerWalletId err -> ResponseEntity.status(400)
                     .body(new DefaultErrorResponse(err));
         };
+    }
+
+    @ExceptionHandler(DeleteCategoryException.class)
+    public ResponseEntity<DefaultErrorResponse> handleDeleteCategoryException(DeleteCategoryException e) {
+        log4xx(e);
+        return ResponseEntity.status(400)
+                .body(new DefaultErrorResponse(e));
     }
 
     private static void log4xx(Throwable e) {
