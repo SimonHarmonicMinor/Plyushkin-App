@@ -15,6 +15,12 @@ import static jakarta.persistence.LockModeType.PESSIMISTIC_WRITE;
 
 public interface ExpenseCategoryRepository extends EntityGraphJpaRepository<ExpenseCategory, Long> {
 
+    default ExpenseCategoryNumber nextNumber(WalletId walletId) {
+        return findMaxNumberPerWalletId(walletId)
+                .map(ExpenseCategoryNumber::increment)
+                .orElse(ExpenseCategoryNumber.createOne());
+    }
+
     @Query("SELECT MAX(c.number) FROM ExpenseCategory c WHERE c.walletId = :walletId")
     Optional<ExpenseCategoryNumber> findMaxNumberPerWalletId(WalletId walletId);
 
