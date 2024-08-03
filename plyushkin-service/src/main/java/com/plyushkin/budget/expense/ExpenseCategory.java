@@ -10,7 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.DynamicUpdate;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
@@ -18,12 +17,12 @@ import static lombok.AccessLevel.PROTECTED;
 @Entity
 @Table(schema = "budget", name = "expense_category")
 @NoArgsConstructor(access = PROTECTED)
-@DynamicUpdate
 @Getter
 @Setter(PROTECTED)
 public class ExpenseCategory extends AbstractCategory<ExpenseCategory> {
-    @Embedded
+    @Column(updatable = false)
     @ToString.Include
+    @Convert(converter = ExpenseCategoryNumberAttributeConverter.class)
     protected ExpenseCategoryNumber number;
 
     @ManyToOne(fetch = LAZY)

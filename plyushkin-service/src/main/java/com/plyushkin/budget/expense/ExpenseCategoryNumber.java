@@ -1,32 +1,18 @@
 package com.plyushkin.budget.expense;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-import java.io.Serial;
-import java.io.Serializable;
 
 import static lombok.AccessLevel.PRIVATE;
-import static lombok.AccessLevel.PROTECTED;
 
-@Embeddable
-@NoArgsConstructor(access = PROTECTED)
 @EqualsAndHashCode
 @AllArgsConstructor(access = PRIVATE)
 @Getter
 @Schema(implementation = Long.class, description = "ExpenseNoteCategoryNumber", minimum = "1")
-public class ExpenseCategoryNumber implements Serializable, Comparable<ExpenseCategoryNumber> {
-
-    @Serial
-    private static final long serialVersionUID = 1L;
-
-    @Column(name = "number", updatable = false)
-    private long value;
+public class ExpenseCategoryNumber {
+    private final long value;
 
     public static ExpenseCategoryNumber createOne() {
         return new ExpenseCategoryNumber(1L);
@@ -39,18 +25,11 @@ public class ExpenseCategoryNumber implements Serializable, Comparable<ExpenseCa
                     value
             );
         }
-        ExpenseCategoryNumber number = new ExpenseCategoryNumber();
-        number.value = value;
-        return number;
+        return new ExpenseCategoryNumber(value);
     }
 
     public ExpenseCategoryNumber increment() {
         return new ExpenseCategoryNumber(this.value + 1);
-    }
-
-    @Override
-    public int compareTo(ExpenseCategoryNumber o) {
-        return Long.compare(this.value, o.value);
     }
 
     @Getter
