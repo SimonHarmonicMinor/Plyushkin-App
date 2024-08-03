@@ -20,7 +20,7 @@ import static lombok.AccessLevel.PROTECTED;
 @AllArgsConstructor(access = PRIVATE)
 @Getter
 @Schema(implementation = Long.class, description = "ExpenseNoteCategoryNumber", minimum = "1")
-public class ExpenseCategoryNumber implements Serializable {
+public class ExpenseCategoryNumber implements Serializable, Comparable<ExpenseCategoryNumber> {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -46,6 +46,11 @@ public class ExpenseCategoryNumber implements Serializable {
 
     public ExpenseCategoryNumber increment() {
         return new ExpenseCategoryNumber(this.value + 1);
+    }
+
+    @Override
+    public int compareTo(ExpenseCategoryNumber o) {
+        return Long.compare(this.value, o.value);
     }
 
     @Getter

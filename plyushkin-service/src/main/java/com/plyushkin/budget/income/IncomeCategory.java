@@ -4,13 +4,11 @@ import com.plyushkin.budget.AbstractCategory;
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
 import jakarta.annotation.Nullable;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.DynamicUpdate;
 
 import static jakarta.persistence.FetchType.LAZY;
@@ -22,7 +20,10 @@ import static lombok.AccessLevel.PROTECTED;
 @DynamicUpdate
 @Setter(PROTECTED)
 @Getter
-public class IncomeCategory extends AbstractCategory<IncomeCategoryNumber, IncomeCategory> {
+public class IncomeCategory extends AbstractCategory<IncomeCategory> {
+    @Embedded
+    @ToString.Include
+    protected IncomeCategoryNumber number;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "parent_id")

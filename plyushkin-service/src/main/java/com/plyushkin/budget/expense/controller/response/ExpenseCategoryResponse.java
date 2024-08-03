@@ -12,6 +12,8 @@ import java.util.Optional;
 
 public record ExpenseCategoryResponse(
         @NotNull
+        String name,
+        @NotNull
         ExpenseCategoryNumber number,
         @NotNull
         WalletId walletId,
@@ -22,11 +24,12 @@ public record ExpenseCategoryResponse(
 ) {
     public ExpenseCategoryResponse(ExpenseCategory category) {
         this(
+                category.getName(),
                 category.getNumber(),
                 category.getWalletId(),
                 category.getWhoCreated(),
                 Optional.ofNullable(category.getParent())
-                        .map(AbstractCategory::getNumber)
+                        .map(ExpenseCategory::getNumber)
                         .orElse(null)
         );
     }

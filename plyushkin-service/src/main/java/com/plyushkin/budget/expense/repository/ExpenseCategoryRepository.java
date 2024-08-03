@@ -21,7 +21,7 @@ public interface ExpenseCategoryRepository extends EntityGraphJpaRepository<Expe
                 .orElse(ExpenseCategoryNumber.createOne());
     }
 
-    @Query("SELECT MAX(c.number) FROM ExpenseCategory c WHERE c.walletId = :walletId")
+    @Query("SELECT MAX(c.number.value) FROM ExpenseCategory c WHERE c.walletId = :walletId GROUP BY c.walletId")
     Optional<ExpenseCategoryNumber> findMaxNumberPerWalletId(WalletId walletId);
 
     @Query("SELECT COUNT(c) > 0 FROM ExpenseCategory c WHERE c.walletId = :walletId AND c.name = :name")

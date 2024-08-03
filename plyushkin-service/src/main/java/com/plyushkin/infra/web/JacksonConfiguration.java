@@ -6,15 +6,19 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.actuate.autoconfigure.web.ManagementContextFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
-public class JacksonConfiguration {
+public class JacksonConfiguration implements WebMvcConfigurer {
     private final List<SerdeProvider<?>> serdeProviders;
+    private final ManagementContextFactory servletWebChildContextFactory;
 
     @Bean
     public ObjectMapper objectMapper() {
@@ -32,5 +36,12 @@ public class JacksonConfiguration {
             module.addDeserializer(serdeProvider.type(), serdeProvider.deserializer());
         }
         return module;
+    }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        for (final SerdeProvider<?> serdeProvider : serdeProviders) {
+            registry.addFormatterForFieldType(serdeProvider.type(), serdeProvider.formatter());
+        }
     }
 }

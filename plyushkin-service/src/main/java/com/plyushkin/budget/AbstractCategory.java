@@ -28,15 +28,8 @@ import org.springframework.data.domain.AbstractAggregateRoot;
 @ToString(onlyExplicitlyIncluded = true)
 @NoArgsConstructor(access = PROTECTED)
 @Getter
-public abstract class AbstractCategory<
-        I extends Serializable,
-        T extends AbstractCategory<I, T>
-        >
+public abstract class AbstractCategory<T extends AbstractCategory<T>>
         extends AbstractAggregateRoot<T> {
-    @Embedded
-    @ToString.Include
-    protected I number;
-
     @ToString.Include
     protected String name;
 

@@ -26,9 +26,8 @@ import org.springframework.data.domain.AbstractAggregateRoot;
 @Getter
 public class AbstractRecord<
         I extends Serializable,
-        CI extends Serializable,
-        C extends AbstractCategory<CI, C>,
-        T extends AbstractRecord<I, CI, C, T>
+        C extends AbstractCategory<C>,
+        T extends AbstractRecord<I, C, T>
         >
         extends AbstractAggregateRoot<T> {
 
