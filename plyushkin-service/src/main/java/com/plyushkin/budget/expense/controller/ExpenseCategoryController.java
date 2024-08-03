@@ -44,7 +44,7 @@ class ExpenseCategoryController {
     @PreAuthorize("@BudgetAuth.hasAccessForWalletUpdate(#walletId)")
     public ResponseEntity<ExpenseCategoryResponse> createCategory(
             @NotNull @PathVariable WalletId walletId,
-            @Valid @RequestBody ExpenseNoteCategoryCreateRequest request
+            @NotNull @Valid @RequestBody ExpenseNoteCategoryCreateRequest request
     )
             throws CreateCategoryException {
         ExpenseCategory category = useCase.createCategory(new CreateCategoryCommand(
