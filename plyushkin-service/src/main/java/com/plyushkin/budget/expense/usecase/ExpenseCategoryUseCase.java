@@ -33,10 +33,7 @@ public class ExpenseCategoryUseCase {
                     command.name()
             );
         }
-        ExpenseCategoryNumber expenseCategoryNumber =
-                repository.findMaxNumberPerWalletId(command.walletId())
-                        .orElse(ExpenseCategoryNumber.createOne());
-
+        ExpenseCategoryNumber expenseCategoryNumber = repository.nextNumber(command.walletId());
         return repository.save(ExpenseCategory.create(
                 expenseCategoryNumber,
                 command.name(),
