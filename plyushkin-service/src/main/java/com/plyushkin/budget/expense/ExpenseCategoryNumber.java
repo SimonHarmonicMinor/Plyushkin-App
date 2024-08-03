@@ -44,6 +44,10 @@ public class ExpenseCategoryNumber implements Serializable {
         return number;
     }
 
+    public ExpenseCategoryNumber increment() {
+        return new ExpenseCategoryNumber(this.value + 1);
+    }
+
     @Getter
     public static class InvalidExpenseNoteCategoryNumberException extends Exception {
         private final long wrongValue;
