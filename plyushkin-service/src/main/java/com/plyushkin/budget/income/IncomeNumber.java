@@ -1,26 +1,24 @@
 package com.plyushkin.budget.income;
 
-import static lombok.AccessLevel.PROTECTED;
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.StandardException;
 
 import java.io.Serial;
 import java.io.Serializable;
 
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.experimental.StandardException;
+import static lombok.AccessLevel.PROTECTED;
 
-@Embeddable
-@NoArgsConstructor(access = PROTECTED)
+@AllArgsConstructor(access = PROTECTED)
 @EqualsAndHashCode
-public class IncomeNumber implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
-
-    @Column(name = "number", updatable = false)
-    private long value;
+@Getter
+@Schema(implementation = Long.class, description = "IncomeNumber", minimum = "1")
+public class IncomeNumber {
+    private final long value;
 
     public static IncomeNumber create(long value) throws InvalidIncomeNumberException {
         if (value <= 0) {
@@ -28,9 +26,7 @@ public class IncomeNumber implements Serializable {
                     "Value should be positive but it is: " + value
             );
         }
-        IncomeNumber number = new IncomeNumber();
-        number.value = value;
-        return number;
+        return new IncomeNumber(value);
     }
 
     @Override

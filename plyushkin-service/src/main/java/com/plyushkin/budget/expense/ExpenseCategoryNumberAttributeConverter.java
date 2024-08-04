@@ -4,7 +4,6 @@ import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import lombok.SneakyThrows;
 
-@Converter
 class ExpenseCategoryNumberAttributeConverter implements AttributeConverter<ExpenseCategoryNumber, Long> {
     @Override
     public Long convertToDatabaseColumn(ExpenseCategoryNumber number) {

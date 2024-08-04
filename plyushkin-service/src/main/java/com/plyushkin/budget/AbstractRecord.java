@@ -25,9 +25,8 @@ import org.springframework.data.domain.AbstractAggregateRoot;
 @NoArgsConstructor(access = PROTECTED)
 @Getter
 public class AbstractRecord<
-        I extends Serializable,
         C extends AbstractCategory<C>,
-        T extends AbstractRecord<I, C, T>
+        T extends AbstractRecord<C, T>
         >
         extends AbstractAggregateRoot<T> {
 
@@ -35,10 +34,6 @@ public class AbstractRecord<
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter(PRIVATE)
     private Long pk;
-
-    @Embedded
-    @ToString.Include
-    private I number;
 
     @Embedded
     @AttributeOverrides(
@@ -73,8 +68,7 @@ public class AbstractRecord<
     private String comment;
 
     @SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
-    protected AbstractRecord(I id,
-                             WalletId walletId,
+    protected AbstractRecord( WalletId walletId,
                              UserId whoDid,
                              LocalDate date,
                              Currency currency,
@@ -82,7 +76,6 @@ public class AbstractRecord<
                              C category,
                              String comment) throws InvalidRecordException {
         validateCategory(category);
-        this.number = id;
         this.walletId = walletId;
         this.whoDid = whoDid;
         this.date = date;
