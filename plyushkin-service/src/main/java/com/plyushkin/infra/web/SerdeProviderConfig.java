@@ -1,5 +1,6 @@
 package com.plyushkin.infra.web;
 
+import com.plyushkin.budget.Currency;
 import com.plyushkin.budget.expense.ExpenseCategoryNumber;
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
@@ -68,6 +69,26 @@ public class SerdeProviderConfig {
             @Override
             public Class<UserId> type() {
                 return UserId.class;
+            }
+        };
+    }
+
+    @Bean
+    SerdeProvider<Currency> currencySerdeProvider() {
+        return new StringSerdeProvider<Currency>() {
+            @Override
+            public Currency asEntity(String rawValue) {
+                return Currency.of(rawValue);
+            }
+
+            @Override
+            public String asString(Currency value) {
+                return value.value();
+            }
+
+            @Override
+            public Class<Currency> type() {
+                return Currency.class;
             }
         };
     }

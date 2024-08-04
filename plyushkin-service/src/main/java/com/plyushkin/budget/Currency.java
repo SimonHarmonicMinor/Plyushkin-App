@@ -1,5 +1,8 @@
 package com.plyushkin.budget;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(implementation = CurrencyEnum.class, description = "Currency", enumAsRef = true)
 public interface Currency {
 
     String value();
