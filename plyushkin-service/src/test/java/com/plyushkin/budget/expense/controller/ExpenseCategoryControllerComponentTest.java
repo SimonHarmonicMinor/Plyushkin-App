@@ -18,6 +18,7 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.function.Predicate;
 
+import static com.plyushkin.testutil.CustomMatchers.containsBy;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.hasSize;
@@ -104,19 +105,5 @@ class ExpenseCategoryControllerComponentTest {
                 containsBy(c -> c.getName().equals("category 2") && Objects.equals(c.getParentNumber(), category1.getNumber())),
                 containsBy(c -> c.getName().equals("category 3") && Objects.equals(c.getParentNumber(), category1.getNumber()))
         ));
-    }
-
-    private static <T> Matcher<Collection<T>> containsBy(Predicate<T> predicate) {
-        return new TypeSafeMatcher<>() {
-            @Override
-            protected boolean matchesSafely(Collection<T> t) {
-                return t.stream().anyMatch(predicate);
-            }
-
-            @Override
-            public void describeTo(Description description) {
-
-            }
-        };
     }
 }
