@@ -1,5 +1,6 @@
 package com.plyushkin.budget;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
@@ -13,6 +14,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)
 @EqualsAndHashCode
+@Schema(implementation = BigDecimal.class, description = "Money", minimum = "1")
 public class Money implements Comparable<Money> {
     @Column
     private BigDecimal value;
