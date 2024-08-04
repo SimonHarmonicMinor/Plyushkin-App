@@ -117,7 +117,10 @@ public abstract class AbstractRecord<
         return getClass().hashCode();
     }
 
-    private static <C extends AbstractCategory<C>> void validateCategory(C category, WalletId expectedWalletId) throws InvalidRecordCategoryException {
+    private static <C extends AbstractCategory<C>> void validateCategory(
+            C category,
+            WalletId expectedWalletId
+    ) throws InvalidRecordCategoryException {
         if (!category.getWalletId().equals(expectedWalletId)) {
             throw new InvalidRecordCategoryException(
                     "Category '%s' cannot be assigned because WalletId does not match: %s"

@@ -13,6 +13,7 @@ import com.plyushkin.budget.expense.repository.ExpenseRecordRepository;
 import com.plyushkin.user.service.CurrentUserIdProvider;
 import com.plyushkin.util.WriteTransactional;
 import com.plyushkin.wallet.WalletId;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -37,6 +38,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.time.LocalDate;
+import java.util.function.Supplier;
 
 @RestController
 @RequestMapping("/api")
@@ -100,15 +102,13 @@ class ExpenseRecordController {
     ) {
         return repository.findByWalletIdAndNumber(walletId, expenseNumber)
                 .map(ExpenseRecordResponse::new)
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "Cannot find ExpenseRecord by WalletId=%s and ExpenseNumber=%s"
-                                .formatted(walletId, expenseNumber)
-                ));
+                .orElseThrow(notFoundExceptionSupplier(walletId, expenseNumber));
     }
 
     @GetMapping("/wallets/{walletId}/expenseRecords")
     @Transactional(readOnly = true)
     @PreAuthorize("@BudgetAuth.hasAccessForWalletView(#walletId)")
+    @SuppressFBWarnings("SIC_INNER_SHOULD_BE_STATIC_ANON")
     public PageResult<ExpenseRecordResponse> listExpenseRecords(
             @PathVariable @NotNull WalletId walletId,
             @RequestParam @NotNull @Min(0) int pageNumber,
@@ -146,10 +146,7 @@ class ExpenseRecordController {
             @NotNull @Valid ExpenseRecordUpdateRequest request
     ) throws AbstractRecord.InvalidRecordCategoryException {
         final var expenseRecord = repository.findByWalletIdAndNumber(walletId, expenseNumber)
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "Cannot find ExpenseRecord by WalletId=%s and ExpenseNumber=%s"
-                                .formatted(walletId, expenseNumber)
-                ));
+                .orElseThrow(notFoundExceptionSupplier(walletId, expenseNumber));
         expenseRecord.update(
                 request.date(),
                 request.currency(),
@@ -177,5 +174,15 @@ class ExpenseRecordController {
                                 .formatted(walletId, expenseNumber)
                 ));
         repository.delete(expenseRecord);
+    }
+
+    private static Supplier<EntityNotFoundException> notFoundExceptionSupplier(
+            WalletId walletId,
+            ExpenseNumber expenseNumber
+    ) {
+        return () -> new EntityNotFoundException(
+                "Cannot find ExpenseRecord by WalletId=%s and ExpenseNumber=%s"
+                        .formatted(walletId, expenseNumber)
+        );
     }
 }

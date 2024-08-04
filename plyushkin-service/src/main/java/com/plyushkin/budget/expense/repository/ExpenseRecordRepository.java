@@ -13,7 +13,9 @@ import java.util.Optional;
 
 import static jakarta.persistence.LockModeType.PESSIMISTIC_WRITE;
 
-public interface ExpenseRecordRepository extends JpaRepository<ExpenseRecord, Long>, JpaSpecificationExecutor<ExpenseRecord> {
+public interface ExpenseRecordRepository
+        extends JpaRepository<ExpenseRecord, Long>,
+        JpaSpecificationExecutor<ExpenseRecord> {
     @Query("SELECT w.id FROM Wallet w WHERE w.id = :walletId")
     @Lock(PESSIMISTIC_WRITE)
     void lockByWalletId(WalletId walletId);

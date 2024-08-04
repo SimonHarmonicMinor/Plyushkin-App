@@ -7,17 +7,11 @@ import com.plyushkin.testutil.db.TestDbFacade;
 import com.plyushkin.testutil.rest.TestControllers;
 import com.plyushkin.testutil.slices.ComponentTest;
 import lombok.SneakyThrows;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
-import java.util.function.Predicate;
 
 import static com.plyushkin.testutil.CustomMatchers.containsBy;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -26,6 +20,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ComponentTest
+@SuppressWarnings("checkstyle:MultipleStringLiterals")
 class ExpenseCategoryControllerComponentTest {
     @Autowired
     private TestDbFacade db;
@@ -102,9 +97,12 @@ class ExpenseCategoryControllerComponentTest {
 
         assertThat(categories, allOf(
                 hasSize(3),
-                containsBy(c -> c.getName().equals("category 1") && c.getParentNumber() == null),
-                containsBy(c -> c.getName().equals("category 2") && Objects.equals(c.getParentNumber(), category1.getNumber())),
-                containsBy(c -> c.getName().equals("category 3") && Objects.equals(c.getParentNumber(), category1.getNumber()))
+                containsBy(c -> c.getName().equals("category 1")
+                        && c.getParentNumber() == null),
+                containsBy(c -> c.getName().equals("category 2")
+                        && Objects.equals(c.getParentNumber(), category1.getNumber())),
+                containsBy(c -> c.getName().equals("category 3")
+                        && Objects.equals(c.getParentNumber(), category1.getNumber()))
         ));
     }
 
