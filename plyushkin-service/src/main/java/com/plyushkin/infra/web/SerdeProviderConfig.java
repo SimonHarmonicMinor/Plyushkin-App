@@ -1,12 +1,15 @@
 package com.plyushkin.infra.web;
 
 import com.plyushkin.budget.Currency;
+import com.plyushkin.budget.Money;
 import com.plyushkin.budget.expense.ExpenseCategoryNumber;
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.math.BigDecimal;
 
 @Configuration
 public class SerdeProviderConfig {
@@ -33,16 +36,21 @@ public class SerdeProviderConfig {
 
     @Bean
     SerdeProvider<ExpenseCategoryNumber> expenseNoteCategoryNumberSerdeProvider() {
-        return new LongSerdeProvider<>() {
+        return new NumberSerdeProvider<ExpenseCategoryNumber, Long>() {
             @Override
             @SneakyThrows
-            public ExpenseCategoryNumber asEntity(long value) {
+            public ExpenseCategoryNumber asEntity(Long value) {
                 return ExpenseCategoryNumber.create(value);
             }
 
             @Override
-            public long asLong(ExpenseCategoryNumber value) {
+            public Long asNumber(ExpenseCategoryNumber value) {
                 return value.getValue();
+            }
+
+            @Override
+            public Long parseNumber(String text) {
+                return Long.parseLong(text);
             }
 
             @Override
@@ -75,7 +83,7 @@ public class SerdeProviderConfig {
 
     @Bean
     SerdeProvider<Currency> currencySerdeProvider() {
-        return new StringSerdeProvider<Currency>() {
+        return new StringSerdeProvider<>() {
             @Override
             public Currency asEntity(String rawValue) {
                 return Currency.of(rawValue);
@@ -89,6 +97,32 @@ public class SerdeProviderConfig {
             @Override
             public Class<Currency> type() {
                 return Currency.class;
+            }
+        };
+    }
+
+    @Bean
+    SerdeProvider<Money> moneySerdeProvider() {
+        return new NumberSerdeProvider<Money, Double>() {
+            @Override
+            public Class<Money> type() {
+                return Money.class;
+            }
+
+            @Override
+            @SneakyThrows
+            public Money asEntity(Double value) {
+                return Money.create(BigDecimal.valueOf(value));
+            }
+
+            @Override
+            public Double asNumber(Money value) {
+                return value.getValue().doubleValue();
+            }
+
+            @Override
+            public Double parseNumber(String text) {
+                return Double.parseDouble(text);
             }
         };
     }

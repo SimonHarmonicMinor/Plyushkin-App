@@ -12,13 +12,13 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Locale;
 
-abstract class LongSerdeProvider<T> implements SerdeProvider<T> {
+abstract class NumberSerdeProvider<T, N extends Number> implements SerdeProvider<T> {
     @Override
     public JsonSerializer<T> serializer() {
         return new JsonSerializer<>() {
             @Override
             public void serialize(T value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-                gen.writeNumber(asLong(value));
+                gen.writeNumber(asNumber(value).toString());
             }
         };
     }
@@ -38,17 +38,19 @@ abstract class LongSerdeProvider<T> implements SerdeProvider<T> {
         return new Formatter<>() {
             @Override
             public T parse(String text, Locale locale) throws ParseException {
-                return asEntity(Long.parseLong(text));
+                return asEntity(parseNumber(text));
             }
 
             @Override
             public String print(T object, Locale locale) {
-                return String.valueOf(asLong(object));
+                return String.valueOf(asNumber(object));
             }
         };
     }
 
-    public abstract T asEntity(long value);
+    public abstract T asEntity(N value);
 
-    public abstract long asLong(T value);
+    public abstract N asNumber(T value);
+
+    public abstract N parseNumber(String text);
 }

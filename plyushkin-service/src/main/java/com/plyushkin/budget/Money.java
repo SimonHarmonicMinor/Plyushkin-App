@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.StandardException;
 
@@ -15,6 +16,7 @@ import static lombok.AccessLevel.PROTECTED;
 @NoArgsConstructor(access = PROTECTED)
 @EqualsAndHashCode
 @Schema(implementation = BigDecimal.class, description = "Money", minimum = "1")
+@Getter
 public class Money implements Comparable<Money> {
     @Column
     private BigDecimal value;
