@@ -1,14 +1,13 @@
 package com.plyushkin.budget.expense.controller;
 
 import com.plyushkin.budget.AbstractRecord;
-import com.plyushkin.budget.Currency;
 import com.plyushkin.budget.expense.ExpenseNumber;
 import com.plyushkin.budget.expense.ExpenseRecord;
-import com.plyushkin.budget.expense.ExpenseRecordEntityGraph;
 import com.plyushkin.budget.expense.ExpenseRecord_;
 import com.plyushkin.budget.expense.controller.request.ExpenseRecordCreateRequest;
 import com.plyushkin.budget.expense.controller.request.ExpenseRecordUpdateRequest;
 import com.plyushkin.budget.expense.controller.response.ExpenseRecordResponse;
+import com.plyushkin.budget.expense.controller.response.PageResult;
 import com.plyushkin.budget.expense.repository.ExpenseCategoryRepository;
 import com.plyushkin.budget.expense.repository.ExpenseRecordRepository;
 import com.plyushkin.user.service.CurrentUserIdProvider;
@@ -16,6 +15,10 @@ import com.plyushkin.util.WriteTransactional;
 import com.plyushkin.wallet.WalletId;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -25,6 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +36,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.Set;
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api")
@@ -105,27 +109,32 @@ class ExpenseRecordController {
     @GetMapping("/wallets/{walletId}/expenseRecords")
     @Transactional(readOnly = true)
     @PreAuthorize("@BudgetAuth.hasAccessForWalletView(#walletId)")
-    public Page<ExpenseRecordResponse> listExpenseRecords(
+    public PageResult<ExpenseRecordResponse> listExpenseRecords(
             @PathVariable @NotNull WalletId walletId,
             @RequestParam @NotNull @Min(0) int pageNumber,
             @RequestParam @NotNull @Min(1) @Max(1000) int pageSize,
-            @RequestParam @Nullable Set<Currency> currencies
+            @RequestParam @Nullable LocalDate from,
+            @RequestParam @Nullable LocalDate to
     ) {
         final var pageRequest = PageRequest.of(pageNumber, pageSize, Sort.by(
                 Sort.Order.asc(ExpenseRecord_.DATE),
                 Sort.Order.asc(ExpenseRecord_.PK)
         ));
 
-        Page<ExpenseRecord> res;
-        final var graph = ExpenseRecordEntityGraph.____()
-                .category()
-                .____.____();
-        if (currencies != null && !currencies.isEmpty()) {
-            res = repository.findAllByWalletIdAndCurrencyIn(walletId, currencies, pageRequest, graph);
-        } else {
-            res = repository.findAllByWalletId(walletId, pageRequest, graph);
-        }
-        return res.map(ExpenseRecordResponse::new);
+        final var specification = new Specification<ExpenseRecord>() {
+            @Override
+            public Predicate toPredicate(Root<ExpenseRecord> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                root.fetch(ExpenseRecord_.CATEGORY);
+                return cb.and(
+                        cb.equal(root.get(ExpenseRecord_.WALLET_ID), walletId),
+                        from != null ? cb.greaterThanOrEqualTo(root.get(ExpenseRecord_.DATE), from) : cb.conjunction(),
+                        to != null ? cb.lessThanOrEqualTo(root.get(ExpenseRecord_.DATE), to) : cb.conjunction()
+                );
+            }
+        };
+
+        Page<ExpenseRecord> res = repository.findAll(specification, pageRequest);
+        return new PageResult<>(res.map(ExpenseRecordResponse::new));
     }
 
     @PatchMapping("/wallets/{walletId}/expenseRecords/{expenseNumber}")
