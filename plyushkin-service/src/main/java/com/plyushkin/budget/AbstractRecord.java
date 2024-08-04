@@ -71,7 +71,7 @@ public abstract class AbstractRecord<
                              Money amount,
                              C category,
                              String comment) throws InvalidRecordException {
-        validateCategory(category);
+        validateCategory(category, walletId);
         this.walletId = walletId;
         this.whoDid = whoDid;
         this.date = date;
@@ -88,7 +88,7 @@ public abstract class AbstractRecord<
                        @Nullable C category,
                        @Nullable String comment) throws InvalidRecordCategoryException {
         if (category != null) {
-            validateCategory(category);
+            validateCategory(category, this.walletId);
             setCategory(category);
         }
         if (date != null) {
@@ -121,11 +121,11 @@ public abstract class AbstractRecord<
         return getClass().hashCode();
     }
 
-    private void validateCategory(C category) throws InvalidRecordCategoryException {
-        if (!category.getWalletId().equals(walletId)) {
+    private static <C extends AbstractCategory<C>> void validateCategory(C category, WalletId expectedWalletId) throws InvalidRecordCategoryException {
+        if (!category.getWalletId().equals(expectedWalletId)) {
             throw new InvalidRecordCategoryException(
                     "Category '%s' cannot be assigned because WalletId does not match: %s"
-                            .formatted(category, walletId)
+                            .formatted(category, expectedWalletId)
             );
         }
     }
