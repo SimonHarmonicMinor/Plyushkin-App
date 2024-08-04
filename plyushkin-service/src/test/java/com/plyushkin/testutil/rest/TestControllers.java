@@ -3,6 +3,7 @@ package com.plyushkin.testutil.rest;
 import com.plyushkin.infra.properties.DefaultUsersProperties;
 import com.plyushkin.openapi.client.ApiClient;
 import com.plyushkin.openapi.client.ExpenseCategoryControllerApi;
+import com.plyushkin.openapi.client.ExpenseRecordControllerApi;
 import com.plyushkin.openapi.client.WalletControllerApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestComponent;
@@ -18,6 +19,10 @@ public class TestControllers {
     private Environment environment;
     @Autowired
     private DefaultUsersProperties defaultUsersProperties;
+
+    public ExpenseRecordControllerApi expenseRecordController() {
+        return new ExpenseRecordControllerApi(newApiClient());
+    }
 
     public ExpenseCategoryControllerApi expenseCategoryController() {
         return new ExpenseCategoryControllerApi(newApiClient());
