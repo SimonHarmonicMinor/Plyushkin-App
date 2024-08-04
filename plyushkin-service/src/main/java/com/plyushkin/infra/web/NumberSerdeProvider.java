@@ -28,7 +28,7 @@ abstract class NumberSerdeProvider<T, N extends Number> implements SerdeProvider
         return new JsonDeserializer<>() {
             @Override
             public T deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-                return asEntity(p.getLongValue());
+                return asEntity(getNumberValue(p));
             }
         };
     }
@@ -53,4 +53,6 @@ abstract class NumberSerdeProvider<T, N extends Number> implements SerdeProvider
     public abstract N asNumber(T value);
 
     public abstract N parseNumber(String text);
+
+    public abstract N getNumberValue(JsonParser p);
 }

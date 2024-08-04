@@ -36,7 +36,7 @@ public class SerdeProviderConfig {
 
     @Bean
     SerdeProvider<ExpenseCategoryNumber> expenseNoteCategoryNumberSerdeProvider() {
-        return new NumberSerdeProvider<ExpenseCategoryNumber, Long>() {
+        return new LongSerdeProvider<>() {
             @Override
             @SneakyThrows
             public ExpenseCategoryNumber asEntity(Long value) {
@@ -46,11 +46,6 @@ public class SerdeProviderConfig {
             @Override
             public Long asNumber(ExpenseCategoryNumber value) {
                 return value.getValue();
-            }
-
-            @Override
-            public Long parseNumber(String text) {
-                return Long.parseLong(text);
             }
 
             @Override
@@ -103,7 +98,7 @@ public class SerdeProviderConfig {
 
     @Bean
     SerdeProvider<Money> moneySerdeProvider() {
-        return new NumberSerdeProvider<Money, Double>() {
+        return new DoubleSerdeProvider<>() {
             @Override
             public Class<Money> type() {
                 return Money.class;
@@ -118,11 +113,6 @@ public class SerdeProviderConfig {
             @Override
             public Double asNumber(Money value) {
                 return value.getValue().doubleValue();
-            }
-
-            @Override
-            public Double parseNumber(String text) {
-                return Double.parseDouble(text);
             }
         };
     }
