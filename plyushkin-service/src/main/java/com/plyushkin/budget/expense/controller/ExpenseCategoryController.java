@@ -54,7 +54,7 @@ class ExpenseCategoryController {
         ));
         return ResponseEntity.created(
                         URI.create(
-                                "/api/wallets/%s/expenseNoteCategories/%s"
+                                "/api/wallets/%s/expenseCategories/%s"
                                         .formatted(
                                                 walletId,
                                                 category.getNumber().getValue()
