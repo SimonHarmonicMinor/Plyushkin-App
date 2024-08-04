@@ -3,10 +3,7 @@ package com.plyushkin.budget.expense;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -20,6 +17,11 @@ import static lombok.AccessLevel.PROTECTED;
 public class ExpenseNumber {
     private final long value;
 
+    @SneakyThrows
+    public static ExpenseNumber createOne() {
+        return create(1);
+    }
+
     public static ExpenseNumber create(long value) throws InvalidExpenseNumberException {
         if (value <= 0) {
             throw new InvalidExpenseNumberException(
@@ -28,6 +30,10 @@ public class ExpenseNumber {
             );
         }
         return new ExpenseNumber(value);
+    }
+
+    public ExpenseNumber increment() {
+        return new ExpenseNumber(this.value + 1);
     }
 
     @Override
