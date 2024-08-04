@@ -24,7 +24,7 @@ import org.springframework.data.domain.AbstractAggregateRoot;
 @ToString(onlyExplicitlyIncluded = true)
 @NoArgsConstructor(access = PROTECTED)
 @Getter
-public class AbstractRecord<
+public abstract class AbstractRecord<
         C extends AbstractCategory<C>,
         T extends AbstractRecord<C, T>
         >
@@ -60,15 +60,11 @@ public class AbstractRecord<
     @AttributeOverride(name = "value", column = @Column(name = "amount"))
     private Money amount;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "category_id")
-    private C category;
-
     @ToString.Include
     private String comment;
 
     @SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
-    protected AbstractRecord( WalletId walletId,
+    protected AbstractRecord(WalletId walletId,
                              UserId whoDid,
                              LocalDate date,
                              Currency currency,
@@ -81,9 +77,10 @@ public class AbstractRecord<
         this.date = date;
         this.currency = currency;
         this.amount = amount;
-        this.category = category;
         this.comment = comment;
     }
+
+    protected abstract void setCategory(C c);
 
     public void update(@Nullable LocalDate date,
                        @Nullable Currency currency,
@@ -92,7 +89,7 @@ public class AbstractRecord<
                        @Nullable String comment) throws InvalidRecordCategoryException {
         if (category != null) {
             validateCategory(category);
-            this.category = category;
+            setCategory(category);
         }
         if (date != null) {
             this.date = date;
@@ -103,7 +100,9 @@ public class AbstractRecord<
         if (amount != null) {
             this.amount = amount;
         }
-        this.comment = requireNonNullElse(comment, "");
+        if (comment != null) {
+            this.comment = comment;
+        }
     }
 
     @Override

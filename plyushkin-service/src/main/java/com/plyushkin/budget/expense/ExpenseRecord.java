@@ -5,16 +5,16 @@ import com.plyushkin.budget.Currency;
 import com.plyushkin.budget.Money;
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
-import jakarta.persistence.Convert;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDate;
 
+import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
@@ -22,13 +22,17 @@ import static lombok.AccessLevel.PROTECTED;
 @NoArgsConstructor(access = PROTECTED)
 @DynamicUpdate
 @Getter
+@Setter(PROTECTED)
 public class ExpenseRecord extends
-        AbstractRecord<ExpenseCategory,
-                ExpenseRecord> {
+        AbstractRecord<ExpenseCategory, ExpenseRecord> {
 
     @ToString.Include
     @Convert(converter = ExpenseNumberAttributeConverter.class)
     private ExpenseNumber number;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "category_id")
+    private ExpenseCategory category;
 
     protected ExpenseRecord(ExpenseNumber number,
                             WalletId walletId,
@@ -40,6 +44,7 @@ public class ExpenseRecord extends
                             String comment) throws InvalidRecordException {
         super(walletId, whoDid, date, currency, amount, category, comment);
         this.number = number;
+        this.category = category;
     }
 
     public static ExpenseRecord create(ExpenseNumber id,
