@@ -1,18 +1,13 @@
 package com.plyushkin.user;
 
-import static jakarta.persistence.FetchType.LAZY;
-import static jakarta.persistence.InheritanceType.TABLE_PER_CLASS;
-import static lombok.AccessLevel.PROTECTED;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 
-import lombok.NoArgsConstructor;
+import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.InheritanceType.TABLE_PER_CLASS;
+import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Inheritance(strategy = TABLE_PER_CLASS)

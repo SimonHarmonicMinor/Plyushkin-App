@@ -1,17 +1,16 @@
 package com.plyushkin.user;
 
-import static lombok.AccessLevel.PACKAGE;
-import static lombok.AccessLevel.PROTECTED;
-
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import static lombok.AccessLevel.PACKAGE;
+import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Table(schema = "auth", name = "users")

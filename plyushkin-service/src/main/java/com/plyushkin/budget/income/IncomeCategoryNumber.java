@@ -1,16 +1,15 @@
 package com.plyushkin.budget.income;
 
-import static lombok.AccessLevel.PROTECTED;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.StandardException;
 
 import java.io.Serial;
 import java.io.Serializable;
 
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.experimental.StandardException;
+import static lombok.AccessLevel.PROTECTED;
 
 @Embeddable
 @NoArgsConstructor(access = PROTECTED)

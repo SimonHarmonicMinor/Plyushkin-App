@@ -1,28 +1,19 @@
 package com.plyushkin.budget;
 
-import static lombok.AccessLevel.PRIVATE;
-import static lombok.AccessLevel.PROTECTED;
-
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
 import jakarta.annotation.Nullable;
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.AttributeOverrides;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
-
-import java.io.Serializable;
-import java.util.Objects;
-
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.StandardException;
 import org.springframework.data.domain.AbstractAggregateRoot;
+
+import java.util.Objects;
+
+import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PROTECTED;
 
 @MappedSuperclass
 @ToString(onlyExplicitlyIncluded = true)

@@ -1,6 +1,5 @@
 package com.plyushkin.budget.expense.controller.response;
 
-import com.plyushkin.budget.AbstractCategory;
 import com.plyushkin.budget.expense.ExpenseCategory;
 import com.plyushkin.budget.expense.ExpenseCategoryNumber;
 import com.plyushkin.user.UserId;

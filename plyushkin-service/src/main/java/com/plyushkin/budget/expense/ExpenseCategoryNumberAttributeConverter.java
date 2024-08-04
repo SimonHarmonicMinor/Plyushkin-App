@@ -1,7 +1,6 @@
 package com.plyushkin.budget.expense;
 
 import jakarta.persistence.AttributeConverter;
-import jakarta.persistence.Converter;
 import lombok.SneakyThrows;
 
 class ExpenseCategoryNumberAttributeConverter implements AttributeConverter<ExpenseCategoryNumber, Long> {

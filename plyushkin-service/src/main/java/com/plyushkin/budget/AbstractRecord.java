@@ -1,24 +1,20 @@
 package com.plyushkin.budget;
 
-import static jakarta.persistence.FetchType.LAZY;
-import static java.util.Objects.requireNonNullElse;
-import static lombok.AccessLevel.PRIVATE;
-import static lombok.AccessLevel.PROTECTED;
-
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
-
-import java.io.Serializable;
-import java.time.LocalDate;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.StandardException;
 import org.springframework.data.domain.AbstractAggregateRoot;
+
+import java.time.LocalDate;
+
+import static lombok.AccessLevel.PRIVATE;
+import static lombok.AccessLevel.PROTECTED;
 
 @MappedSuperclass
 @ToString(onlyExplicitlyIncluded = true)

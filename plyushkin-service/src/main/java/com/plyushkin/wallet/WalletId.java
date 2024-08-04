@@ -1,7 +1,5 @@
 package com.plyushkin.wallet;
 
-import static lombok.AccessLevel.PROTECTED;
-
 import com.plyushkin.util.PrefixedId;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Embeddable;
@@ -9,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.StandardException;
 
 import java.io.Serial;
+
+import static lombok.AccessLevel.PROTECTED;
 
 @Embeddable
 @Schema(implementation = String.class, description = "WalletId")

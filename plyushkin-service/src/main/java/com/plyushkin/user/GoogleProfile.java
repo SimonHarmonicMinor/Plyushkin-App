@@ -1,10 +1,10 @@
 package com.plyushkin.user;
 
-import static lombok.AccessLevel.PROTECTED;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.NoArgsConstructor;
+
+import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Table(schema = "auth", name = "google_profile")
