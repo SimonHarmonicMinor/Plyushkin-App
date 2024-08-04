@@ -2,7 +2,7 @@ package com.plyushkin.budget;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(implementation = CurrencyEnum.class, description = "Currency", enumAsRef = true)
+@Schema(implementation = CurrencyEnum.class, description = "Currency")
 public interface Currency {
 
     String value();
@@ -16,6 +16,7 @@ public interface Currency {
     }
 }
 
+@Schema(enumAsRef = true)
 enum CurrencyEnum implements Currency {
     RUB, DOLLAR, EURO;
 
