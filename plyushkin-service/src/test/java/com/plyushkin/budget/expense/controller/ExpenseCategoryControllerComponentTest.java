@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 
@@ -105,5 +106,24 @@ class ExpenseCategoryControllerComponentTest {
                 containsBy(c -> c.getName().equals("category 2") && Objects.equals(c.getParentNumber(), category1.getNumber())),
                 containsBy(c -> c.getName().equals("category 3") && Objects.equals(c.getParentNumber(), category1.getNumber()))
         ));
+    }
+
+    @Test
+    @SneakyThrows
+    void shouldDeleteCategory() {
+        final var walletId =
+                rest.walletController().createWallet(new WalletCreateRequest().name("w1"))
+                        .getId();
+        final var category1 = rest.expenseCategoryController()
+                .createCategory(
+                        walletId,
+                        new ExpenseNoteCategoryCreateRequest()
+                                .name("category 1")
+                );
+
+        rest.expenseCategoryController().deleteCategory(walletId, category1.getNumber());
+
+        final var categories = rest.expenseCategoryController().listCategories(walletId);
+        assertThat(categories, hasSize(0));
     }
 }
