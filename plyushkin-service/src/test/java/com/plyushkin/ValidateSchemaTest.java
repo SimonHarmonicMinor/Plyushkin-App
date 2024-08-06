@@ -1,30 +1,15 @@
 package com.plyushkin;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
-
-import com.plyushkin.infra.JpaConfig;
+import com.plyushkin.testutil.slices.DBTest;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.springframework.context.annotation.Import;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
-@DataJpaTest(properties = "spring.jpa.hibernate.ddl-auto=validate")
-@AutoConfigureTestDatabase(replace = NONE)
-@Testcontainers
-@Import(JpaConfig.class)
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+@DBTest(properties = "spring.jpa.hibernate.ddl-auto=validate")
 public class ValidateSchemaTest {
 
-  @ServiceConnection
-  @Container
-  private static final PostgreSQLContainer<?> POSTGRES = new PostgreSQLContainer<>("postgres:13.5");
-
-  @Test
-  void sanity() {
-    assertTrue(true);
-  }
+    @Test
+    void sanity() {
+        assertTrue(true);
+    }
 }
