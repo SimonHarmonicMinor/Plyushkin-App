@@ -3,8 +3,8 @@ import java.nio.file.Paths;
 
 plugins {
     java
-    id("org.springframework.boot") version "3.2.6"
-    id("io.spring.dependency-management") version "1.1.5"
+    id("org.springframework.boot") version "3.3.2"
+    id("io.spring.dependency-management") version "1.1.6"
     id("ru.vyarus.quality") version "5.0.0"
     id("net.ltgt.errorprone") version "4.0.0"
     id("org.springdoc.openapi-gradle-plugin") version "1.8.0"
@@ -41,7 +41,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.cosium.spring.data:spring-data-jpa-entity-graph:3.2.2")
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
     implementation("io.sentry:sentry-spring-boot-starter-jakarta")
     implementation("org.flywaydb:flyway-core")
     implementation("com.h2database:h2")
