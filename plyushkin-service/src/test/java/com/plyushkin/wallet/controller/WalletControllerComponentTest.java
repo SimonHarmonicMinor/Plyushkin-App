@@ -42,15 +42,17 @@ class WalletControllerComponentTest {
     @Test
     @SneakyThrows
     void shouldCreateMultipleWallets() {
-        rest.walletController().createWallet(new WalletCreateRequest().name("my wallet 1"));
-        rest.walletController().createWallet(new WalletCreateRequest().name("my wallet 2"));
+        final var name1 = "my wallet 1";
+        final var name2 = "my wallet 2";
+        rest.walletController().createWallet(new WalletCreateRequest().name(name1));
+        rest.walletController().createWallet(new WalletCreateRequest().name(name2));
 
         final var wallets = rest.walletController().getWallets();
 
         assertThat(wallets, allOf(
                 hasSize(2),
-                containsBy(w -> w.getName().equals("my wallet 1")),
-                containsBy(w -> w.getName().equals("my wallet 2"))
+                containsBy(w -> w.getName().equals(name1)),
+                containsBy(w -> w.getName().equals(name2))
         ));
     }
 
