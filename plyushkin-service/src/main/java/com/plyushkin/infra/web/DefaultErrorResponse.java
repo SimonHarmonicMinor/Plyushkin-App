@@ -18,7 +18,8 @@ public record DefaultErrorResponse(
 
     public DefaultErrorResponse(String message,
                                 Instant timestamp) {
-        this.message = requireNonNullElse(message, "").trim().substring(0, 200);
+        final var trim = requireNonNullElse(message, "").trim();
+        this.message = trim.substring(0, Math.min(trim.length(), 200));
         this.timestamp = timestamp;
     }
 }
