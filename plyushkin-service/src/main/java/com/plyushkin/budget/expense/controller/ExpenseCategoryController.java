@@ -3,8 +3,8 @@ package com.plyushkin.budget.expense.controller;
 import com.plyushkin.budget.expense.ExpenseCategory;
 import com.plyushkin.budget.expense.ExpenseCategoryEntityGraph;
 import com.plyushkin.budget.expense.ExpenseCategoryNumber;
-import com.plyushkin.budget.expense.controller.request.ExpenseNoteCategoryCreateRequest;
-import com.plyushkin.budget.expense.controller.request.ExpenseNoteCategoryUpdateRequest;
+import com.plyushkin.budget.expense.controller.request.ExpenseCategoryCreateRequest;
+import com.plyushkin.budget.expense.controller.request.ExpenseCategoryUpdateRequest;
 import com.plyushkin.budget.expense.controller.response.ExpenseCategoryResponse;
 import com.plyushkin.budget.expense.repository.ExpenseCategoryRepository;
 import com.plyushkin.budget.expense.usecase.ExpenseCategoryUseCase;
@@ -44,7 +44,7 @@ class ExpenseCategoryController {
     @PreAuthorize("@BudgetAuth.hasAccessForWalletUpdate(#walletId)")
     public ResponseEntity<ExpenseCategoryResponse> createCategory(
             @NotNull @PathVariable WalletId walletId,
-            @NotNull @Valid @RequestBody ExpenseNoteCategoryCreateRequest request
+            @NotNull @Valid @RequestBody ExpenseCategoryCreateRequest request
     )
             throws CreateCategoryException {
         ExpenseCategory category = useCase.createCategory(new CreateCategoryCommand(
@@ -67,7 +67,7 @@ class ExpenseCategoryController {
     @PreAuthorize("@BudgetAuth.hasAccessForWalletUpdate(#walletId)")
     public ExpenseCategoryResponse updateCategory(@NotNull @PathVariable ExpenseCategoryNumber number,
                                                   @NotNull @PathVariable WalletId walletId,
-                                                  @NotNull @Valid @RequestBody ExpenseNoteCategoryUpdateRequest request)
+                                                  @NotNull @Valid @RequestBody ExpenseCategoryUpdateRequest request)
             throws UpdateExpenseCategoryException {
         return new ExpenseCategoryResponse(
                 useCase.updateCategory(

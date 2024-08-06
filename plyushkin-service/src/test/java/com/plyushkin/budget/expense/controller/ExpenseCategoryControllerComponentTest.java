@@ -1,7 +1,7 @@
 package com.plyushkin.budget.expense.controller;
 
-import com.plyushkin.openapi.client.ExpenseNoteCategoryCreateRequest;
-import com.plyushkin.openapi.client.ExpenseNoteCategoryUpdateRequest;
+import com.plyushkin.openapi.client.ExpenseCategoryCreateRequest;
+import com.plyushkin.openapi.client.ExpenseCategoryUpdateRequest;
 import com.plyushkin.openapi.client.WalletCreateRequest;
 import com.plyushkin.testutil.db.TestDbFacade;
 import com.plyushkin.testutil.rest.TestControllers;
@@ -42,7 +42,7 @@ class ExpenseCategoryControllerComponentTest {
         final var category = rest.expenseCategoryController()
                 .createCategory(
                         walletId,
-                        new ExpenseNoteCategoryCreateRequest()
+                        new ExpenseCategoryCreateRequest()
                                 .name("category 1")
                 );
 
@@ -60,19 +60,19 @@ class ExpenseCategoryControllerComponentTest {
         final var category1 = rest.expenseCategoryController()
                 .createCategory(
                         walletId,
-                        new ExpenseNoteCategoryCreateRequest()
+                        new ExpenseCategoryCreateRequest()
                                 .name("category 1")
                 );
         final var category2 = rest.expenseCategoryController()
                 .createCategory(
                         walletId,
-                        new ExpenseNoteCategoryCreateRequest()
+                        new ExpenseCategoryCreateRequest()
                                 .name("category 2")
                 );
         final var category3 = rest.expenseCategoryController()
                 .createCategory(
                         walletId,
-                        new ExpenseNoteCategoryCreateRequest()
+                        new ExpenseCategoryCreateRequest()
                                 .name("category 3")
                 );
 
@@ -80,14 +80,14 @@ class ExpenseCategoryControllerComponentTest {
                 .updateCategory(
                         category2.getNumber(),
                         walletId,
-                        new ExpenseNoteCategoryUpdateRequest()
+                        new ExpenseCategoryUpdateRequest()
                                 .newParentNumber(category1.getNumber())
                 );
         rest.expenseCategoryController()
                 .updateCategory(
                         category3.getNumber(),
                         walletId,
-                        new ExpenseNoteCategoryUpdateRequest()
+                        new ExpenseCategoryUpdateRequest()
                                 .newParentNumber(category1.getNumber())
                 );
 
@@ -115,7 +115,7 @@ class ExpenseCategoryControllerComponentTest {
         final var category1 = rest.expenseCategoryController()
                 .createCategory(
                         walletId,
-                        new ExpenseNoteCategoryCreateRequest()
+                        new ExpenseCategoryCreateRequest()
                                 .name("category 1")
                 );
 
