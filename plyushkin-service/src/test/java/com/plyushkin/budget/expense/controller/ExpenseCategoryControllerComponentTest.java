@@ -1,7 +1,10 @@
 package com.plyushkin.budget.expense.controller;
 
+import com.plyushkin.openapi.client.ApiException;
 import com.plyushkin.openapi.client.ExpenseCategoryCreateRequest;
 import com.plyushkin.openapi.client.ExpenseCategoryUpdateRequest;
+import com.plyushkin.openapi.client.ExpenseRecordCreateRequest;
+import com.plyushkin.openapi.client.CurrencyEnum;
 import com.plyushkin.openapi.client.WalletCreateRequest;
 import com.plyushkin.testutil.db.TestDbFacade;
 import com.plyushkin.testutil.rest.TestControllers;
@@ -11,6 +14,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import static com.plyushkin.testutil.CustomMatchers.containsBy;
@@ -18,6 +23,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ComponentTest
 @SuppressWarnings("checkstyle:MultipleStringLiterals")
@@ -123,5 +129,39 @@ class ExpenseCategoryControllerComponentTest {
 
         final var categories = rest.expenseCategoryController().listCategories(walletId);
         assertThat(categories, hasSize(0));
+    }
+
+    @Test
+    @SneakyThrows
+    void shouldNotDeleteCategoryIfItUsedByExpenseRecord() {
+        final var walletId =
+                rest.walletController().createWallet(new WalletCreateRequest().name("w1"))
+                        .getId();
+        final var category1 = rest.expenseCategoryController()
+                .createCategory(
+                        walletId,
+                        new ExpenseCategoryCreateRequest()
+                                .name("category 1")
+                );
+        rest.expenseRecordController()
+                .createExpenseRecord(
+                        walletId,
+                        new ExpenseRecordCreateRequest()
+                                .categoryNumber(category1.getNumber())
+                                .comment("")
+                                .currency(CurrencyEnum.DOLLAR)
+                                .date(LocalDate.now())
+                                .amount(BigDecimal.ONE)
+                );
+
+        final var exception = assertThrows(
+                ApiException.class,
+                () -> rest.expenseCategoryController().deleteCategory(
+                        walletId,
+                        category1.getNumber()
+                )
+        );
+
+        assertEquals(400, exception.getCode());
     }
 }

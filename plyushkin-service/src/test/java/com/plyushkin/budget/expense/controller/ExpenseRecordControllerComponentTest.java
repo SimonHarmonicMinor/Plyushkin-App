@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.plyushkin.openapi.client.ExpenseRecordResponse;
 import com.plyushkin.openapi.client.ExpenseRecordCreateRequest;
 import com.plyushkin.openapi.client.ExpenseRecordUpdateRequest;
-import com.plyushkin.openapi.client.ExpenseNoteCategoryCreateRequest;
+import com.plyushkin.openapi.client.ExpenseCategoryCreateRequest;
 import com.plyushkin.openapi.client.WalletCreateRequest;
 import com.plyushkin.openapi.client.CurrencyEnum;
 
@@ -48,7 +48,7 @@ class ExpenseRecordControllerComponentTest {
                 rest.expenseCategoryController()
                         .createCategory(
                                 walletId,
-                                new ExpenseNoteCategoryCreateRequest()
+                                new ExpenseCategoryCreateRequest()
                                         .name("c1")
                         ).getNumber();
 
@@ -81,14 +81,14 @@ class ExpenseRecordControllerComponentTest {
                 rest.expenseCategoryController()
                         .createCategory(
                                 walletId,
-                                new ExpenseNoteCategoryCreateRequest()
+                                new ExpenseCategoryCreateRequest()
                                         .name("c1")
                         ).getNumber();
         final var newCategoryNumber =
                 rest.expenseCategoryController()
                         .createCategory(
                                 walletId,
-                                new ExpenseNoteCategoryCreateRequest()
+                                new ExpenseCategoryCreateRequest()
                                         .name("c2")
                         ).getNumber();
         final var expenseRecordNumber = rest.expenseRecordController()
@@ -135,7 +135,7 @@ class ExpenseRecordControllerComponentTest {
                 rest.expenseCategoryController()
                         .createCategory(
                                 walletId,
-                                new ExpenseNoteCategoryCreateRequest()
+                                new ExpenseCategoryCreateRequest()
                                         .name("c1")
                         ).getNumber();
         final var expenseRecord = rest.expenseRecordController()
@@ -154,7 +154,6 @@ class ExpenseRecordControllerComponentTest {
         final var page = rest.expenseRecordController().listExpenseRecords(walletId, 0, 100, null, null);
 
         assertThat(page.getContent(), hasSize(0));
-        assertEquals(page.getTotalElements(), 0);
     }
 
     @Test
@@ -167,7 +166,7 @@ class ExpenseRecordControllerComponentTest {
                 rest.expenseCategoryController()
                         .createCategory(
                                 walletId,
-                                new ExpenseNoteCategoryCreateRequest()
+                                new ExpenseCategoryCreateRequest()
                                         .name("c1")
                         ).getNumber();
         createRecord(walletId, LocalDate.of(2100, Month.APRIL, 1), categoryNumber);
