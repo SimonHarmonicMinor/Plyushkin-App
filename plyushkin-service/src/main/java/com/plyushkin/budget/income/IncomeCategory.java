@@ -1,6 +1,6 @@
 package com.plyushkin.budget.income;
 
-import com.plyushkin.budget.AbstractCategory;
+import com.plyushkin.budget.base.AbstractCategory;
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
 import jakarta.annotation.Nullable;

@@ -1,6 +1,6 @@
 package com.plyushkin.budget.income;
 
-import com.plyushkin.budget.AbstractRecord;
+import com.plyushkin.budget.base.AbstractRecord;
 import com.plyushkin.budget.Currency;
 import com.plyushkin.budget.Money;
 import com.plyushkin.user.UserId;

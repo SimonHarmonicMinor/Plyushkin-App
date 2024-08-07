@@ -1,4 +1,4 @@
-package com.plyushkin.budget.expense.usecase.exception;
+package com.plyushkin.budget.base.usecase.exception;
 
 import lombok.Getter;
 import lombok.experimental.StandardException;
@@ -7,8 +7,7 @@ import lombok.experimental.StandardException;
 public abstract sealed class CreateCategoryException extends Exception {
 
     @Getter
-    public static final class NonUniqueNamePerWalletId extends
-            CreateCategoryException {
+    public static final class NonUniqueNamePerWalletId extends CreateCategoryException {
 
         private final String name;
 

@@ -1,4 +1,4 @@
-package com.plyushkin.budget.expense.usecase.exception;
+package com.plyushkin.budget.base.usecase.exception;
 
 import lombok.experimental.StandardException;
 

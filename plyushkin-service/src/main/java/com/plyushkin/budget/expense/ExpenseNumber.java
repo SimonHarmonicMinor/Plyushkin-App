@@ -1,5 +1,6 @@
 package com.plyushkin.budget.expense;
 
+import com.plyushkin.budget.base.Number;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -12,7 +13,7 @@ import static lombok.AccessLevel.PROTECTED;
 @EqualsAndHashCode
 @Getter
 @Schema(implementation = Long.class, description = "ExpenseNumber", minimum = "1")
-public class ExpenseNumber {
+public class ExpenseNumber implements Number<ExpenseNumber> {
     private final long value;
 
     @SneakyThrows
@@ -30,6 +31,7 @@ public class ExpenseNumber {
         return new ExpenseNumber(value);
     }
 
+    @Override
     public ExpenseNumber increment() {
         return new ExpenseNumber(this.value + 1);
     }

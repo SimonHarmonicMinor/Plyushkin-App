@@ -1,4 +1,4 @@
-package com.plyushkin.budget;
+package com.plyushkin.budget.base;
 
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;

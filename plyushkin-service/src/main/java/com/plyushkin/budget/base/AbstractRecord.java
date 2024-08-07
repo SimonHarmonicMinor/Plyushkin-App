@@ -1,5 +1,8 @@
-package com.plyushkin.budget;
+package com.plyushkin.budget.base;
 
+import com.plyushkin.budget.Currency;
+import com.plyushkin.budget.CurrencyAttributeConverter;
+import com.plyushkin.budget.Money;
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;

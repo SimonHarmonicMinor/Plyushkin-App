@@ -1,19 +1,18 @@
 package com.plyushkin.budget.expense.controller;
 
+import com.plyushkin.budget.expense.controller.request.ExpenseCategoryCreateRequest;
 import com.plyushkin.budget.expense.ExpenseCategory;
 import com.plyushkin.budget.expense.ExpenseCategoryEntityGraph;
 import com.plyushkin.budget.expense.ExpenseCategoryNumber;
-import com.plyushkin.budget.expense.controller.request.ExpenseCategoryCreateRequest;
 import com.plyushkin.budget.expense.controller.request.ExpenseCategoryUpdateRequest;
 import com.plyushkin.budget.expense.controller.response.ExpenseCategoryResponse;
 import com.plyushkin.budget.expense.repository.ExpenseCategoryRepository;
 import com.plyushkin.budget.expense.usecase.ExpenseCategoryUseCase;
-import com.plyushkin.budget.expense.usecase.command.CreateCategoryCommand;
-import com.plyushkin.budget.expense.usecase.command.UpdateCommand;
-import com.plyushkin.budget.expense.usecase.exception.CreateCategoryException;
-import com.plyushkin.budget.expense.usecase.exception.CreateCategoryException.NonUniqueNamePerWalletId;
-import com.plyushkin.budget.expense.usecase.exception.DeleteCategoryException;
-import com.plyushkin.budget.expense.usecase.exception.UpdateExpenseCategoryException;
+import com.plyushkin.budget.base.usecase.command.CreateCategoryCommand;
+import com.plyushkin.budget.base.usecase.command.UpdateCategoryCommand;
+import com.plyushkin.budget.base.usecase.exception.CreateCategoryException;
+import com.plyushkin.budget.base.usecase.exception.DeleteCategoryException;
+import com.plyushkin.budget.base.usecase.exception.UpdateCategoryUseCaseException;
 import com.plyushkin.infra.web.DefaultErrorResponse;
 import com.plyushkin.user.service.CurrentUserIdProvider;
 import com.plyushkin.wallet.WalletId;
@@ -68,12 +67,12 @@ class ExpenseCategoryController {
     public ExpenseCategoryResponse updateCategory(@NotNull @PathVariable ExpenseCategoryNumber number,
                                                   @NotNull @PathVariable WalletId walletId,
                                                   @NotNull @Valid @RequestBody ExpenseCategoryUpdateRequest request)
-            throws UpdateExpenseCategoryException {
+            throws UpdateCategoryUseCaseException {
         return new ExpenseCategoryResponse(
                 useCase.updateCategory(
                         walletId,
                         number,
-                        new UpdateCommand(
+                        new UpdateCategoryCommand<>(
                                 request.name(),
                                 request.newParentNumber()
                         )
@@ -120,9 +119,9 @@ class ExpenseCategoryController {
         useCase.deleteCategory(walletId, number);
     }
 
-    @ExceptionHandler(UpdateExpenseCategoryException.class)
+    @ExceptionHandler(UpdateCategoryUseCaseException.class)
     public ResponseEntity<DefaultErrorResponse> handleUpdateExpenseNoteCategoryException(
-            UpdateExpenseCategoryException e
+            UpdateCategoryUseCaseException e
     ) {
         log4xx(e);
         return ResponseEntity.status(400)
@@ -133,7 +132,7 @@ class ExpenseCategoryController {
     public ResponseEntity<DefaultErrorResponse> handleCreateCategoryException(CreateCategoryException e) {
         log4xx(e);
         return switch (e) {
-            case NonUniqueNamePerWalletId err -> ResponseEntity.status(400)
+            case CreateCategoryException.NonUniqueNamePerWalletId err -> ResponseEntity.status(400)
                     .body(new DefaultErrorResponse(err));
         };
     }

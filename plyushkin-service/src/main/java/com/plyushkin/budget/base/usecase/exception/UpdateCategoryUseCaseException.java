@@ -1,12 +1,12 @@
-package com.plyushkin.budget.expense.usecase.exception;
+package com.plyushkin.budget.base.usecase.exception;
 
 import lombok.experimental.StandardException;
 
 @StandardException
-public abstract sealed class UpdateExpenseCategoryException extends Exception {
+public abstract sealed class UpdateCategoryUseCaseException extends Exception {
 
     @StandardException
-    public abstract static sealed class ChangeParent extends UpdateExpenseCategoryException {
+    public abstract static sealed class ChangeParent extends UpdateCategoryUseCaseException {
         @StandardException
         public static final class RootNotFound extends ChangeParent {
         }
