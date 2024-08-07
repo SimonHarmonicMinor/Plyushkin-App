@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.SneakyThrows;
 
 import static lombok.AccessLevel.PROTECTED;
 
@@ -15,11 +14,6 @@ import static lombok.AccessLevel.PROTECTED;
 @Schema(implementation = Long.class, description = "ExpenseNumber", minimum = "1")
 public class ExpenseNumber implements Number<ExpenseNumber> {
     private final long value;
-
-    @SneakyThrows
-    public static ExpenseNumber createOne() {
-        return create(1);
-    }
 
     public static ExpenseNumber create(long value) throws InvalidExpenseNumberException {
         if (value <= 0) {
