@@ -1,5 +1,6 @@
 package com.plyushkin.budget.expense;
 
+import com.plyushkin.budget.CategoryNumber;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -11,7 +12,7 @@ import static lombok.AccessLevel.PRIVATE;
 @AllArgsConstructor(access = PRIVATE)
 @Getter
 @Schema(implementation = Long.class, description = "ExpenseNoteCategoryNumber", minimum = "1")
-public class ExpenseCategoryNumber {
+public class ExpenseCategoryNumber implements CategoryNumber<ExpenseCategoryNumber> {
     private final long value;
 
     public static ExpenseCategoryNumber createOne() {
@@ -28,6 +29,7 @@ public class ExpenseCategoryNumber {
         return new ExpenseCategoryNumber(value);
     }
 
+    @Override
     public ExpenseCategoryNumber increment() {
         return new ExpenseCategoryNumber(this.value + 1);
     }
