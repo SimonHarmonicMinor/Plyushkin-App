@@ -15,7 +15,10 @@ import java.util.Optional;
 import static jakarta.persistence.LockModeType.PESSIMISTIC_WRITE;
 
 @NoRepositoryBean
-public interface AbstractCategoryRepository<T extends AbstractCategory<T>, N extends Number<N>> extends EntityGraphJpaRepository<T, Long> {
+public interface AbstractCategoryRepository<
+        T extends AbstractCategory<T>,
+        N extends Number<N>
+        > extends EntityGraphJpaRepository<T, Long> {
     N initialNumber();
 
     default N nextNumber(WalletId walletId) {
