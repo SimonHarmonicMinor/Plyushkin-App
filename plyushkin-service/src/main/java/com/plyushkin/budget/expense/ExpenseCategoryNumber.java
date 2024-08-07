@@ -15,10 +15,6 @@ import static lombok.AccessLevel.PRIVATE;
 public class ExpenseCategoryNumber implements Number<ExpenseCategoryNumber> {
     private final long value;
 
-    public static ExpenseCategoryNumber createOne() {
-        return new ExpenseCategoryNumber(1L);
-    }
-
     public static ExpenseCategoryNumber create(long value) throws InvalidExpenseNoteCategoryNumberException {
         if (value <= 0) {
             throw new InvalidExpenseNoteCategoryNumberException(
