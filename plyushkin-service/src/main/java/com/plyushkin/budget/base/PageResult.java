@@ -1,4 +1,4 @@
-package com.plyushkin.budget.expense.controller.response;
+package com.plyushkin.budget.base;
 
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.Page;

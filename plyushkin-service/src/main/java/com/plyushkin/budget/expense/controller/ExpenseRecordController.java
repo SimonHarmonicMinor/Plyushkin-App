@@ -4,7 +4,7 @@ import com.plyushkin.budget.base.AbstractRecord;
 import com.plyushkin.budget.expense.controller.request.ExpenseRecordCreateRequest;
 import com.plyushkin.budget.expense.controller.request.ExpenseRecordUpdateRequest;
 import com.plyushkin.budget.expense.controller.response.ExpenseRecordResponse;
-import com.plyushkin.budget.expense.controller.response.PageResult;
+import com.plyushkin.budget.base.PageResult;
 import com.plyushkin.budget.expense.ExpenseNumber;
 import com.plyushkin.budget.expense.ExpenseRecord;
 import com.plyushkin.budget.expense.ExpenseRecord_;
