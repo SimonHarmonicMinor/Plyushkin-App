@@ -1,5 +1,6 @@
 package com.plyushkin.budget.income;
 
+import com.plyushkin.budget.base.Number;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -12,7 +13,7 @@ import static lombok.AccessLevel.PROTECTED;
 @EqualsAndHashCode
 @Getter
 @Schema(implementation = Long.class, description = "IncomeNumber", minimum = "1")
-public class IncomeNumber {
+public class IncomeNumber implements Number<IncomeNumber> {
     private final long value;
 
     public static IncomeNumber create(long value) throws InvalidIncomeNumberException {
@@ -22,6 +23,11 @@ public class IncomeNumber {
             );
         }
         return new IncomeNumber(value);
+    }
+
+    @Override
+    public IncomeNumber increment() {
+        return new IncomeNumber(this.value + 1);
     }
 
     @Override
