@@ -1,6 +1,6 @@
 package com.plyushkin.budget.investment.swap;
 
-import com.plyushkin.budget.base.Number;
+import com.plyushkin.budget.base.AbstractNumber;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -13,7 +13,7 @@ import static lombok.AccessLevel.PROTECTED;
 @EqualsAndHashCode
 @Getter
 @Schema(implementation = Long.class, description = "CurrencySwapDealNumber", minimum = "1")
-public class CurrencySwapDealNumber implements Number<CurrencySwapDealNumber> {
+public class CurrencySwapDealNumber implements AbstractNumber<CurrencySwapDealNumber> {
     private final long value;
 
     public static CurrencySwapDealNumber create(long value) throws InvalidCurrencySwapNumberException {

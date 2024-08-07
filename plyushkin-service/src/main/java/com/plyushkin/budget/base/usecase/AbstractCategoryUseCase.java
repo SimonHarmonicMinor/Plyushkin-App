@@ -1,7 +1,7 @@
 package com.plyushkin.budget.base.usecase;
 
 import com.plyushkin.budget.base.AbstractCategory;
-import com.plyushkin.budget.base.Number;
+import com.plyushkin.budget.base.AbstractNumber;
 import com.plyushkin.budget.base.repository.AbstractCategoryRepository;
 import com.plyushkin.budget.base.repository.AbstractRecordRepository;
 import com.plyushkin.budget.base.usecase.command.CreateCategoryCommand;
@@ -18,7 +18,7 @@ import java.util.function.BiFunction;
 @RequiredArgsConstructor
 public abstract class AbstractCategoryUseCase<
         C extends AbstractCategory<C>,
-        N extends Number<N>,
+        N extends AbstractNumber<N>,
         R extends AbstractCategoryRepository<C, N>,
         RR extends AbstractRecordRepository<C, ?, ?>
         > {

@@ -1,6 +1,6 @@
 package com.plyushkin.budget.investment.deposit;
 
-import com.plyushkin.budget.base.Number;
+import com.plyushkin.budget.base.AbstractNumber;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -13,7 +13,7 @@ import static lombok.AccessLevel.PROTECTED;
 @EqualsAndHashCode
 @Getter
 @Schema(implementation = Long.class, description = "DepositNumber", minimum = "1")
-public class DepositNumber implements Number<DepositNumber> {
+public class DepositNumber implements AbstractNumber<DepositNumber> {
     private final long value;
 
     public static DepositNumber create(long value) throws InvalidDepositNumberException {

@@ -1,6 +1,6 @@
 package com.plyushkin.budget.income;
 
-import com.plyushkin.budget.base.Number;
+import com.plyushkin.budget.base.AbstractNumber;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -13,7 +13,7 @@ import static lombok.AccessLevel.PRIVATE;
 @AllArgsConstructor(access = PRIVATE)
 @Getter
 @Schema(implementation = Long.class, description = "IncomeCategoryNumber", minimum = "1")
-public class IncomeCategoryNumber implements Number<IncomeCategoryNumber> {
+public class IncomeCategoryNumber implements AbstractNumber<IncomeCategoryNumber> {
     private final long value;
 
     public static IncomeCategoryNumber create(long value) throws InvalidIncomeCategoryNumberException {

@@ -1,6 +1,6 @@
 package com.plyushkin.budget.expense;
 
-import com.plyushkin.budget.base.Number;
+import com.plyushkin.budget.base.AbstractNumber;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -12,7 +12,7 @@ import static lombok.AccessLevel.PROTECTED;
 @EqualsAndHashCode
 @Getter
 @Schema(implementation = Long.class, description = "ExpenseNumber", minimum = "1")
-public class ExpenseNumber implements Number<ExpenseNumber> {
+public class ExpenseNumber implements AbstractNumber<ExpenseNumber> {
     private final long value;
 
     public static ExpenseNumber create(long value) throws InvalidExpenseNumberException {

@@ -2,7 +2,7 @@ package com.plyushkin.budget.base.repository;
 
 import com.plyushkin.budget.base.AbstractCategory;
 import com.plyushkin.budget.base.AbstractRecord;
-import com.plyushkin.budget.base.Number;
+import com.plyushkin.budget.base.AbstractNumber;
 import com.plyushkin.wallet.WalletId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -18,7 +18,7 @@ import static jakarta.persistence.LockModeType.PESSIMISTIC_WRITE;
 public interface AbstractRecordRepository<
         C extends AbstractCategory<C>,
         R extends AbstractRecord<C, R>,
-        N extends Number<N>
+        N extends AbstractNumber<N>
         >
         extends JpaRepository<R, Long>, JpaSpecificationExecutor<R> {
 
@@ -32,7 +32,7 @@ public interface AbstractRecordRepository<
 
     default N nextNumber(WalletId walletId) {
         return findMaxNumberPerWalletId(walletId)
-                .map(Number::increment)
+                .map(AbstractNumber::increment)
                 .orElse(initialNumber());
     }
 
