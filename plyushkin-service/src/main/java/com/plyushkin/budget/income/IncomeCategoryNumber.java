@@ -1,40 +1,37 @@
 package com.plyushkin.budget.income;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
+import com.plyushkin.budget.base.Number;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 import lombok.experimental.StandardException;
 
-import java.io.Serial;
-import java.io.Serializable;
+import static lombok.AccessLevel.PRIVATE;
 
-import static lombok.AccessLevel.PROTECTED;
-
-@Embeddable
-@NoArgsConstructor(access = PROTECTED)
 @EqualsAndHashCode
-public class IncomeCategoryNumber implements Serializable {
+@AllArgsConstructor(access = PRIVATE)
+@Getter
+@Schema(implementation = Long.class, description = "IncomeCategoryNumber", minimum = "1")
+public class IncomeCategoryNumber implements Number<IncomeCategoryNumber> {
+    private final long value;
 
-    @Serial
-    private static final long serialVersionUID = 1L;
-
-    @Column(name = "number", updatable = false)
-    private long value;
-
-    public static IncomeCategoryNumber create(long value) throws InvalidIncomeNoteIdException {
+    public static IncomeCategoryNumber create(long value) throws InvalidIncomeCategoryNumberException {
         if (value <= 0) {
-            throw new InvalidIncomeNoteIdException(
+            throw new InvalidIncomeCategoryNumberException(
                     "Value should be positive but it is: " + value
             );
         }
-        IncomeCategoryNumber number = new IncomeCategoryNumber();
-        number.value = value;
-        return number;
+        return new IncomeCategoryNumber(value);
+    }
+
+    @Override
+    public IncomeCategoryNumber increment() {
+        return new IncomeCategoryNumber(this.value + 1);
     }
 
     @StandardException
-    public static class InvalidIncomeNoteIdException extends Exception {
+    public static class InvalidIncomeCategoryNumberException extends Exception {
 
     }
 }

@@ -21,7 +21,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Setter(PROTECTED)
 @Getter
 public class IncomeCategory extends AbstractCategory<IncomeCategory> {
-    @Embedded
+    @Convert(converter = IncomeCategoryNumberAttributeConverter.class)
     @ToString.Include
     protected IncomeCategoryNumber number;
 
