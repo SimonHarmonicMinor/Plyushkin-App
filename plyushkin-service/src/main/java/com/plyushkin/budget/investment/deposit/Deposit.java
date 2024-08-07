@@ -28,7 +28,7 @@ public class Deposit {
     @Getter(PRIVATE)
     private Long pk;
 
-    @Embedded
+    @Convert(converter = DepositNumberAttributeConverter.class)
     private DepositNumber number;
 
     private String name;
