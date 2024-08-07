@@ -16,7 +16,7 @@ public class CurrencySwapDeal {
     @Getter(PRIVATE)
     private Long pk;
 
-    @Embedded
+    @Convert(converter = CurrencySwapDealNumberAttributeConverter.class)
     private CurrencySwapDealNumber number;
 
     @Embedded

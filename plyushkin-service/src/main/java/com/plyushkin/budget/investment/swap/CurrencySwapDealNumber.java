@@ -1,27 +1,36 @@
 package com.plyushkin.budget.investment.swap;
 
-import com.plyushkin.budget.AbstractNumber;
-import jakarta.persistence.Embeddable;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import com.plyushkin.budget.base.Number;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.experimental.StandardException;
 
-@Embeddable
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class CurrencySwapDealNumber extends AbstractNumber {
-    protected CurrencySwapDealNumber(long value) throws InvalidNumberException {
-        super(value);
-    }
+import static lombok.AccessLevel.PROTECTED;
+
+@AllArgsConstructor(access = PROTECTED)
+@EqualsAndHashCode
+@Getter
+@Schema(implementation = Long.class, description = "CurrencySwapDealNumber", minimum = "1")
+public class CurrencySwapDealNumber implements Number<CurrencySwapDealNumber> {
+    private final long value;
 
     public static CurrencySwapDealNumber create(long value) throws InvalidCurrencySwapNumberException {
-        try {
-            return new CurrencySwapDealNumber(value);
-        } catch (InvalidNumberException e) {
-            throw new InvalidCurrencySwapNumberException(e.getMessage(), e);
+        if (value <= 0) {
+            throw new InvalidCurrencySwapNumberException(
+                    "Value should be positive but it is: " + value
+            );
         }
+        return new CurrencySwapDealNumber(value);
+    }
+
+    @Override
+    public CurrencySwapDealNumber increment() {
+        return new CurrencySwapDealNumber(this.value + 1);
     }
 
     @StandardException
-    public static class InvalidCurrencySwapNumberException extends InvalidNumberException {
+    public static class InvalidCurrencySwapNumberException extends Exception {
     }
 }
