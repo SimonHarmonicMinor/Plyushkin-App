@@ -30,12 +30,12 @@ public class IncomeCategory extends AbstractCategory<IncomeCategory> {
     @Nullable
     private IncomeCategory parent;
 
-    public static IncomeCategory create(IncomeCategoryNumber id,
+    public static IncomeCategory create(IncomeCategoryNumber number,
                                         String name,
                                         WalletId walletId,
                                         UserId whoCreated) {
         IncomeCategory incomeCategory = new IncomeCategory();
-        incomeCategory.number = id;
+        incomeCategory.number = number;
         incomeCategory.name = name;
         incomeCategory.walletId = walletId;
         incomeCategory.whoCreated = whoCreated;
