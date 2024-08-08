@@ -226,7 +226,6 @@
         <module name="ParameterName"/>
         <module name="PatternVariableName"/>
         <module name="RecordComponentName"/>
-        <module name="RecordTypeParameterName"/>
         <module name="StaticVariableName"/>
         <module name="TypeName"/>
 
