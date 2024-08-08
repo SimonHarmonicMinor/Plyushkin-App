@@ -1,4 +1,4 @@
-package com.plyushkin.budget;
+package com.plyushkin.budget.base;
 
 import com.plyushkin.budget.base.usecase.exception.CreateCategoryException;
 import com.plyushkin.budget.base.usecase.exception.DeleteCategoryException;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 @Slf4j
-class BudgetExceptionResolver {
+class ExpenseIncomeExceptionResolver {
 
     @ExceptionHandler(UpdateCategoryUseCaseException.class)
     public ResponseEntity<DefaultErrorResponse> handleUpdateExpenseNoteCategoryException(

@@ -1,13 +1,13 @@
 package com.plyushkin.budget.expense.controller;
 
 import com.plyushkin.budget.base.AbstractRecord;
-import com.plyushkin.budget.expense.controller.request.ExpenseRecordCreateRequest;
-import com.plyushkin.budget.expense.controller.request.ExpenseRecordUpdateRequest;
-import com.plyushkin.budget.expense.controller.response.ExpenseRecordResponse;
 import com.plyushkin.budget.base.PageResult;
 import com.plyushkin.budget.expense.ExpenseNumber;
 import com.plyushkin.budget.expense.ExpenseRecord;
 import com.plyushkin.budget.expense.ExpenseRecord_;
+import com.plyushkin.budget.expense.controller.request.ExpenseRecordCreateRequest;
+import com.plyushkin.budget.expense.controller.request.ExpenseRecordUpdateRequest;
+import com.plyushkin.budget.expense.controller.response.ExpenseRecordResponse;
 import com.plyushkin.budget.expense.repository.ExpenseCategoryRepository;
 import com.plyushkin.budget.expense.repository.ExpenseRecordRepository;
 import com.plyushkin.user.service.CurrentUserIdProvider;
@@ -16,10 +16,6 @@ import com.plyushkin.wallet.WalletId;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -29,7 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
@@ -121,18 +116,7 @@ class ExpenseRecordController {
                 Sort.Order.asc(ExpenseRecord_.PK)
         ));
 
-        final var specification = new Specification<ExpenseRecord>() {
-            @Override
-            public Predicate toPredicate(Root<ExpenseRecord> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-                root.fetch(ExpenseRecord_.CATEGORY);
-                return cb.and(
-                        cb.equal(root.get(ExpenseRecord_.WALLET_ID), walletId),
-                        from != null ? cb.greaterThanOrEqualTo(root.get(ExpenseRecord_.DATE), from) : cb.conjunction(),
-                        to != null ? cb.lessThanOrEqualTo(root.get(ExpenseRecord_.DATE), to) : cb.conjunction()
-                );
-            }
-        };
-
+        final var specification = repository.pageSpecification(walletId, from, to);
         Page<ExpenseRecord> res = repository.findAll(specification, pageRequest);
         return new PageResult<>(res.map(ExpenseRecordResponse::new));
     }
