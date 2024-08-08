@@ -1,5 +1,6 @@
 package com.plyushkin.budget.base;
 
+import com.plyushkin.budget.base.usecase.exception.CategoryNotFoundException;
 import com.plyushkin.budget.base.usecase.exception.CreateCategoryException;
 import com.plyushkin.budget.base.usecase.exception.DeleteCategoryException;
 import com.plyushkin.budget.base.usecase.exception.UpdateCategoryUseCaseException;
@@ -35,6 +36,13 @@ class ExpenseIncomeExceptionResolver {
     public ResponseEntity<DefaultErrorResponse> handleDeleteCategoryException(DeleteCategoryException e) {
         log4xx(e);
         return ResponseEntity.status(400)
+                .body(new DefaultErrorResponse(e));
+    }
+
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public ResponseEntity<DefaultErrorResponse> handleCategoryNotFoundException(CategoryNotFoundException e) {
+        log4xx(e);
+        return ResponseEntity.status(404)
                 .body(new DefaultErrorResponse(e));
     }
 
