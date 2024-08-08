@@ -6,6 +6,7 @@ import com.plyushkin.budget.base.repository.AbstractCategoryRepository;
 import com.plyushkin.budget.base.repository.AbstractRecordRepository;
 import com.plyushkin.budget.base.usecase.command.CreateCategoryCommand;
 import com.plyushkin.budget.base.usecase.command.UpdateCategoryCommand;
+import com.plyushkin.budget.base.usecase.exception.CategoryNotFoundException;
 import com.plyushkin.budget.base.usecase.exception.CreateCategoryException;
 import com.plyushkin.budget.base.usecase.exception.DeleteCategoryException;
 import com.plyushkin.budget.base.usecase.exception.UpdateCategoryUseCaseException;
@@ -13,6 +14,7 @@ import com.plyushkin.util.WriteTransactional;
 import com.plyushkin.wallet.WalletId;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.function.BiFunction;
 
 @RequiredArgsConstructor
@@ -94,5 +96,21 @@ public abstract class AbstractCategoryUseCase<
             );
         }
         repository.delete(category);
+    }
+
+    public List<C> listCategories(WalletId walletId) {
+        return repository.findAllByWalletId(
+                walletId
+        );
+    }
+
+    public C getCategory(WalletId walletId, N number) throws CategoryNotFoundException {
+        return repository.findByWalletIdAndNumber(
+                walletId,
+                number
+        ).orElseThrow(() -> new CategoryNotFoundException(
+                "Cannot find category by WalletId=%s and Number=%s"
+                        .formatted(walletId, number)
+        ));
     }
 }
