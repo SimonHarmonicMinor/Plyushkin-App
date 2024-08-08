@@ -1,10 +1,10 @@
 package com.plyushkin.budget.base.repository;
 
-import com.cosium.spring.data.jpa.entity.graph.domain2.EntityGraph;
 import com.cosium.spring.data.jpa.entity.graph.repository.EntityGraphJpaRepository;
 import com.plyushkin.budget.base.AbstractCategory;
 import com.plyushkin.budget.base.AbstractNumber;
 import com.plyushkin.wallet.WalletId;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
@@ -37,13 +37,9 @@ public interface AbstractCategoryRepository<
     @Lock(PESSIMISTIC_WRITE)
     void lockByWalletId(WalletId walletId);
 
+    @EntityGraph(attributePaths = "parent")
     Optional<T> findByWalletIdAndNumber(WalletId walletId, N number);
 
-    Optional<T> findByWalletIdAndNumber(
-            WalletId walletId,
-            N number,
-            EntityGraph entityGraph
-    );
-
-    List<T> findAllByWalletId(WalletId walletId, EntityGraph entityGraph);
+    @EntityGraph(attributePaths = "parent")
+    List<T> findAllByWalletId(WalletId walletId);
 }

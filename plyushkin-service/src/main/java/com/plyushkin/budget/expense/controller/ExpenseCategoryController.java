@@ -1,18 +1,17 @@
 package com.plyushkin.budget.expense.controller;
 
-import com.plyushkin.budget.expense.controller.request.ExpenseCategoryCreateRequest;
-import com.plyushkin.budget.expense.ExpenseCategory;
-import com.plyushkin.budget.expense.ExpenseCategoryEntityGraph;
-import com.plyushkin.budget.expense.ExpenseCategoryNumber;
-import com.plyushkin.budget.expense.controller.request.ExpenseCategoryUpdateRequest;
-import com.plyushkin.budget.expense.controller.response.ExpenseCategoryResponse;
-import com.plyushkin.budget.expense.repository.ExpenseCategoryRepository;
-import com.plyushkin.budget.expense.usecase.ExpenseCategoryUseCase;
 import com.plyushkin.budget.base.usecase.command.CreateCategoryCommand;
 import com.plyushkin.budget.base.usecase.command.UpdateCategoryCommand;
 import com.plyushkin.budget.base.usecase.exception.CreateCategoryException;
 import com.plyushkin.budget.base.usecase.exception.DeleteCategoryException;
 import com.plyushkin.budget.base.usecase.exception.UpdateCategoryUseCaseException;
+import com.plyushkin.budget.expense.ExpenseCategory;
+import com.plyushkin.budget.expense.ExpenseCategoryNumber;
+import com.plyushkin.budget.expense.controller.request.ExpenseCategoryCreateRequest;
+import com.plyushkin.budget.expense.controller.request.ExpenseCategoryUpdateRequest;
+import com.plyushkin.budget.expense.controller.response.ExpenseCategoryResponse;
+import com.plyushkin.budget.expense.repository.ExpenseCategoryRepository;
+import com.plyushkin.budget.expense.usecase.ExpenseCategoryUseCase;
 import com.plyushkin.infra.web.DefaultErrorResponse;
 import com.plyushkin.user.service.CurrentUserIdProvider;
 import com.plyushkin.wallet.WalletId;
@@ -88,10 +87,7 @@ class ExpenseCategoryController {
     ) {
         return repository.findByWalletIdAndNumber(
                         walletId,
-                        number,
-                        ExpenseCategoryEntityGraph.____()
-                                .parent()
-                                .____.____()
+                        number
                 ).map(ExpenseCategoryResponse::new)
                 .map(ResponseEntity::ok)
                 .orElse(
@@ -103,10 +99,7 @@ class ExpenseCategoryController {
     @PreAuthorize("@BudgetAuth.hasAccessForWalletView(#walletId)")
     public List<ExpenseCategoryResponse> listCategories(@NotNull @PathVariable WalletId walletId) {
         return repository.findAllByWalletId(
-                        walletId,
-                        ExpenseCategoryEntityGraph.____()
-                                .parent()
-                                .____.____()
+                        walletId
                 ).stream()
                 .map(ExpenseCategoryResponse::new)
                 .toList();
