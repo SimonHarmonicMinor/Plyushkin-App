@@ -2,6 +2,7 @@ package com.plyushkin.budget.expense.controller;
 
 import com.plyushkin.budget.base.usecase.command.CreateCategoryCommand;
 import com.plyushkin.budget.base.usecase.command.UpdateCategoryCommand;
+import com.plyushkin.budget.base.usecase.exception.CategoryNotFoundException;
 import com.plyushkin.budget.base.usecase.exception.CreateCategoryException;
 import com.plyushkin.budget.base.usecase.exception.DeleteCategoryException;
 import com.plyushkin.budget.base.usecase.exception.UpdateCategoryUseCaseException;
@@ -10,9 +11,7 @@ import com.plyushkin.budget.expense.ExpenseCategoryNumber;
 import com.plyushkin.budget.expense.controller.request.ExpenseCategoryCreateRequest;
 import com.plyushkin.budget.expense.controller.request.ExpenseCategoryUpdateRequest;
 import com.plyushkin.budget.expense.controller.response.ExpenseCategoryResponse;
-import com.plyushkin.budget.expense.repository.ExpenseCategoryRepository;
 import com.plyushkin.budget.expense.usecase.ExpenseCategoryUseCase;
-import com.plyushkin.infra.web.DefaultErrorResponse;
 import com.plyushkin.user.service.CurrentUserIdProvider;
 import com.plyushkin.wallet.WalletId;
 import jakarta.validation.Valid;
@@ -35,7 +34,6 @@ import java.util.List;
 class ExpenseCategoryController {
 
     private final ExpenseCategoryUseCase useCase;
-    private final ExpenseCategoryRepository repository;
     private final CurrentUserIdProvider currentUserIdProvider;
 
     @PostMapping("/wallets/{walletId}/expenseCategories")
@@ -81,26 +79,18 @@ class ExpenseCategoryController {
 
     @GetMapping("/wallets/{walletId}/expenseCategories/{number}")
     @PreAuthorize("@BudgetAuth.hasAccessForWalletView(#walletId)")
-    public ResponseEntity<ExpenseCategoryResponse> getCategory(
+    public ExpenseCategoryResponse getCategory(
             @NotNull @PathVariable ExpenseCategoryNumber number,
             @NotNull @PathVariable WalletId walletId
-    ) {
-        return repository.findByWalletIdAndNumber(
-                        walletId,
-                        number
-                ).map(ExpenseCategoryResponse::new)
-                .map(ResponseEntity::ok)
-                .orElse(
-                        ResponseEntity.notFound().build()
-                );
+    ) throws CategoryNotFoundException {
+        return new ExpenseCategoryResponse(useCase.getCategory(walletId, number));
     }
 
     @GetMapping("/wallets/{walletId}/expenseCategories")
     @PreAuthorize("@BudgetAuth.hasAccessForWalletView(#walletId)")
     public List<ExpenseCategoryResponse> listCategories(@NotNull @PathVariable WalletId walletId) {
-        return repository.findAllByWalletId(
-                        walletId
-                ).stream()
+        return useCase.listCategories(walletId)
+                .stream()
                 .map(ExpenseCategoryResponse::new)
                 .toList();
     }
