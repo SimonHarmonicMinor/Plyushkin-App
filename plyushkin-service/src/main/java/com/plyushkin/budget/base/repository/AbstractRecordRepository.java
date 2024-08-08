@@ -1,15 +1,18 @@
 package com.plyushkin.budget.base.repository;
 
 import com.plyushkin.budget.base.AbstractCategory;
-import com.plyushkin.budget.base.AbstractRecord;
 import com.plyushkin.budget.base.AbstractNumber;
+import com.plyushkin.budget.base.AbstractRecord;
 import com.plyushkin.wallet.WalletId;
+import jakarta.annotation.Nullable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.NoRepositoryBean;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import static jakarta.persistence.LockModeType.PESSIMISTIC_WRITE;
@@ -21,6 +24,17 @@ public interface AbstractRecordRepository<
         N extends AbstractNumber<N>
         >
         extends JpaRepository<R, Long>, JpaSpecificationExecutor<R> {
+
+    default Specification<R> pageSpecification(WalletId walletId, @Nullable LocalDate from, @Nullable LocalDate to) {
+        return (root, query, cb) -> {
+            root.fetch("category");
+            return cb.and(
+                    cb.equal(root.get("walletId"), walletId),
+                    from != null ? cb.greaterThanOrEqualTo(root.get("date"), from) : cb.conjunction(),
+                    to != null ? cb.lessThanOrEqualTo(root.get("date"), to) : cb.conjunction()
+            );
+        };
+    }
 
     N initialNumber();
 
