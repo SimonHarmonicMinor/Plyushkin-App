@@ -37,7 +37,7 @@ class IncomeCategoryController {
 
     @PostMapping("/wallets/{walletId}/incomeCategories")
     @PreAuthorize("@BudgetAuth.hasAccessForWalletUpdate(#walletId)")
-    public ResponseEntity<IncomeCategoryResponse> createCategory(
+    public ResponseEntity<IncomeCategoryResponse> createIncomeCategory(
             @NotNull @PathVariable WalletId walletId,
             @NotNull @Valid @RequestBody IncomeCategoryCreateRequest request
     )
@@ -60,7 +60,7 @@ class IncomeCategoryController {
 
     @PatchMapping("/wallets/{walletId}/incomeCategories/{number}")
     @PreAuthorize("@BudgetAuth.hasAccessForWalletUpdate(#walletId)")
-    public IncomeCategoryResponse updateCategory(@NotNull @PathVariable IncomeCategoryNumber number,
+    public IncomeCategoryResponse updateIncomeCategory(@NotNull @PathVariable IncomeCategoryNumber number,
                                                  @NotNull @PathVariable WalletId walletId,
                                                  @NotNull @Valid @RequestBody IncomeCategoryUpdateRequest request)
             throws UpdateCategoryUseCaseException {
@@ -78,7 +78,7 @@ class IncomeCategoryController {
 
     @GetMapping("/wallets/{walletId}/incomeCategories/{number}")
     @PreAuthorize("@BudgetAuth.hasAccessForWalletView(#walletId)")
-    public IncomeCategoryResponse getCategory(
+    public IncomeCategoryResponse getIncomeCategory(
             @NotNull @PathVariable IncomeCategoryNumber number,
             @NotNull @PathVariable WalletId walletId
     ) throws CategoryNotFoundException {
@@ -87,7 +87,7 @@ class IncomeCategoryController {
 
     @GetMapping("/wallets/{walletId}/incomeCategories")
     @PreAuthorize("@BudgetAuth.hasAccessForWalletView(#walletId)")
-    public List<IncomeCategoryResponse> listCategories(@NotNull @PathVariable WalletId walletId) {
+    public List<IncomeCategoryResponse> listIncomeCategories(@NotNull @PathVariable WalletId walletId) {
         return useCase.listCategories(walletId)
                 .stream()
                 .map(IncomeCategoryResponse::new)
@@ -96,7 +96,7 @@ class IncomeCategoryController {
 
     @DeleteMapping("/wallets/{walletId}/incomeCategories/{number}")
     @PreAuthorize("@BudgetAuth.hasAccessForWalletUpdate(#walletId)")
-    public void deleteCategory(@PathVariable @NotNull WalletId walletId,
+    public void deleteIncomeCategory(@PathVariable @NotNull WalletId walletId,
                                @PathVariable @NotNull IncomeCategoryNumber number) throws DeleteCategoryException {
         useCase.deleteCategory(walletId, number);
     }
