@@ -38,7 +38,7 @@ class ExpenseCategoryController {
 
     @PostMapping("/wallets/{walletId}/expenseCategories")
     @PreAuthorize("@BudgetAuth.hasAccessForWalletUpdate(#walletId)")
-    public ResponseEntity<ExpenseCategoryResponse> createCategory(
+    public ResponseEntity<ExpenseCategoryResponse> createExpenseCategory(
             @NotNull @PathVariable WalletId walletId,
             @NotNull @Valid @RequestBody ExpenseCategoryCreateRequest request
     )
@@ -61,9 +61,9 @@ class ExpenseCategoryController {
 
     @PatchMapping("/wallets/{walletId}/expenseCategories/{number}")
     @PreAuthorize("@BudgetAuth.hasAccessForWalletUpdate(#walletId)")
-    public ExpenseCategoryResponse updateCategory(@NotNull @PathVariable ExpenseCategoryNumber number,
-                                                  @NotNull @PathVariable WalletId walletId,
-                                                  @NotNull @Valid @RequestBody ExpenseCategoryUpdateRequest request)
+    public ExpenseCategoryResponse updateExpenseCategory(@NotNull @PathVariable ExpenseCategoryNumber number,
+                                                         @NotNull @PathVariable WalletId walletId,
+                                                         @NotNull @Valid @RequestBody ExpenseCategoryUpdateRequest request)
             throws UpdateCategoryUseCaseException {
         return new ExpenseCategoryResponse(
                 useCase.updateCategory(
@@ -79,7 +79,7 @@ class ExpenseCategoryController {
 
     @GetMapping("/wallets/{walletId}/expenseCategories/{number}")
     @PreAuthorize("@BudgetAuth.hasAccessForWalletView(#walletId)")
-    public ExpenseCategoryResponse getCategory(
+    public ExpenseCategoryResponse getExpenseCategory(
             @NotNull @PathVariable ExpenseCategoryNumber number,
             @NotNull @PathVariable WalletId walletId
     ) throws CategoryNotFoundException {
@@ -88,7 +88,7 @@ class ExpenseCategoryController {
 
     @GetMapping("/wallets/{walletId}/expenseCategories")
     @PreAuthorize("@BudgetAuth.hasAccessForWalletView(#walletId)")
-    public List<ExpenseCategoryResponse> listCategories(@NotNull @PathVariable WalletId walletId) {
+    public List<ExpenseCategoryResponse> listExpenseCategories(@NotNull @PathVariable WalletId walletId) {
         return useCase.listCategories(walletId)
                 .stream()
                 .map(ExpenseCategoryResponse::new)
@@ -97,8 +97,8 @@ class ExpenseCategoryController {
 
     @DeleteMapping("/wallets/{walletId}/expenseCategories/{number}")
     @PreAuthorize("@BudgetAuth.hasAccessForWalletUpdate(#walletId)")
-    public void deleteCategory(@PathVariable @NotNull WalletId walletId,
-                               @PathVariable @NotNull ExpenseCategoryNumber number) throws DeleteCategoryException {
+    public void deleteExpenseCategory(@PathVariable @NotNull WalletId walletId,
+                                      @PathVariable @NotNull ExpenseCategoryNumber number) throws DeleteCategoryException {
         useCase.deleteCategory(walletId, number);
     }
 }
