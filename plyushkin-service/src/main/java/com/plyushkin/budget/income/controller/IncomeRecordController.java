@@ -80,7 +80,7 @@ class IncomeRecordController {
     @GetMapping("/wallets/{walletId}/incomeRecords/{incomeNumber}")
     @Transactional(readOnly = true)
     @PreAuthorize("@BudgetAuth.hasAccessForWalletView(#walletId)")
-    public IncomeRecordResponse getExpenseRecord(
+    public IncomeRecordResponse getIncomeRecord(
             @PathVariable @NotNull WalletId walletId,
             @PathVariable @NotNull IncomeNumber incomeNumber
     ) throws RecordNotFoundException {
@@ -91,7 +91,7 @@ class IncomeRecordController {
     @Transactional(readOnly = true)
     @PreAuthorize("@BudgetAuth.hasAccessForWalletView(#walletId)")
     @SuppressFBWarnings("SIC_INNER_SHOULD_BE_STATIC_ANON")
-    public PageResult<IncomeRecordResponse> listExpenseRecords(
+    public PageResult<IncomeRecordResponse> listIncomeRecords(
             @PathVariable @NotNull WalletId walletId,
             @RequestParam @NotNull @Min(0) int pageNumber,
             @RequestParam @NotNull @Min(1) @Max(1000) int pageSize,
@@ -115,7 +115,7 @@ class IncomeRecordController {
     @PatchMapping("/wallets/{walletId}/incomeRecords/{incomeNumber}")
     @WriteTransactional
     @PreAuthorize("@BudgetAuth.hasAccessForWalletUpdate(#walletId)")
-    public IncomeRecordResponse updateExpenseRecord(
+    public IncomeRecordResponse updateIncomeRecord(
             @PathVariable @NotNull WalletId walletId,
             @PathVariable @NotNull IncomeNumber incomeNumber,
             @NotNull @Valid IncomeRecordUpdateRequest request
@@ -138,7 +138,7 @@ class IncomeRecordController {
     @DeleteMapping("/wallets/{walletId}/incomeRecords/{incomeNumber}")
     @WriteTransactional
     @PreAuthorize("@BudgetAuth.hasAccessForWalletUpdate(#walletId)")
-    public void deleteExpenseRecord(
+    public void deleteIncomeRecord(
             @PathVariable @NotNull WalletId walletId,
             @PathVariable @NotNull IncomeNumber incomeNumber
     ) throws DeleteRecordException {
