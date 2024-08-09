@@ -26,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ComponentTest
+@SuppressWarnings("checkstyle:MultipleStringLiterals")
 class IncomeCategoryControllerComponentTest {
     @Autowired
     private TestDbFacade db;

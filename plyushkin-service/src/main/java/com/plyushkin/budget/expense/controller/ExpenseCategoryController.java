@@ -61,9 +61,11 @@ class ExpenseCategoryController {
 
     @PatchMapping("/wallets/{walletId}/expenseCategories/{number}")
     @PreAuthorize("@BudgetAuth.hasAccessForWalletUpdate(#walletId)")
-    public ExpenseCategoryResponse updateExpenseCategory(@NotNull @PathVariable ExpenseCategoryNumber number,
-                                                         @NotNull @PathVariable WalletId walletId,
-                                                         @NotNull @Valid @RequestBody ExpenseCategoryUpdateRequest request)
+    public ExpenseCategoryResponse updateExpenseCategory(
+            @NotNull @PathVariable ExpenseCategoryNumber number,
+            @NotNull @PathVariable WalletId walletId,
+            @NotNull @Valid @RequestBody ExpenseCategoryUpdateRequest request
+    )
             throws UpdateCategoryUseCaseException {
         return new ExpenseCategoryResponse(
                 useCase.updateCategory(
@@ -97,8 +99,10 @@ class ExpenseCategoryController {
 
     @DeleteMapping("/wallets/{walletId}/expenseCategories/{number}")
     @PreAuthorize("@BudgetAuth.hasAccessForWalletUpdate(#walletId)")
-    public void deleteExpenseCategory(@PathVariable @NotNull WalletId walletId,
-                                      @PathVariable @NotNull ExpenseCategoryNumber number) throws DeleteCategoryException {
+    public void deleteExpenseCategory(
+            @PathVariable @NotNull WalletId walletId,
+            @PathVariable @NotNull ExpenseCategoryNumber number
+    ) throws DeleteCategoryException {
         useCase.deleteCategory(walletId, number);
     }
 }
