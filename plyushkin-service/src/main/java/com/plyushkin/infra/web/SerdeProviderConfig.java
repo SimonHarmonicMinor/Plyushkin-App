@@ -4,6 +4,8 @@ import com.plyushkin.budget.Currency;
 import com.plyushkin.budget.Money;
 import com.plyushkin.budget.expense.ExpenseCategoryNumber;
 import com.plyushkin.budget.expense.ExpenseNumber;
+import com.plyushkin.budget.income.IncomeCategoryNumber;
+import com.plyushkin.budget.income.IncomeNumber;
 import com.plyushkin.user.UserId;
 import com.plyushkin.wallet.WalletId;
 import lombok.SneakyThrows;
@@ -135,6 +137,48 @@ public class SerdeProviderConfig {
             @Override
             public Class<ExpenseNumber> type() {
                 return ExpenseNumber.class;
+            }
+        };
+    }
+
+    @Bean
+    SerdeProvider<IncomeNumber> incomeNumberSerdeProvider() {
+        return new LongSerdeProvider<>() {
+            @Override
+            @SneakyThrows
+            public IncomeNumber asEntity(Long value) {
+                return IncomeNumber.create(value);
+            }
+
+            @Override
+            public Long asNumber(IncomeNumber value) {
+                return value.getValue();
+            }
+
+            @Override
+            public Class<IncomeNumber> type() {
+                return IncomeNumber.class;
+            }
+        };
+    }
+
+    @Bean
+    SerdeProvider<IncomeCategoryNumber> incomeNoteCategoryNumberSerdeProvider() {
+        return new LongSerdeProvider<>() {
+            @Override
+            @SneakyThrows
+            public IncomeCategoryNumber asEntity(Long value) {
+                return IncomeCategoryNumber.create(value);
+            }
+
+            @Override
+            public Long asNumber(IncomeCategoryNumber value) {
+                return value.getValue();
+            }
+
+            @Override
+            public Class<IncomeCategoryNumber> type() {
+                return IncomeCategoryNumber.class;
             }
         };
     }

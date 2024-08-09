@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.actuate.autoconfigure.web.ManagementContextFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -18,7 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JacksonConfiguration implements WebMvcConfigurer {
     private final List<SerdeProvider<?>> serdeProviders;
-    private final ManagementContextFactory servletWebChildContextFactory;
 
     @Bean
     public ObjectMapper objectMapper() {
