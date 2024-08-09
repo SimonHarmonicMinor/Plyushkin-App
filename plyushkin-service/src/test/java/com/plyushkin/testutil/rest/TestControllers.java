@@ -5,6 +5,8 @@ import com.plyushkin.openapi.client.ApiClient;
 import com.plyushkin.openapi.client.ExpenseCategoryControllerApi;
 import com.plyushkin.openapi.client.ExpenseRecordControllerApi;
 import com.plyushkin.openapi.client.WalletControllerApi;
+import com.plyushkin.openapi.client.IncomeCategoryControllerApi;
+import com.plyushkin.openapi.client.IncomeRecordControllerApi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestComponent;
 import org.springframework.core.env.Environment;
@@ -26,6 +28,14 @@ public class TestControllers {
 
     public ExpenseCategoryControllerApi expenseCategoryController() {
         return new ExpenseCategoryControllerApi(newApiClient());
+    }
+
+    public IncomeRecordControllerApi incomeRecordController() {
+        return new IncomeRecordControllerApi(newApiClient());
+    }
+
+    public IncomeCategoryControllerApi incomeCategoryController() {
+        return new IncomeCategoryControllerApi(newApiClient());
     }
 
     public WalletControllerApi walletController() {
