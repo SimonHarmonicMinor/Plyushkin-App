@@ -123,6 +123,7 @@ openApi {
             "--default-users.enable-creation=false"
         ))
     }
+    waitTimeInSeconds = 35
 }
 
 openApiGenerate {
