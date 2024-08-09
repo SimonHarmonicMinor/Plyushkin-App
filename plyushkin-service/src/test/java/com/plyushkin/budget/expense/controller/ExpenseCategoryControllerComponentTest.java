@@ -46,7 +46,7 @@ class ExpenseCategoryControllerComponentTest {
                         .getId();
 
         final var category = rest.expenseCategoryController()
-                .createCategory(
+                .createExpenseCategory(
                         walletId,
                         new ExpenseCategoryCreateRequest()
                                 .name("category 1")
@@ -64,33 +64,33 @@ class ExpenseCategoryControllerComponentTest {
                 rest.walletController().createWallet(new WalletCreateRequest().name("w1"))
                         .getId();
         final var category1 = rest.expenseCategoryController()
-                .createCategory(
+                .createExpenseCategory(
                         walletId,
                         new ExpenseCategoryCreateRequest()
                                 .name("category 1")
                 );
         final var category2 = rest.expenseCategoryController()
-                .createCategory(
+                .createExpenseCategory(
                         walletId,
                         new ExpenseCategoryCreateRequest()
                                 .name("category 2")
                 );
         final var category3 = rest.expenseCategoryController()
-                .createCategory(
+                .createExpenseCategory(
                         walletId,
                         new ExpenseCategoryCreateRequest()
                                 .name("category 3")
                 );
 
         rest.expenseCategoryController()
-                .updateCategory(
+                .updateExpenseCategory(
                         category2.getNumber(),
                         walletId,
                         new ExpenseCategoryUpdateRequest()
                                 .newParentNumber(category1.getNumber())
                 );
         rest.expenseCategoryController()
-                .updateCategory(
+                .updateExpenseCategory(
                         category3.getNumber(),
                         walletId,
                         new ExpenseCategoryUpdateRequest()
@@ -99,7 +99,7 @@ class ExpenseCategoryControllerComponentTest {
 
         final var categories =
                 rest.expenseCategoryController()
-                        .listCategories(walletId);
+                        .listExpenseCategories(walletId);
 
         assertThat(categories, allOf(
                 hasSize(3),
@@ -119,15 +119,15 @@ class ExpenseCategoryControllerComponentTest {
                 rest.walletController().createWallet(new WalletCreateRequest().name("w1"))
                         .getId();
         final var category1 = rest.expenseCategoryController()
-                .createCategory(
+                .createExpenseCategory(
                         walletId,
                         new ExpenseCategoryCreateRequest()
                                 .name("category 1")
                 );
 
-        rest.expenseCategoryController().deleteCategory(walletId, category1.getNumber());
+        rest.expenseCategoryController().deleteExpenseCategory(walletId, category1.getNumber());
 
-        final var categories = rest.expenseCategoryController().listCategories(walletId);
+        final var categories = rest.expenseCategoryController().listExpenseCategories(walletId);
         assertThat(categories, hasSize(0));
     }
 
@@ -138,7 +138,7 @@ class ExpenseCategoryControllerComponentTest {
                 rest.walletController().createWallet(new WalletCreateRequest().name("w1"))
                         .getId();
         final var category1 = rest.expenseCategoryController()
-                .createCategory(
+                .createExpenseCategory(
                         walletId,
                         new ExpenseCategoryCreateRequest()
                                 .name("category 1")
@@ -156,7 +156,7 @@ class ExpenseCategoryControllerComponentTest {
 
         final var exception = assertThrows(
                 ApiException.class,
-                () -> rest.expenseCategoryController().deleteCategory(
+                () -> rest.expenseCategoryController().deleteExpenseCategory(
                         walletId,
                         category1.getNumber()
                 )

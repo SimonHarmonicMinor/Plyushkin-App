@@ -46,7 +46,7 @@ class ExpenseRecordControllerComponentTest {
                         .getId();
         final var categoryNumber =
                 rest.expenseCategoryController()
-                        .createCategory(
+                        .createExpenseCategory(
                                 walletId,
                                 new ExpenseCategoryCreateRequest()
                                         .name("c1")
@@ -79,14 +79,14 @@ class ExpenseRecordControllerComponentTest {
                         .getId();
         final var categoryNumber =
                 rest.expenseCategoryController()
-                        .createCategory(
+                        .createExpenseCategory(
                                 walletId,
                                 new ExpenseCategoryCreateRequest()
                                         .name("c1")
                         ).getNumber();
         final var newCategoryNumber =
                 rest.expenseCategoryController()
-                        .createCategory(
+                        .createExpenseCategory(
                                 walletId,
                                 new ExpenseCategoryCreateRequest()
                                         .name("c2")
@@ -133,7 +133,7 @@ class ExpenseRecordControllerComponentTest {
                         .getId();
         final var categoryNumber =
                 rest.expenseCategoryController()
-                        .createCategory(
+                        .createExpenseCategory(
                                 walletId,
                                 new ExpenseCategoryCreateRequest()
                                         .name("c1")
@@ -164,7 +164,7 @@ class ExpenseRecordControllerComponentTest {
                         .getId();
         final var categoryNumber =
                 rest.expenseCategoryController()
-                        .createCategory(
+                        .createExpenseCategory(
                                 walletId,
                                 new ExpenseCategoryCreateRequest()
                                         .name("c1")
