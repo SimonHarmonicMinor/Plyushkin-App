@@ -6,10 +6,12 @@ plugins {
 
 tasks.register<NpmTask>("npmTest") {
     args = listOf("test", "--", "--watchAll=false")
+    shouldRunAfter("npmInstall")
 }
 
 tasks.register<NpmTask>("npmBuild") {
     args = listOf("run", "build")
+    shouldRunAfter("npmInstall", "npmTest")
 }
 
 tasks.register("build") {
