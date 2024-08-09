@@ -39,7 +39,7 @@ class IncomeCategoryControllerComponentTest {
 
     @Test
     @SneakyThrows
-    void shouldcreateIncomeCategory() {
+    void shouldCreateIncomeCategory() {
         final var walletId =
                 rest.walletController().createWallet(new WalletCreateRequest().name("w1"))
                         .getId();
@@ -113,7 +113,7 @@ class IncomeCategoryControllerComponentTest {
 
     @Test
     @SneakyThrows
-    void shoulddeleteIncomeCategory() {
+    void shouldDeleteIncomeCategory() {
         final var walletId =
                 rest.walletController().createWallet(new WalletCreateRequest().name("w1"))
                         .getId();
@@ -132,7 +132,7 @@ class IncomeCategoryControllerComponentTest {
 
     @Test
     @SneakyThrows
-    void shouldNotdeleteIncomeCategoryIfItUsedByExpenseRecord() {
+    void shouldNotDeleteIncomeCategoryIfItUsedByExpenseRecord() {
         final var walletId =
                 rest.walletController().createWallet(new WalletCreateRequest().name("w1"))
                         .getId();
