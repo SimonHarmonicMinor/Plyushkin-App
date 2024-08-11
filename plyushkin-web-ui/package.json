@@ -29,7 +29,8 @@
     "extends": [
       "react-app",
       "react-app/jest",
-      "plugin:unicorn/all"
+      "plugin:unicorn/all",
+      "plugin:prettier/recommended"
     ]
   },
   "browserslist": {
@@ -45,6 +46,9 @@
     ]
   },
   "devDependencies": {
-    "eslint-plugin-unicorn": "^55.0.0"
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-unicorn": "^55.0.0",
+    "prettier": "3.3.3"
   }
 }
