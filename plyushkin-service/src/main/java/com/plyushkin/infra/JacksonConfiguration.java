@@ -1,4 +1,4 @@
-package com.plyushkin.infra.web;
+package com.plyushkin.infra;
 
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;

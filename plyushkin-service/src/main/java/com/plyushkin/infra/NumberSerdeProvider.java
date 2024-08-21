@@ -1,6 +1,5 @@
-package com.plyushkin.infra.web;
+package com.plyushkin.infra;
 
-import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -13,23 +12,23 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Locale;
 
-abstract class StringSerdeProvider<T> implements SerdeProvider<T> {
-    @Override
-    public JsonDeserializer<T> deserializer() {
-        return new JsonDeserializer<>() {
-            @Override
-            public T deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JacksonException {
-                return asEntity(p.getValueAsString());
-            }
-        };
-    }
-
+public abstract class NumberSerdeProvider<T, N extends Number> implements SerdeProvider<T> {
     @Override
     public JsonSerializer<T> serializer() {
         return new JsonSerializer<>() {
             @Override
             public void serialize(T value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-                gen.writeString(asString(value));
+                gen.writeNumber(asNumber(value).toString());
+            }
+        };
+    }
+
+    @Override
+    public JsonDeserializer<T> deserializer() {
+        return new JsonDeserializer<>() {
+            @Override
+            public T deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+                return asEntity(getNumberValue(p));
             }
         };
     }
@@ -39,17 +38,21 @@ abstract class StringSerdeProvider<T> implements SerdeProvider<T> {
         return new Formatter<>() {
             @Override
             public T parse(String text, Locale locale) throws ParseException {
-                return asEntity(text);
+                return asEntity(parseNumber(text));
             }
 
             @Override
             public String print(T object, Locale locale) {
-                return asString(object);
+                return String.valueOf(asNumber(object));
             }
         };
     }
 
-    public abstract T asEntity(String rawValue);
+    public abstract T asEntity(N value);
 
-    public abstract String asString(T value);
+    public abstract N asNumber(T value);
+
+    public abstract N parseNumber(String text);
+
+    public abstract N getNumberValue(JsonParser p);
 }

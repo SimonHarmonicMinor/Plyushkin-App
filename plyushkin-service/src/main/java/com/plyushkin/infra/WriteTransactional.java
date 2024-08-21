@@ -1,4 +1,4 @@
-package com.plyushkin.util;
+package com.plyushkin.infra;
 
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.transaction.annotation.Propagation;

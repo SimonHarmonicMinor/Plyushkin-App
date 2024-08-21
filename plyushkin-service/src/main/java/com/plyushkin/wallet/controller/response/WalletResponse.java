@@ -1,7 +1,7 @@
 package com.plyushkin.wallet.controller.response;
 
 import com.plyushkin.user.UserId;
-import com.plyushkin.wallet.Wallet;
+import com.plyushkin.wallet.domain.Wallet;
 import com.plyushkin.wallet.WalletId;
 import jakarta.validation.constraints.NotNull;
 

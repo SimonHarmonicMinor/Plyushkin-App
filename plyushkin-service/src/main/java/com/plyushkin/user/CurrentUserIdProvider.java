@@ -1,7 +1,6 @@
-package com.plyushkin.user.service;
+package com.plyushkin.user;
 
-import com.plyushkin.infra.security.UserAuthentication;
-import com.plyushkin.user.UserId;
+import com.plyushkin.user.security.UserAuthentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 

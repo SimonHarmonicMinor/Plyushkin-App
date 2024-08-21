@@ -1,9 +1,9 @@
 package com.plyushkin.wallet.controller;
 
-import com.plyushkin.infra.web.DefaultErrorResponse;
-import com.plyushkin.user.service.CurrentUserIdProvider;
-import com.plyushkin.util.WriteTransactional;
-import com.plyushkin.wallet.Wallet;
+import com.plyushkin.infra.DefaultErrorResponse;
+import com.plyushkin.user.CurrentUserIdProvider;
+import com.plyushkin.infra.WriteTransactional;
+import com.plyushkin.wallet.domain.Wallet;
 import com.plyushkin.wallet.WalletId;
 import com.plyushkin.wallet.controller.request.WalletCreateRequest;
 import com.plyushkin.wallet.controller.request.WalletUpdateRequest;
@@ -57,7 +57,7 @@ class WalletController {
 
     @GetMapping("/wallets/{walletId}")
     @Transactional(readOnly = true)
-    @PreAuthorize("@BudgetAuth.hasAccessForWalletView(#walletId)")
+    @PreAuthorize("@WalletAuth.hasAccessForWalletView(#walletId)")
     public WalletResponse getWalletById(
             @PathVariable @NotNull WalletId walletId
     ) {
@@ -78,6 +78,7 @@ class WalletController {
 
     @PatchMapping("/wallets/{walletId}")
     @WriteTransactional
+    @PreAuthorize("@WalletAuth.hasAccessForWalletUpdate(#walletId)")
     public WalletResponse updateWallet(
             @PathVariable @NotNull WalletId walletId,
             @RequestBody @NotNull @Valid WalletUpdateRequest request

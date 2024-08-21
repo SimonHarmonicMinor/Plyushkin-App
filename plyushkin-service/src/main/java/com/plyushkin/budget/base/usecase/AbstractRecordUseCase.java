@@ -15,7 +15,7 @@ import com.plyushkin.budget.base.usecase.exception.DeleteRecordException;
 import com.plyushkin.budget.base.usecase.exception.RecordNotFoundException;
 import com.plyushkin.budget.base.usecase.exception.UpdateRecordException;
 import com.plyushkin.user.UserId;
-import com.plyushkin.util.WriteTransactional;
+import com.plyushkin.infra.WriteTransactional;
 import com.plyushkin.wallet.WalletId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

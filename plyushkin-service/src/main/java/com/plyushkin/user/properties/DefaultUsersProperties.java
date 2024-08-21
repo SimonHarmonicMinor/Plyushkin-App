@@ -1,4 +1,4 @@
-package com.plyushkin.infra.properties;
+package com.plyushkin.user.properties;
 
 import com.plyushkin.user.UserId;
 import org.springframework.boot.context.properties.ConfigurationProperties;

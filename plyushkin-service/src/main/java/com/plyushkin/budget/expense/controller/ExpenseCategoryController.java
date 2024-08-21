@@ -12,7 +12,7 @@ import com.plyushkin.budget.expense.controller.request.ExpenseCategoryCreateRequ
 import com.plyushkin.budget.expense.controller.request.ExpenseCategoryUpdateRequest;
 import com.plyushkin.budget.expense.controller.response.ExpenseCategoryResponse;
 import com.plyushkin.budget.expense.usecase.ExpenseCategoryUseCase;
-import com.plyushkin.user.service.CurrentUserIdProvider;
+import com.plyushkin.user.CurrentUserIdProvider;
 import com.plyushkin.wallet.WalletId;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

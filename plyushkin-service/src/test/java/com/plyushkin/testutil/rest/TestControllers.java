@@ -1,6 +1,6 @@
 package com.plyushkin.testutil.rest;
 
-import com.plyushkin.infra.properties.DefaultUsersProperties;
+import com.plyushkin.user.properties.DefaultUsersProperties;
 import com.plyushkin.openapi.client.ApiClient;
 import com.plyushkin.openapi.client.ExpenseCategoryControllerApi;
 import com.plyushkin.openapi.client.ExpenseRecordControllerApi;

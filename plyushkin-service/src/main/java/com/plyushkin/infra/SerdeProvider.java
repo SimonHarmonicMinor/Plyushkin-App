@@ -1,10 +1,10 @@
-package com.plyushkin.infra.web;
+package com.plyushkin.infra;
 
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import org.springframework.format.Formatter;
 
-interface SerdeProvider<T> {
+public interface SerdeProvider<T> {
     JsonDeserializer<T> deserializer();
 
     JsonSerializer<T> serializer();

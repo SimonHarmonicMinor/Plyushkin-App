@@ -1,4 +1,4 @@
-package com.plyushkin.infra.security;
+package com.plyushkin.user.security;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;

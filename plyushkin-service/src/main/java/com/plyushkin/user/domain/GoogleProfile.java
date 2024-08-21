@@ -1,4 +1,4 @@
-package com.plyushkin.user;
+package com.plyushkin.user.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

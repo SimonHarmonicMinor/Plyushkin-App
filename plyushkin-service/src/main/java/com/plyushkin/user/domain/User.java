@@ -1,5 +1,6 @@
-package com.plyushkin.user;
+package com.plyushkin.user.domain;
 
+import com.plyushkin.user.UserId;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;

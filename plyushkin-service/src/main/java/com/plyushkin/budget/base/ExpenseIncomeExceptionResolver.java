@@ -4,7 +4,7 @@ import com.plyushkin.budget.base.usecase.exception.CategoryNotFoundException;
 import com.plyushkin.budget.base.usecase.exception.CreateCategoryException;
 import com.plyushkin.budget.base.usecase.exception.DeleteCategoryException;
 import com.plyushkin.budget.base.usecase.exception.UpdateCategoryUseCaseException;
-import com.plyushkin.infra.web.DefaultErrorResponse;
+import com.plyushkin.infra.DefaultErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

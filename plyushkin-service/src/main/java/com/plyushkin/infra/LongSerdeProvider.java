@@ -1,9 +1,9 @@
-package com.plyushkin.infra.web;
+package com.plyushkin.infra;
 
 import com.fasterxml.jackson.core.JsonParser;
 import lombok.SneakyThrows;
 
-abstract class LongSerdeProvider<T> extends NumberSerdeProvider<T, Long> {
+public abstract class LongSerdeProvider<T> extends NumberSerdeProvider<T, Long> {
     @Override
     public Long parseNumber(String text) {
         return Long.parseLong(text);

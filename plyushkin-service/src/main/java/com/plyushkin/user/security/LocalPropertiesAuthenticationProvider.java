@@ -1,6 +1,6 @@
-package com.plyushkin.infra.security;
+package com.plyushkin.user.security;
 
-import com.plyushkin.infra.properties.DefaultUsersProperties;
+import com.plyushkin.user.properties.DefaultUsersProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;

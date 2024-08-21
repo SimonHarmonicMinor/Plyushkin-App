@@ -1,4 +1,4 @@
-package com.plyushkin.util;
+package com.plyushkin.infra;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.persistence.Column;

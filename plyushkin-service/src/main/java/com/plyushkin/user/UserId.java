@@ -1,6 +1,6 @@
 package com.plyushkin.user;
 
-import com.plyushkin.util.PrefixedId;
+import com.plyushkin.infra.PrefixedId;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Embeddable;
 import lombok.NoArgsConstructor;

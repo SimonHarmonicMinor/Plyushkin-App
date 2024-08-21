@@ -12,7 +12,7 @@ import com.plyushkin.budget.income.controller.request.IncomeCategoryCreateReques
 import com.plyushkin.budget.income.controller.request.IncomeCategoryUpdateRequest;
 import com.plyushkin.budget.income.controller.response.IncomeCategoryResponse;
 import com.plyushkin.budget.income.usecase.IncomeCategoryUseCase;
-import com.plyushkin.user.service.CurrentUserIdProvider;
+import com.plyushkin.user.CurrentUserIdProvider;
 import com.plyushkin.wallet.WalletId;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;

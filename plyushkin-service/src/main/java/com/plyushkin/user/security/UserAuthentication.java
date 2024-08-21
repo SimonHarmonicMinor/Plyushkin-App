@@ -1,6 +1,6 @@
-package com.plyushkin.infra.security;
+package com.plyushkin.user.security;
 
-import com.plyushkin.infra.properties.DefaultUsersProperties;
+import com.plyushkin.user.properties.DefaultUsersProperties;
 import com.plyushkin.user.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
