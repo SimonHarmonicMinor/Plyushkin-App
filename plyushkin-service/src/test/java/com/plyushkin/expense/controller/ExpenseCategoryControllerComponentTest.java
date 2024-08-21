@@ -1,4 +1,4 @@
-package com.plyushkin.budget.expense.controller;
+package com.plyushkin.expense.controller;
 
 import com.plyushkin.openapi.client.ApiException;
 import com.plyushkin.openapi.client.ExpenseCategoryCreateRequest;

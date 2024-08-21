@@ -1,4 +1,4 @@
-package com.plyushkin.budget.income.controller;
+package com.plyushkin.income.controller;
 
 import com.plyushkin.testutil.db.TestDbFacade;
 import com.plyushkin.testutil.rest.TestControllers;

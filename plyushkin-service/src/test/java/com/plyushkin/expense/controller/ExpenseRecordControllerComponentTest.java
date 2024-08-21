@@ -1,4 +1,4 @@
-package com.plyushkin.budget.income.controller;
+package com.plyushkin.expense.controller;
 
 import com.plyushkin.testutil.db.TestDbFacade;
 import com.plyushkin.testutil.rest.TestControllers;
@@ -8,26 +8,26 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.plyushkin.openapi.client.ExpenseRecordResponse;
+import com.plyushkin.openapi.client.ExpenseRecordCreateRequest;
+import com.plyushkin.openapi.client.ExpenseRecordUpdateRequest;
+import com.plyushkin.openapi.client.ExpenseCategoryCreateRequest;
+import com.plyushkin.openapi.client.WalletCreateRequest;
+import com.plyushkin.openapi.client.CurrencyEnum;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Objects;
 
-import com.plyushkin.openapi.client.IncomeRecordResponse;
-import com.plyushkin.openapi.client.IncomeRecordCreateRequest;
-import com.plyushkin.openapi.client.IncomeRecordUpdateRequest;
-import com.plyushkin.openapi.client.IncomeCategoryCreateRequest;
-import com.plyushkin.openapi.client.WalletCreateRequest;
-import com.plyushkin.openapi.client.CurrencyEnum;
-
 import static com.plyushkin.testutil.CustomMatchers.containsBy;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ComponentTest
-class IncomeRecordControllerTest {
+class ExpenseRecordControllerComponentTest {
     @Autowired
     private TestControllers rest;
     @Autowired
@@ -40,22 +40,22 @@ class IncomeRecordControllerTest {
 
     @Test
     @SneakyThrows
-    void shouldCreateIncomeRecord() {
+    void shouldCreateExpenseRecord() {
         final var walletId =
                 rest.walletController().createWallet(new WalletCreateRequest().name("w1"))
                         .getId();
         final var categoryNumber =
-                rest.incomeCategoryController()
-                        .createIncomeCategory(
+                rest.expenseCategoryController()
+                        .createExpenseCategory(
                                 walletId,
-                                new IncomeCategoryCreateRequest()
+                                new ExpenseCategoryCreateRequest()
                                         .name("c1")
                         ).getNumber();
 
-        final var expenseRecord = rest.incomeRecordController()
-                .createIncomeRecord(
+        final var expenseRecord = rest.expenseRecordController()
+                .createExpenseRecord(
                         walletId,
-                        new IncomeRecordCreateRequest()
+                        new ExpenseRecordCreateRequest()
                                 .date(LocalDate.of(2000, Month.APRIL, 1))
                                 .amount(BigDecimal.valueOf(14.45))
                                 .comment("")
@@ -73,28 +73,28 @@ class IncomeRecordControllerTest {
 
     @Test
     @SneakyThrows
-    void shouldUpdateIncomeRecord() {
+    void shouldUpdateExpenseRecord() {
         final var walletId =
                 rest.walletController().createWallet(new WalletCreateRequest().name("w1"))
                         .getId();
         final var categoryNumber =
-                rest.incomeCategoryController()
-                        .createIncomeCategory(
+                rest.expenseCategoryController()
+                        .createExpenseCategory(
                                 walletId,
-                                new IncomeCategoryCreateRequest()
+                                new ExpenseCategoryCreateRequest()
                                         .name("c1")
                         ).getNumber();
         final var newCategoryNumber =
-                rest.incomeCategoryController()
-                        .createIncomeCategory(
+                rest.expenseCategoryController()
+                        .createExpenseCategory(
                                 walletId,
-                                new IncomeCategoryCreateRequest()
+                                new ExpenseCategoryCreateRequest()
                                         .name("c2")
                         ).getNumber();
-        final var expenseRecordNumber = rest.incomeRecordController()
-                .createIncomeRecord(
+        final var expenseRecordNumber = rest.expenseRecordController()
+                .createExpenseRecord(
                         walletId,
-                        new IncomeRecordCreateRequest()
+                        new ExpenseRecordCreateRequest()
                                 .date(LocalDate.of(2000, Month.APRIL, 1))
                                 .amount(BigDecimal.valueOf(14.45))
                                 .comment("")
@@ -102,11 +102,11 @@ class IncomeRecordControllerTest {
                                 .categoryNumber(categoryNumber)
                 ).getCategoryNumber();
 
-        rest.incomeRecordController()
-                .updateIncomeRecord(
+        rest.expenseRecordController()
+                .updateExpenseRecord(
                         walletId,
                         expenseRecordNumber,
-                        new IncomeRecordUpdateRequest()
+                        new ExpenseRecordUpdateRequest()
                                 .amount(BigDecimal.valueOf(214.8945))
                                 .currency(CurrencyEnum.RUB)
                                 .categoryNumber(newCategoryNumber)
@@ -114,8 +114,8 @@ class IncomeRecordControllerTest {
                                 .date(LocalDate.of(2010, Month.APRIL, 1))
                 );
 
-        final var expenseRecord = rest.incomeRecordController()
-                .getIncomeRecord(walletId, expenseRecordNumber);
+        final var expenseRecord = rest.expenseRecordController()
+                .getExpenseRecord(walletId, expenseRecordNumber);
 
         assertEquals(LocalDate.of(2010, Month.APRIL, 1), expenseRecord.getDate());
         assertEquals(BigDecimal.valueOf(214.8945), expenseRecord.getAmount());
@@ -127,21 +127,21 @@ class IncomeRecordControllerTest {
 
     @Test
     @SneakyThrows
-    void shouldDeleteIncomeRecord() {
+    void shouldDeleteExpenseRecord() {
         final var walletId =
                 rest.walletController().createWallet(new WalletCreateRequest().name("w1"))
                         .getId();
         final var categoryNumber =
-                rest.incomeCategoryController()
-                        .createIncomeCategory(
+                rest.expenseCategoryController()
+                        .createExpenseCategory(
                                 walletId,
-                                new IncomeCategoryCreateRequest()
+                                new ExpenseCategoryCreateRequest()
                                         .name("c1")
                         ).getNumber();
-        final var expenseRecord = rest.incomeRecordController()
-                .createIncomeRecord(
+        final var expenseRecord = rest.expenseRecordController()
+                .createExpenseRecord(
                         walletId,
-                        new IncomeRecordCreateRequest()
+                        new ExpenseRecordCreateRequest()
                                 .date(LocalDate.of(2000, Month.APRIL, 1))
                                 .amount(BigDecimal.valueOf(14.45))
                                 .comment("")
@@ -149,9 +149,9 @@ class IncomeRecordControllerTest {
                                 .categoryNumber(categoryNumber)
                 );
 
-        rest.incomeRecordController().deleteIncomeRecord(walletId, expenseRecord.getCategoryNumber());
+        rest.expenseRecordController().deleteExpenseRecord(walletId, expenseRecord.getCategoryNumber());
 
-        final var page = rest.incomeRecordController().listIncomeRecords(walletId, 0, 100, null, null);
+        final var page = rest.expenseRecordController().listExpenseRecords(walletId, 0, 100, null, null);
 
         assertThat(page.getContent(), hasSize(0));
     }
@@ -163,10 +163,10 @@ class IncomeRecordControllerTest {
                 rest.walletController().createWallet(new WalletCreateRequest().name("w1"))
                         .getId();
         final var categoryNumber =
-                rest.incomeCategoryController()
-                        .createIncomeCategory(
+                rest.expenseCategoryController()
+                        .createExpenseCategory(
                                 walletId,
-                                new IncomeCategoryCreateRequest()
+                                new ExpenseCategoryCreateRequest()
                                         .name("c1")
                         ).getNumber();
         createRecord(walletId, LocalDate.of(2100, Month.APRIL, 1), categoryNumber);
@@ -174,7 +174,7 @@ class IncomeRecordControllerTest {
         final var expenseRecord3 = createRecord(walletId, LocalDate.of(2300, Month.APRIL, 1), categoryNumber);
         createRecord(walletId, LocalDate.of(2400, Month.APRIL, 1), categoryNumber);
 
-        final var page = rest.incomeRecordController().listIncomeRecords(
+        final var page = rest.expenseRecordController().listExpenseRecords(
                 walletId,
                 0,
                 100,
@@ -194,11 +194,11 @@ class IncomeRecordControllerTest {
     }
 
     @SneakyThrows
-    private IncomeRecordResponse createRecord(String walletId, LocalDate date, Long categoryNumber) {
-        return rest.incomeRecordController()
-                .createIncomeRecord(
+    private ExpenseRecordResponse createRecord(String walletId, LocalDate date, Long categoryNumber) {
+        return rest.expenseRecordController()
+                .createExpenseRecord(
                         walletId,
-                        new IncomeRecordCreateRequest()
+                        new ExpenseRecordCreateRequest()
                                 .date(date)
                                 .amount(BigDecimal.valueOf(14.45))
                                 .comment("")
