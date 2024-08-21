@@ -165,7 +165,6 @@
         <module name="JavadocType"/>
         <!--<module name="JavadocVariable"/>-->
         <!--<module name="MissingJavadocMethod"/>-->
-        <module name="MissingJavadocPackage"/>
         <module name="NonEmptyAtclauseDescription"/>
         <!--<module name="SingleLineJavadoc"/>-->
         <!--<module name="SummaryJavadoc"/>-->
