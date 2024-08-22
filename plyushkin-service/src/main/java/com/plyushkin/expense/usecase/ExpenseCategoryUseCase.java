@@ -1,8 +1,8 @@
 package com.plyushkin.expense.usecase;
 
-import com.plyushkin.budget.usecase.AbstractCategoryUseCase;
+import com.plyushkin.shared.budget.usecase.AbstractCategoryUseCase;
 import com.plyushkin.expense.domain.ExpenseCategory;
-import com.plyushkin.expense.ExpenseCategoryNumber;
+import com.plyushkin.shared.ExpenseCategoryNumber;
 import com.plyushkin.expense.repository.ExpenseCategoryRepository;
 import com.plyushkin.expense.repository.ExpenseRecordRepository;
 import org.springframework.stereotype.Service;

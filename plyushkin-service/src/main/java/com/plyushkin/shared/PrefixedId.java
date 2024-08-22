@@ -20,7 +20,7 @@ import static lombok.AccessLevel.PROTECTED;
 @MappedSuperclass
 @Getter
 @NoArgsConstructor(access = PROTECTED)
-public abstract class PrefixedId implements Serializable {
+abstract class PrefixedId implements Serializable {
     private static final int MAX_RADIX = 16;
 
     @Getter(PRIVATE)

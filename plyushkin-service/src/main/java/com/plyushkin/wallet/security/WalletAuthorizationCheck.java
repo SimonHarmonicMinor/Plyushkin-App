@@ -1,7 +1,7 @@
 package com.plyushkin.wallet.security;
 
-import com.plyushkin.user.CurrentUserIdProvider;
-import com.plyushkin.wallet.WalletId;
+import com.plyushkin.shared.CurrentUserIdProvider;
+import com.plyushkin.shared.WalletId;
 import com.plyushkin.wallet.repository.WalletRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

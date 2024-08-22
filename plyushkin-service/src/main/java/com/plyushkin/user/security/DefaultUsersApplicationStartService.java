@@ -1,6 +1,6 @@
 package com.plyushkin.user.security;
 
-import com.plyushkin.user.properties.DefaultUsersProperties;
+import com.plyushkin.shared.DefaultUsersProperties;
 import com.plyushkin.user.domain.User;
 import com.plyushkin.user.repository.UserRepository;
 import com.plyushkin.shared.WriteTransactional;

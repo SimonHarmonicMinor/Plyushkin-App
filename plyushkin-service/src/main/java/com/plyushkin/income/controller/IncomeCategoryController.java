@@ -1,19 +1,19 @@
 package com.plyushkin.income.controller;
 
 
-import com.plyushkin.budget.usecase.command.CreateCategoryCommand;
-import com.plyushkin.budget.usecase.command.UpdateCategoryCommand;
-import com.plyushkin.budget.usecase.exception.CategoryNotFoundException;
-import com.plyushkin.budget.usecase.exception.CreateCategoryException;
-import com.plyushkin.budget.usecase.exception.DeleteCategoryException;
-import com.plyushkin.budget.usecase.exception.UpdateCategoryUseCaseException;
-import com.plyushkin.income.IncomeCategoryNumber;
+import com.plyushkin.shared.budget.usecase.command.CreateCategoryCommand;
+import com.plyushkin.shared.budget.usecase.command.UpdateCategoryCommand;
+import com.plyushkin.shared.budget.usecase.exception.CategoryNotFoundException;
+import com.plyushkin.shared.budget.usecase.exception.CreateCategoryException;
+import com.plyushkin.shared.budget.usecase.exception.DeleteCategoryException;
+import com.plyushkin.shared.budget.usecase.exception.UpdateCategoryUseCaseException;
+import com.plyushkin.shared.IncomeCategoryNumber;
 import com.plyushkin.income.controller.request.IncomeCategoryCreateRequest;
 import com.plyushkin.income.controller.request.IncomeCategoryUpdateRequest;
 import com.plyushkin.income.controller.response.IncomeCategoryResponse;
 import com.plyushkin.income.usecase.IncomeCategoryUseCase;
-import com.plyushkin.user.CurrentUserIdProvider;
-import com.plyushkin.wallet.WalletId;
+import com.plyushkin.shared.CurrentUserIdProvider;
+import com.plyushkin.shared.WalletId;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;

@@ -1,11 +1,11 @@
 package com.plyushkin.income.domain;
 
-import com.plyushkin.budget.domain.AbstractRecord;
-import com.plyushkin.budget.domain.Currency;
-import com.plyushkin.budget.domain.Money;
-import com.plyushkin.income.IncomeNumber;
-import com.plyushkin.user.UserId;
-import com.plyushkin.wallet.WalletId;
+import com.plyushkin.shared.budget.domain.AbstractRecord;
+import com.plyushkin.shared.budget.domain.Currency;
+import com.plyushkin.shared.budget.domain.Money;
+import com.plyushkin.shared.IncomeNumber;
+import com.plyushkin.shared.UserId;
+import com.plyushkin.shared.WalletId;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

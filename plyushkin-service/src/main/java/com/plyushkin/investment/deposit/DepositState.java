@@ -1,6 +1,6 @@
 package com.plyushkin.investment.deposit;
 
-import com.plyushkin.budget.domain.Money;
+import com.plyushkin.shared.budget.domain.Money;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
 

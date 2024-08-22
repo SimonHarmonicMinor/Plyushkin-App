@@ -1,8 +1,8 @@
 package com.plyushkin.income.controller.request;
 
-import com.plyushkin.budget.domain.Currency;
-import com.plyushkin.budget.domain.Money;
-import com.plyushkin.income.IncomeCategoryNumber;
+import com.plyushkin.shared.budget.domain.Currency;
+import com.plyushkin.shared.budget.domain.Money;
+import com.plyushkin.shared.IncomeCategoryNumber;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 

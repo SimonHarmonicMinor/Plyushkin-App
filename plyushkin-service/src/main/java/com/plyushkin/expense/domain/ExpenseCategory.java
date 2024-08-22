@@ -1,10 +1,10 @@
 package com.plyushkin.expense.domain;
 
 
-import com.plyushkin.budget.domain.AbstractCategory;
-import com.plyushkin.expense.ExpenseCategoryNumber;
-import com.plyushkin.user.UserId;
-import com.plyushkin.wallet.WalletId;
+import com.plyushkin.shared.budget.domain.AbstractCategory;
+import com.plyushkin.shared.ExpenseCategoryNumber;
+import com.plyushkin.shared.UserId;
+import com.plyushkin.shared.WalletId;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Getter;

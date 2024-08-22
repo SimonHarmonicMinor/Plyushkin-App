@@ -1,7 +1,7 @@
 package com.plyushkin.wallet.domain;
 
-import com.plyushkin.user.UserId;
-import com.plyushkin.wallet.WalletId;
+import com.plyushkin.shared.UserId;
+import com.plyushkin.shared.WalletId;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,12 +1,12 @@
 package com.plyushkin.income.controller.response;
 
-import com.plyushkin.budget.domain.Currency;
-import com.plyushkin.budget.domain.Money;
-import com.plyushkin.income.IncomeCategoryNumber;
-import com.plyushkin.income.IncomeNumber;
+import com.plyushkin.shared.budget.domain.Currency;
+import com.plyushkin.shared.budget.domain.Money;
+import com.plyushkin.shared.IncomeCategoryNumber;
+import com.plyushkin.shared.IncomeNumber;
 import com.plyushkin.income.domain.IncomeRecord;
-import com.plyushkin.user.UserId;
-import com.plyushkin.wallet.WalletId;
+import com.plyushkin.shared.UserId;
+import com.plyushkin.shared.WalletId;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;

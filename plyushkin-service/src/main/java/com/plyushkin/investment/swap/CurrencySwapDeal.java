@@ -1,6 +1,6 @@
 package com.plyushkin.investment.swap;
 
-import com.plyushkin.wallet.WalletId;
+import com.plyushkin.shared.WalletId;
 import jakarta.persistence.*;
 import lombok.Getter;
 

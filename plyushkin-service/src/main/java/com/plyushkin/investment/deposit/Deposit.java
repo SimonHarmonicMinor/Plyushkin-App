@@ -1,9 +1,9 @@
 package com.plyushkin.investment.deposit;
 
-import com.plyushkin.budget.domain.Currency;
-import com.plyushkin.budget.domain.CurrencyAttributeConverter;
-import com.plyushkin.budget.domain.Money;
-import com.plyushkin.wallet.WalletId;
+import com.plyushkin.shared.budget.domain.Currency;
+import com.plyushkin.shared.budget.domain.CurrencyAttributeConverter;
+import com.plyushkin.shared.budget.domain.Money;
+import com.plyushkin.shared.WalletId;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Getter;

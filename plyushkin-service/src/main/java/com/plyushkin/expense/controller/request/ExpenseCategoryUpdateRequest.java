@@ -1,6 +1,6 @@
 package com.plyushkin.expense.controller.request;
 
-import com.plyushkin.expense.ExpenseCategoryNumber;
+import com.plyushkin.shared.ExpenseCategoryNumber;
 import jakarta.annotation.Nullable;
 
 public record ExpenseCategoryUpdateRequest(

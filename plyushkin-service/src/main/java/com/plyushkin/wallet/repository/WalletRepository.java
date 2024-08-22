@@ -1,8 +1,8 @@
 package com.plyushkin.wallet.repository;
 
-import com.plyushkin.user.UserId;
+import com.plyushkin.shared.UserId;
 import com.plyushkin.wallet.domain.Wallet;
-import com.plyushkin.wallet.WalletId;
+import com.plyushkin.shared.WalletId;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

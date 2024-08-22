@@ -1,6 +1,6 @@
 package com.plyushkin.income.domain;
 
-import com.plyushkin.income.IncomeNumber;
+import com.plyushkin.shared.IncomeNumber;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import lombok.SneakyThrows;

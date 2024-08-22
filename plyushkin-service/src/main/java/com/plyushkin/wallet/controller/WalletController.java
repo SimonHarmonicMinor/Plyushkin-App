@@ -1,10 +1,10 @@
 package com.plyushkin.wallet.controller;
 
 import com.plyushkin.shared.DefaultErrorResponse;
-import com.plyushkin.user.CurrentUserIdProvider;
+import com.plyushkin.shared.CurrentUserIdProvider;
 import com.plyushkin.shared.WriteTransactional;
 import com.plyushkin.wallet.domain.Wallet;
-import com.plyushkin.wallet.WalletId;
+import com.plyushkin.shared.WalletId;
 import com.plyushkin.wallet.controller.request.WalletCreateRequest;
 import com.plyushkin.wallet.controller.request.WalletUpdateRequest;
 import com.plyushkin.wallet.controller.response.WalletResponse;

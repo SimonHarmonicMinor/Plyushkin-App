@@ -1,6 +1,6 @@
 package com.plyushkin.investment.deposit;
 
-import com.plyushkin.budget.domain.AbstractNumber;
+import com.plyushkin.shared.budget.domain.AbstractNumber;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

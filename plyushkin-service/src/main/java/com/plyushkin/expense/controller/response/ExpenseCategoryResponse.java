@@ -1,9 +1,9 @@
 package com.plyushkin.expense.controller.response;
 
 import com.plyushkin.expense.domain.ExpenseCategory;
-import com.plyushkin.expense.ExpenseCategoryNumber;
-import com.plyushkin.user.UserId;
-import com.plyushkin.wallet.WalletId;
+import com.plyushkin.shared.ExpenseCategoryNumber;
+import com.plyushkin.shared.UserId;
+import com.plyushkin.shared.WalletId;
 import jakarta.validation.constraints.NotNull;
 
 import javax.annotation.Nullable;

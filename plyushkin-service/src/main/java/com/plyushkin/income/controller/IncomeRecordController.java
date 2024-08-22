@@ -1,22 +1,22 @@
 package com.plyushkin.income.controller;
 
 
-import com.plyushkin.budget.domain.PageResult;
-import com.plyushkin.budget.usecase.command.CreateRecordCommand;
-import com.plyushkin.budget.usecase.command.ListRecordsCommand;
-import com.plyushkin.budget.usecase.command.UpdateRecordCommand;
-import com.plyushkin.budget.usecase.exception.CreateRecordException;
-import com.plyushkin.budget.usecase.exception.DeleteRecordException;
-import com.plyushkin.budget.usecase.exception.RecordNotFoundException;
-import com.plyushkin.budget.usecase.exception.UpdateRecordException;
-import com.plyushkin.income.IncomeNumber;
+import com.plyushkin.shared.budget.domain.PageResult;
+import com.plyushkin.shared.budget.usecase.command.CreateRecordCommand;
+import com.plyushkin.shared.budget.usecase.command.ListRecordsCommand;
+import com.plyushkin.shared.budget.usecase.command.UpdateRecordCommand;
+import com.plyushkin.shared.budget.usecase.exception.CreateRecordException;
+import com.plyushkin.shared.budget.usecase.exception.DeleteRecordException;
+import com.plyushkin.shared.budget.usecase.exception.RecordNotFoundException;
+import com.plyushkin.shared.budget.usecase.exception.UpdateRecordException;
+import com.plyushkin.shared.IncomeNumber;
 import com.plyushkin.income.controller.request.IncomeRecordCreateRequest;
 import com.plyushkin.income.controller.request.IncomeRecordUpdateRequest;
 import com.plyushkin.income.controller.response.IncomeRecordResponse;
 import com.plyushkin.income.usecase.IncomeRecordUseCase;
-import com.plyushkin.user.CurrentUserIdProvider;
+import com.plyushkin.shared.CurrentUserIdProvider;
 import com.plyushkin.shared.WriteTransactional;
-import com.plyushkin.wallet.WalletId;
+import com.plyushkin.shared.WalletId;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;

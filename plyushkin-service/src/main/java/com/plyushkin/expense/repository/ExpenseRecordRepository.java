@@ -1,8 +1,8 @@
 package com.plyushkin.expense.repository;
 
-import com.plyushkin.budget.repository.AbstractRecordRepository;
+import com.plyushkin.shared.budget.repository.AbstractRecordRepository;
 import com.plyushkin.expense.domain.ExpenseCategory;
-import com.plyushkin.expense.ExpenseNumber;
+import com.plyushkin.shared.ExpenseNumber;
 import com.plyushkin.expense.domain.ExpenseRecord;
 import lombok.SneakyThrows;
 

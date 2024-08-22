@@ -1,6 +1,6 @@
 package com.plyushkin.expense.domain;
 
-import com.plyushkin.expense.ExpenseCategoryNumber;
+import com.plyushkin.shared.ExpenseCategoryNumber;
 import jakarta.persistence.AttributeConverter;
 import lombok.SneakyThrows;
 
