@@ -10,7 +10,7 @@ import org.springframework.modulith.Modulithic;
 @EnableConfigurationProperties
 @ConfigurationPropertiesScan("com.plyushkin")
 @SuppressWarnings("checkstyle:HideUtilityClassConstructor")
-@Modulithic(sharedModules = "infra")
+@Modulithic(sharedModules = "shared")
 public class PlyushkinServiceApplication {
 
     public static void main(String[] args) {
