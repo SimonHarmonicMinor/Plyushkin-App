@@ -26,6 +26,6 @@ jobs:
       - name: Run OpenApi Generate for Java
         run: ./gradlew openApiGenerate
       - name: Run OpenApi Generate for TS
-        run: ./gradlew npmInstall && bash ./plyshkin-web-ui/generate-ts-http-client.sh
+        run: ./gradlew npmInstall && bash ./plyushkin-web-ui/generate-ts-http-client.sh
       - name: Build TS project
         run: ./gradlew :plyushkin-web-ui:build
