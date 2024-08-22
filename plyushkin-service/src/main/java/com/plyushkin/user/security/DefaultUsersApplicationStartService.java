@@ -3,7 +3,7 @@ package com.plyushkin.user.security;
 import com.plyushkin.user.properties.DefaultUsersProperties;
 import com.plyushkin.user.domain.User;
 import com.plyushkin.user.repository.UserRepository;
-import com.plyushkin.infra.WriteTransactional;
+import com.plyushkin.shared.WriteTransactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.event.ApplicationStartedEvent;

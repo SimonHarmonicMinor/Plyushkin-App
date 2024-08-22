@@ -15,7 +15,7 @@ import com.plyushkin.income.controller.request.IncomeRecordUpdateRequest;
 import com.plyushkin.income.controller.response.IncomeRecordResponse;
 import com.plyushkin.income.usecase.IncomeRecordUseCase;
 import com.plyushkin.user.CurrentUserIdProvider;
-import com.plyushkin.infra.WriteTransactional;
+import com.plyushkin.shared.WriteTransactional;
 import com.plyushkin.wallet.WalletId;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.annotation.Nullable;

@@ -14,7 +14,7 @@ import com.plyushkin.expense.controller.request.ExpenseRecordUpdateRequest;
 import com.plyushkin.expense.controller.response.ExpenseRecordResponse;
 import com.plyushkin.expense.usecase.ExpenseRecordUseCase;
 import com.plyushkin.user.CurrentUserIdProvider;
-import com.plyushkin.infra.WriteTransactional;
+import com.plyushkin.shared.WriteTransactional;
 import com.plyushkin.wallet.WalletId;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.annotation.Nullable;

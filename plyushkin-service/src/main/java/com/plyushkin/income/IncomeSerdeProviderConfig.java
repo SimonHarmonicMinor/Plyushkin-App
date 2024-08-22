@@ -1,7 +1,7 @@
 package com.plyushkin.income;
 
-import com.plyushkin.infra.LongSerdeProvider;
-import com.plyushkin.infra.SerdeProvider;
+import com.plyushkin.shared.LongSerdeProvider;
+import com.plyushkin.shared.SerdeProvider;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.plyushkin.infra;
+package com.plyushkin.shared;
 
 import com.cosium.spring.data.jpa.entity.graph.repository.support.EntityGraphJpaRepositoryFactoryBean;
 import org.springframework.context.annotation.Configuration;

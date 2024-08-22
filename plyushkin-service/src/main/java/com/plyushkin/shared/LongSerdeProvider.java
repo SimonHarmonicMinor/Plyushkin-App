@@ -1,4 +1,4 @@
-package com.plyushkin.infra;
+package com.plyushkin.shared;
 
 import com.fasterxml.jackson.core.JsonParser;
 import lombok.SneakyThrows;

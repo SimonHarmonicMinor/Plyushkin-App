@@ -1,7 +1,7 @@
 package com.plyushkin.user;
 
-import com.plyushkin.infra.SerdeProvider;
-import com.plyushkin.infra.StringSerdeProvider;
+import com.plyushkin.shared.SerdeProvider;
+import com.plyushkin.shared.StringSerdeProvider;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

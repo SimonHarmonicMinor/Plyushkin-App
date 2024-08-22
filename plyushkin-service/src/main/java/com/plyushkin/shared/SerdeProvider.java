@@ -1,4 +1,4 @@
-package com.plyushkin.infra;
+package com.plyushkin.shared;
 
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;

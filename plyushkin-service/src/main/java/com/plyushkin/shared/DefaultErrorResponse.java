@@ -1,4 +1,4 @@
-package com.plyushkin.infra;
+package com.plyushkin.shared;
 
 import jakarta.validation.constraints.NotNull;
 

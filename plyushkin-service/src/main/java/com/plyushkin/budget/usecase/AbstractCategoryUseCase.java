@@ -10,7 +10,7 @@ import com.plyushkin.budget.usecase.exception.CategoryNotFoundException;
 import com.plyushkin.budget.usecase.exception.CreateCategoryException;
 import com.plyushkin.budget.usecase.exception.DeleteCategoryException;
 import com.plyushkin.budget.usecase.exception.UpdateCategoryUseCaseException;
-import com.plyushkin.infra.WriteTransactional;
+import com.plyushkin.shared.WriteTransactional;
 import com.plyushkin.wallet.WalletId;
 import lombok.RequiredArgsConstructor;
 

@@ -1,8 +1,8 @@
 package com.plyushkin.wallet.controller;
 
-import com.plyushkin.infra.DefaultErrorResponse;
+import com.plyushkin.shared.DefaultErrorResponse;
 import com.plyushkin.user.CurrentUserIdProvider;
-import com.plyushkin.infra.WriteTransactional;
+import com.plyushkin.shared.WriteTransactional;
 import com.plyushkin.wallet.domain.Wallet;
 import com.plyushkin.wallet.WalletId;
 import com.plyushkin.wallet.controller.request.WalletCreateRequest;

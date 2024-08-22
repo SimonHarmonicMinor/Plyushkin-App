@@ -2,9 +2,9 @@ package com.plyushkin.budget;
 
 import com.plyushkin.budget.domain.Currency;
 import com.plyushkin.budget.domain.Money;
-import com.plyushkin.infra.DoubleSerdeProvider;
-import com.plyushkin.infra.SerdeProvider;
-import com.plyushkin.infra.StringSerdeProvider;
+import com.plyushkin.shared.DoubleSerdeProvider;
+import com.plyushkin.shared.SerdeProvider;
+import com.plyushkin.shared.StringSerdeProvider;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

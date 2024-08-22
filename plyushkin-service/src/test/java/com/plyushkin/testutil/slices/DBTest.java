@@ -1,6 +1,6 @@
 package com.plyushkin.testutil.slices;
 
-import com.plyushkin.infra.JpaConfig;
+import com.plyushkin.shared.JpaConfig;
 import com.plyushkin.testutil.db.TestDbFacade;
 import com.plyushkin.testutil.extension.PostgresExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
