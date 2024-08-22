@@ -1,0 +1,20 @@
+{
+  "$schema": "./node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+  "spaces": 2,
+  "generator-cli": {
+    "version": "7.8.0",
+    "generators": {
+      "typescript-client": {
+        "generatorName": "typescript-fetch",
+        "inputSpec": "../plyushkin-service/build/openapi.json",
+        "output": "#{cwd}/src/generated/http-client",
+        "additionalProperties": {
+          "snapshot": true,
+          "supportsES6": true,
+          "withInterfaces": true,
+          "stringEnums": true
+        }
+      }
+    }
+  }
+}
