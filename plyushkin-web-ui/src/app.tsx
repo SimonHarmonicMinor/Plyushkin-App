@@ -1,25 +1,34 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import { Layout } from "antd";
+import { RocketOutlined } from "@ant-design/icons";
 
-function App() {
+const { Header, Content } = Layout;
+
+function App({ children }: { children?: React.ReactNode }) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Layout>
+      <Header
+        style={{
+          display: "flex",
+          alignItems: "center",
+          backgroundColor: "gray",
+        }}
+      >
+        <RocketOutlined />
+        Plyushkin Budget Application
+      </Header>
+      <Content style={{ padding: "0 48px" }}>
+        <div
+          style={{
+            minHeight: 280,
+            padding: 24,
+          }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          {children}
+        </div>
+      </Content>
+    </Layout>
   );
 }
 
