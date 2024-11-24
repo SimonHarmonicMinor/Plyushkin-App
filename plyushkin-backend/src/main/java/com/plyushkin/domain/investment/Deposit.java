@@ -1,4 +1,7 @@
-package com.plyushkin.domain;
+package com.plyushkin.domain.investment;
+
+import com.plyushkin.domain.BudgetRecord;
+import com.plyushkin.domain.Money;
 
 import java.time.LocalDate;
 
