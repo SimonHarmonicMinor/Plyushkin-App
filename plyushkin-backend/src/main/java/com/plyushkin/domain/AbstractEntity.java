@@ -3,7 +3,6 @@ package com.plyushkin.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.ToString;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.domain.AbstractAggregateRoot;
@@ -24,7 +23,6 @@ public abstract class AbstractEntity<T extends AbstractEntity<T>> extends Abstra
     @CreatedDate
     private Instant createdAt;
 
-    @Embedded
     @AttributeOverrides(
             @AttributeOverride(name = "value", column = @Column(name = "updated_at"))
     )
