@@ -1,35 +1,16 @@
 package com.plyushkin.domain.value;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.experimental.StandardException;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
-import static lombok.AccessLevel.PROTECTED;
-
-@Embeddable
-@NoArgsConstructor(access = PROTECTED)
-@EqualsAndHashCode
-@Schema(implementation = BigDecimal.class, description = "Money", minimum = "1")
-@Getter
-public class Money implements Comparable<Money> {
-    @Column
-    private BigDecimal value;
-
-    public static Money create(BigDecimal value) throws InvalidMoneyException {
-        if (value.compareTo(BigDecimal.ZERO) < 0) {
-            throw new InvalidMoneyException(
-                    "Money cannot be less than zero but passed: " + value
-            );
-        }
-        Money money = new Money();
-        money.value = value;
-        return money;
+@Schema(implementation = BigDecimal.class, description = "Money")
+public record Money(
+        BigDecimal value
+) implements Comparable<Money> {
+    public Money {
+        Objects.requireNonNull(value, "Cannot be null");
     }
 
     @Override
@@ -37,7 +18,11 @@ public class Money implements Comparable<Money> {
         return this.value.compareTo(o.value);
     }
 
-    @StandardException
-    public static class InvalidMoneyException extends Exception {
+    public Money plus(Money money) {
+        return new Money(this.value.add(money.value));
+    }
+
+    public Money minus(Money money) {
+        return new Money(this.value.subtract(money.value));
     }
 }
