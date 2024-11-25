@@ -1,4 +1,4 @@
-package com.plyushkin.domain;
+package com.plyushkin.domain.value;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
