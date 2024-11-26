@@ -1,3 +1,31 @@
+CREATE TABLE currency
+(
+    id        BIGINT PRIMARY KEY,
+    wallet_id BIGINT       NOT NULL,
+    name      VARCHAR(200) NOT NULL
+);
+
+CREATE TABLE income_category
+(
+    id        BIGINT PRIMARY KEY,
+    wallet_id BIGINT       NOT NULL,
+    name      VARCHAR(200) NOT NULL
+);
+
+CREATE TABLE expense_category
+(
+    id        BIGINT PRIMARY KEY,
+    wallet_id BIGINT       NOT NULL,
+    name      VARCHAR(200) NOT NULL
+);
+
+CREATE TABLE company
+(
+    id        BIGINT PRIMARY KEY,
+    wallet_id BIGINT       NOT NULL,
+    name      VARCHAR(200) NOT NULL
+);
+
 CREATE TABLE budget_record
 (
     type                    VARCHAR(50)                     NOT NULL,
