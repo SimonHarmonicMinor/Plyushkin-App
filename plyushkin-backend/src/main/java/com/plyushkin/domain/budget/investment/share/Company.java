@@ -1,7 +1,8 @@
-package com.plyushkin.domain.wallet;
+package com.plyushkin.domain.budget.investment.share;
 
 import com.plyushkin.domain.base.AbstractEntity;
 import com.plyushkin.domain.value.ID;
+import com.plyushkin.domain.wallet.Wallet;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;

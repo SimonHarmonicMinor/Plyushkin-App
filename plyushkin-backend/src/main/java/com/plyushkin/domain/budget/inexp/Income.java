@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -16,6 +17,7 @@ import static lombok.AccessLevel.PROTECTED;
 @NoArgsConstructor(access = PROTECTED)
 @ToString(onlyExplicitlyIncluded = true, callSuper = true)
 @DiscriminatorValue("INCOME")
+@Getter
 public class Income extends BudgetRecord<Income> {
     @NotNull
     @ManyToOne(fetch = LAZY)

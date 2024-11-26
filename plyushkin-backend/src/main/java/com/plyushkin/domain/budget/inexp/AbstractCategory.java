@@ -6,6 +6,7 @@ import com.plyushkin.domain.wallet.Wallet;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -15,6 +16,7 @@ import static lombok.AccessLevel.PROTECTED;
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @NoArgsConstructor(access = PROTECTED)
+@Getter
 public class AbstractCategory<T extends AbstractCategory<T>> extends AbstractEntity<T> {
     @EmbeddedId
     @EqualsAndHashCode.Include
@@ -29,10 +31,4 @@ public class AbstractCategory<T extends AbstractCategory<T>> extends AbstractEnt
     @NotNull
     @ToString.Include
     protected String name;
-
-    public AbstractCategory(ID<T> id, ID<Wallet> walletId, String name) {
-        this.id = id;
-        this.walletId = walletId;
-        this.name = name;
-    }
 }

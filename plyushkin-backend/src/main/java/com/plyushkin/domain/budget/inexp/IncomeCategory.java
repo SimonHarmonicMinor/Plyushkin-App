@@ -11,10 +11,7 @@ import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Table(name = "income_category")
-@ToString(callSuper = true)
+@ToString(onlyExplicitlyIncluded = true, callSuper = true)
 @NoArgsConstructor(access = PROTECTED)
 public class IncomeCategory extends AbstractCategory<IncomeCategory> {
-    public IncomeCategory(ID<IncomeCategory> id, ID<Wallet> walletId, String name) {
-        super(id, walletId, name);
-    }
 }

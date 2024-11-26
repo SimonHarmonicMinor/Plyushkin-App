@@ -6,7 +6,10 @@ import com.plyushkin.domain.value.Money;
 import com.plyushkin.domain.wallet.Currency;
 import com.plyushkin.domain.wallet.Wallet;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -41,6 +44,7 @@ public abstract class BudgetRecord<T extends BudgetRecord<T>> extends AbstractEn
 
     @ToString.Include
     @NotNull
+    @Size(max = 200)
     protected String comment;
 
     @ManyToOne(fetch = LAZY)
@@ -49,5 +53,5 @@ public abstract class BudgetRecord<T extends BudgetRecord<T>> extends AbstractEn
 
     @ToString.Include
     @NotNull
-    protected Money price;
+    protected Money amount;
 }

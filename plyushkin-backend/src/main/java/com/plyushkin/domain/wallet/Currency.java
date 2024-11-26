@@ -30,10 +30,4 @@ public class Currency extends AbstractEntity<Currency> {
     @NotNull
     @ToString.Include
     private String name;
-
-    public Currency(ID<Currency> id, ID<Wallet> walletId, String name) {
-        this.id = id;
-        this.walletId = walletId;
-        this.name = name;
-    }
 }
