@@ -1,7 +1,5 @@
 package com.plyushkin.domain.budget.inexp;
 
-import com.plyushkin.domain.value.ID;
-import com.plyushkin.domain.wallet.Wallet;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.NoArgsConstructor;
