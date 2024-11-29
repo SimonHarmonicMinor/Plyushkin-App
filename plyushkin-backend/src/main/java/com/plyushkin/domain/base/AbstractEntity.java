@@ -23,7 +23,6 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 public abstract class AbstractEntity<T extends AbstractEntity<T>> extends AbstractAggregateRoot<T> {
-    @Embedded
     @AttributeOverride(name = "value", column = @Column(name = "created_at", updatable = false))
     @ToString.Include
     @CreatedDate
