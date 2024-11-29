@@ -3,7 +3,7 @@ import java.nio.file.Paths;
 
 plugins {
     java
-    id("org.springframework.boot") version "3.3.2"
+    id("org.springframework.boot") version "3.3.5"
     id("io.spring.dependency-management") version "1.1.6"
     id("ru.vyarus.quality") version "5.0.0"
     id("net.ltgt.errorprone") version "4.0.0"
@@ -65,12 +65,12 @@ dependencies {
 dependencyManagement {
     imports {
         mavenBom("io.sentry:sentry-bom:${property("sentryVersion")}")
-        mavenBom("org.springframework.modulith:spring-modulith-bom:1.2.2")
     }
 }
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    jvmArgs("--add-opens", "java.base/java.time=ALL-UNNAMED")
 }
 
 tasks.create("runStaticAnalysis") {
