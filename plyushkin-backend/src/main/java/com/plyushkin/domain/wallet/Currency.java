@@ -22,7 +22,7 @@ public class Currency extends AbstractEntity<Currency> {
     private ID<Currency> id;
 
     @Embedded
-    @AttributeOverride(name = "value", column = @Column(name = "id", updatable = false))
+    @AttributeOverride(name = "value", column = @Column(name = "wallet_id", updatable = false))
     @NotNull
     @ToString.Include
     private ID<Wallet> walletId;
