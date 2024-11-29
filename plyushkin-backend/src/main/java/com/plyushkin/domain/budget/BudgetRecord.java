@@ -6,9 +6,7 @@ import com.plyushkin.domain.value.Money;
 import com.plyushkin.domain.wallet.Currency;
 import com.plyushkin.domain.wallet.Wallet;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -30,7 +28,7 @@ public abstract class BudgetRecord<T extends BudgetRecord<T>> extends AbstractEn
     @EmbeddedId
     @EqualsAndHashCode.Include
     @ToString.Include
-    protected ID<T> id;
+    protected ID id;
 
     @Embedded
     @AttributeOverride(name = "value", column = @Column(name = "wallet_id", updatable = false))
@@ -54,4 +52,8 @@ public abstract class BudgetRecord<T extends BudgetRecord<T>> extends AbstractEn
     @ToString.Include
     @NotNull
     protected Money amount;
+
+    public ID<T> getId() {
+        return id;
+    }
 }
