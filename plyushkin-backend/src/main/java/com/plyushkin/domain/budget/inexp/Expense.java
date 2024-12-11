@@ -18,7 +18,7 @@ import static lombok.AccessLevel.PROTECTED;
 @ToString(onlyExplicitlyIncluded = true, callSuper = true)
 @DiscriminatorValue("EXPENSE")
 @Getter
-public class Expense extends BudgetRecord<Expense> {
+public class Expense extends BudgetRecord {
     @NotNull
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "expense_category_id")

@@ -4,9 +4,7 @@ import com.plyushkin.domain.base.AbstractEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -21,7 +19,9 @@ import static jakarta.persistence.InheritanceType.SINGLE_TABLE;
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @ToString(onlyExplicitlyIncluded = true)
-public abstract class BudgetRecord<T extends BudgetRecord<T>> extends AbstractEntity<T> {
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+public abstract class BudgetRecord extends AbstractEntity {
     @EqualsAndHashCode.Include
     @ToString.Include
     @Id

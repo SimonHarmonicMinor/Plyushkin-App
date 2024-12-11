@@ -4,10 +4,7 @@ import com.plyushkin.domain.base.AbstractEntity;
 import com.plyushkin.domain.value.ID;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
@@ -18,7 +15,8 @@ import static lombok.AccessLevel.PROTECTED;
 @NoArgsConstructor(access = PROTECTED)
 @ToString(onlyExplicitlyIncluded = true)
 @Getter
-public class Currency extends AbstractEntity<Currency> {
+@AllArgsConstructor
+public class Currency extends AbstractEntity {
     @EmbeddedId
     @EqualsAndHashCode.Include
     @ToString.Include

@@ -19,7 +19,7 @@ import static lombok.AccessLevel.PROTECTED;
 @ToString(onlyExplicitlyIncluded = true, callSuper = true)
 @NoArgsConstructor(access = PROTECTED)
 @Getter
-public class Deposit extends BudgetRecord<Deposit> {
+public class Deposit extends BudgetRecord {
     @NotNull
     @Column(name = "deposit_closed_date")
     @ToString.Include

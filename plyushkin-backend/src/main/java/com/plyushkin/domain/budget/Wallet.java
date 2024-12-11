@@ -6,9 +6,7 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import static lombok.AccessLevel.PROTECTED;
 
@@ -17,11 +15,13 @@ import static lombok.AccessLevel.PROTECTED;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @NoArgsConstructor(access = PROTECTED)
 @ToString(onlyExplicitlyIncluded = true)
-public class Wallet extends AbstractEntity<Wallet> {
+@AllArgsConstructor
+@Getter
+public class Wallet extends AbstractEntity {
     @EmbeddedId
     @EqualsAndHashCode.Include
     @ToString.Include
-    private ID<Currency> id;
+    private ID<Wallet> id;
 
     @NotNull
     @ToString.Include

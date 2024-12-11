@@ -19,7 +19,7 @@ import static lombok.AccessLevel.PROTECTED;
 @ToString(onlyExplicitlyIncluded = true, callSuper = true)
 @NoArgsConstructor(access = PROTECTED)
 @Getter
-public class Share extends BudgetRecord<Share> {
+public class Share extends BudgetRecord {
     @ManyToOne(fetch = LAZY)
     @NotNull
     @JoinColumn(name = "share_company_id")

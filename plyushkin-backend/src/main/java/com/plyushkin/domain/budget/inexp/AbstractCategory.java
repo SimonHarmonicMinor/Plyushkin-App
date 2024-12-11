@@ -17,11 +17,7 @@ import static lombok.AccessLevel.PROTECTED;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @NoArgsConstructor(access = PROTECTED)
 @Getter
-public class AbstractCategory<T extends AbstractCategory<T>> extends AbstractEntity<T> {
-    @EmbeddedId
-    @EqualsAndHashCode.Include
-    protected ID<T> id;
-
+public class AbstractCategory extends AbstractEntity {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "wallet_id")

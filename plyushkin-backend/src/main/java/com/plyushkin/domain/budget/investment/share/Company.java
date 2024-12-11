@@ -22,7 +22,7 @@ import static lombok.AccessLevel.PROTECTED;
 @ToString(onlyExplicitlyIncluded = true)
 @NoArgsConstructor(access = PROTECTED)
 @Getter
-public class Company extends AbstractEntity<Company> {
+public class Company extends AbstractEntity {
     @EmbeddedId
     @ToString.Include
     private ID<Company> id;

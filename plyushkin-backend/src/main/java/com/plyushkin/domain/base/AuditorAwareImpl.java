@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-class AuditorAwareImpl implements AuditorAware<ID<User>> {
+public class AuditorAwareImpl implements AuditorAware<ID<User>> {
     private static final UUID VALUE = UUID.fromString("99723d04-ecd0-48b8-804b-bbb0acda540e");
 
     @Override
