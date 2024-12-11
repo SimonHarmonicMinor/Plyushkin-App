@@ -1,7 +1,7 @@
 package com.plyushkin.domain.budget.investment.share;
 
 import com.plyushkin.domain.budget.BudgetRecord;
-import com.plyushkin.domain.value.Money;
+import com.plyushkin.domain.budget.Money;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

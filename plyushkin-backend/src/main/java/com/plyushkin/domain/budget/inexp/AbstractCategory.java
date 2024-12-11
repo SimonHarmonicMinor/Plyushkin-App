@@ -2,7 +2,7 @@ package com.plyushkin.domain.budget.inexp;
 
 import com.plyushkin.domain.base.AbstractEntity;
 import com.plyushkin.domain.value.ID;
-import com.plyushkin.domain.wallet.Wallet;
+import com.plyushkin.domain.budget.Wallet;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;

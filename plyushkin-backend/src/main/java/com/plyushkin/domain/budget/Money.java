@@ -1,4 +1,4 @@
-package com.plyushkin.domain.value;
+package com.plyushkin.domain.budget;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

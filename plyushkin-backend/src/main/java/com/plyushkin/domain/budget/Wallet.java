@@ -1,4 +1,4 @@
-package com.plyushkin.domain.wallet;
+package com.plyushkin.domain.budget;
 
 import com.plyushkin.domain.base.AbstractEntity;
 import com.plyushkin.domain.value.ID;

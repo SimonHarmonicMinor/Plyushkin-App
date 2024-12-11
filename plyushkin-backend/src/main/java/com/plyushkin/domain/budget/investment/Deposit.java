@@ -1,7 +1,7 @@
 package com.plyushkin.domain.budget.investment;
 
 import com.plyushkin.domain.budget.BudgetRecord;
-import com.plyushkin.domain.value.Money;
+import com.plyushkin.domain.budget.Money;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;

@@ -1,7 +1,5 @@
 package com.plyushkin.domain.budget;
 
-import com.plyushkin.domain.value.Money;
-import com.plyushkin.domain.wallet.Currency;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

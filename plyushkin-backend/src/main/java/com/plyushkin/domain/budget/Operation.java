@@ -1,4 +1,4 @@
-package com.plyushkin.domain.value;
+package com.plyushkin.domain.budget;
 
 public enum Operation {
     BUY, SELL

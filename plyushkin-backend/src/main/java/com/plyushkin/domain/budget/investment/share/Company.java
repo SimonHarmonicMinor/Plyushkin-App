@@ -2,7 +2,7 @@ package com.plyushkin.domain.budget.investment.share;
 
 import com.plyushkin.domain.base.AbstractEntity;
 import com.plyushkin.domain.value.ID;
-import com.plyushkin.domain.wallet.Wallet;
+import com.plyushkin.domain.budget.Wallet;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;

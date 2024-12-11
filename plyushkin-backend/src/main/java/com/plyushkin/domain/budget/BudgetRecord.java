@@ -1,9 +1,6 @@
 package com.plyushkin.domain.budget;
 
 import com.plyushkin.domain.base.AbstractEntity;
-import com.plyushkin.domain.value.Money;
-import com.plyushkin.domain.wallet.Currency;
-import com.plyushkin.domain.wallet.Wallet;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

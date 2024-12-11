@@ -1,8 +1,8 @@
 package com.plyushkin.domain.budget.investment.share;
 
 import com.plyushkin.domain.budget.BudgetRecord;
-import com.plyushkin.domain.value.Money;
-import com.plyushkin.domain.value.Operation;
+import com.plyushkin.domain.budget.Money;
+import com.plyushkin.domain.budget.Operation;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
