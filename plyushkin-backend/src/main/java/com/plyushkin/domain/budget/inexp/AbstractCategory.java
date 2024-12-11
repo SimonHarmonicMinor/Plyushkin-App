@@ -22,11 +22,10 @@ public class AbstractCategory<T extends AbstractCategory<T>> extends AbstractEnt
     @EqualsAndHashCode.Include
     protected ID<T> id;
 
-    @Embedded
     @NotNull
-    @ToString.Include
-    @AttributeOverride(name = "value", column = @Column(name = "wallet_id", updatable = false))
-    protected ID<Wallet> walletId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "wallet_id")
+    protected Wallet wallet;
 
     @NotNull
     @ToString.Include

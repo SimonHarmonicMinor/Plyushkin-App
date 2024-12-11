@@ -1,7 +1,10 @@
 package com.plyushkin.domain.budget.inexp;
 
 import com.plyushkin.domain.budget.BudgetRecord;
-import jakarta.persistence.*;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

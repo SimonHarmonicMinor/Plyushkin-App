@@ -3,12 +3,17 @@ package com.plyushkin.domain.budget.investment.share;
 import com.plyushkin.domain.base.AbstractEntity;
 import com.plyushkin.domain.value.ID;
 import com.plyushkin.domain.wallet.Wallet;
-import jakarta.persistence.*;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import static jakarta.persistence.FetchType.LAZY;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
@@ -16,24 +21,23 @@ import static lombok.AccessLevel.PROTECTED;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @ToString(onlyExplicitlyIncluded = true)
 @NoArgsConstructor(access = PROTECTED)
+@Getter
 public class Company extends AbstractEntity<Company> {
     @EmbeddedId
     @ToString.Include
     private ID<Company> id;
 
-    @Embedded
     @NotNull
-    @ToString.Include
-    @AttributeOverride(name = "value", column = @Column(name = "wallet_id"))
-    private ID<Wallet> walletId;
+    @ManyToOne(fetch = LAZY)
+    private Wallet wallet;
 
     @ToString.Include
     @NotNull
     private String name;
 
-    public Company(ID<Company> id, ID<Wallet> walletId, String name) {
+    public Company(ID<Company> id, Wallet wallet, String name) {
         this.id = id;
-        this.walletId = walletId;
+        this.wallet = wallet;
         this.name = name;
     }
 }

@@ -1,7 +1,6 @@
 package com.plyushkin.domain.budget;
 
 import com.plyushkin.domain.base.AbstractEntity;
-import com.plyushkin.domain.value.ID;
 import com.plyushkin.domain.value.Money;
 import com.plyushkin.domain.wallet.Currency;
 import com.plyushkin.domain.wallet.Wallet;
@@ -13,6 +12,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import static jakarta.persistence.DiscriminatorType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
@@ -25,16 +25,15 @@ import static jakarta.persistence.InheritanceType.SINGLE_TABLE;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 @ToString(onlyExplicitlyIncluded = true)
 public abstract class BudgetRecord<T extends BudgetRecord<T>> extends AbstractEntity<T> {
-    @EmbeddedId
     @EqualsAndHashCode.Include
     @ToString.Include
-    protected ID id;
+    @Id
+    protected UUID id;
 
-    @Embedded
-    @AttributeOverride(name = "value", column = @Column(name = "wallet_id", updatable = false))
-    @ToString.Include
+    @ManyToOne(fetch = LAZY)
     @NotNull
-    protected ID<Wallet> walletId;
+    @JoinColumn(name = "wallet_id")
+    protected Wallet wallet;
 
     @ToString.Include
     @NotNull
@@ -47,13 +46,10 @@ public abstract class BudgetRecord<T extends BudgetRecord<T>> extends AbstractEn
 
     @ManyToOne(fetch = LAZY)
     @NotNull
+    @JoinColumn(name = "currency_id")
     protected Currency currency;
 
     @ToString.Include
     @NotNull
     protected Money amount;
-
-    public ID<T> getId() {
-        return id;
-    }
 }

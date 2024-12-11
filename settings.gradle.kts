@@ -1,2 +1,2 @@
 rootProject.name = "plyushkin-app"
-include("plyushkin-service", "plyushkin-web-ui", "plyushkin-backend")
+include("plyushkin-web-ui", "plyushkin-backend")
