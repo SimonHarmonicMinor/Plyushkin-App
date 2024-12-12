@@ -9,6 +9,7 @@ plugins {
     id("net.ltgt.errorprone") version "4.0.0"
     id("org.springdoc.openapi-gradle-plugin") version "1.8.0"
     id("org.openapi.generator") version "7.6.0"
+    id("com.vaadin") version "24.5.8"
 }
 
 group = "com.plyushkin"
@@ -29,12 +30,15 @@ repositories {
 }
 
 extra["sentryVersion"] = "7.3.0"
+extra["vaadinVersion"] = "24.5.8"
 
 dependencies {
     val lombokVersion = "1.18.32"
     errorprone("com.google.errorprone:error_prone_core:2.28.0")
     errorprone("com.uber.nullaway:nullaway:0.11.0")
     implementation("com.uber.nullaway:nullaway:0.11.0")
+    implementation("com.vaadin:vaadin-spring-boot-starter")
+    runtimeOnly("org.springframework.boot:spring-boot-devtools")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
@@ -55,7 +59,9 @@ dependencies {
 
     testCompileOnly("org.projectlombok:lombok:$lombokVersion")
     testAnnotationProcessor("org.projectlombok:lombok:$lombokVersion")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
+    }
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:postgresql")
@@ -65,6 +71,7 @@ dependencies {
 dependencyManagement {
     imports {
         mavenBom("io.sentry:sentry-bom:${property("sentryVersion")}")
+        mavenBom("com.vaadin:vaadin-bom:${property("vaadinVersion")}")
     }
 }
 
